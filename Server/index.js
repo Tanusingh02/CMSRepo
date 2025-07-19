@@ -1,9 +1,16 @@
 const express = require ('express');
-const mongoose = require('./config/db');
+const connectDb = require('./config/db');
 require('dotenv').config();
+const userRoute = require('./routes/user.route')
+
 const app =express();
 
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 
+//mongodb connection
+connectDb();
+app.use('/user',userRoute)
 
 
 
