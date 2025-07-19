@@ -24,4 +24,4 @@ const verifyAdmin = (req,res,next)=>{
     next();
 }
 
-module.exports - { verifyToken, verifyAdmin}
+module.exports = { verifyToken, verifyAdmin};
