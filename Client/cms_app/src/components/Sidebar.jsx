@@ -2,6 +2,7 @@ import React from 'react';
 
 const Sidebar = () => {
 
+    // eslint-disable-next-line no-unused-vars
     const hoverStyle = {
         backgroundColor:'#3aa8e8'
     };
