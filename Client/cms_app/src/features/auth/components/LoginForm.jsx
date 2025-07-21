@@ -13,7 +13,6 @@ function LoginForm({ onLogin }){
 
         navigate('/login');
     }
-
     const handleSubmit = (e) =>{
         e.preventDefault();
         onLogin({email,password});
