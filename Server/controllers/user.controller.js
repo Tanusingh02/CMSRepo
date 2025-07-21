@@ -5,7 +5,23 @@ const User = require("../models/user.model"); //  User model
 
 const signup = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
-  const { fullname, email, password, role } = req.body;
+  const { fullname, email, password, role, doj, location, age, course } = req.body;
+  
+  const inputDate = new Date(doj);
+  const cutoffDate = new Date("2025-05-29");
+
+  let errormessage ="";
+  if(age <= 22){
+    errormessage +="Age must be greater then 22";
+  }
+
+    if(inputDate <= cutoffDate){
+     errormessage += "Date of Joining must be after 29-05-2025";
+    }
+
+    if(errormessage){
+      return res.status(400).json({message:errormessage.trim()});
+     }
   try {
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
@@ -17,6 +33,11 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       role: role || "user",
+      doj,
+      location,
+      age,
+      course
+      
     });
     await newUser.save();
     res.status(201).json({ message: "User created successfully" });
@@ -44,14 +65,30 @@ const loginUser = async (req, res) => {
       "your-secret-key",
       { expiresIn: "1h" } // Token expires in 1 hour
     );
-    return res.status(200).json({ token, message: "Login successful" });
+    return res.status(200).json({
+       token, 
+       message: "Login successful" ,
+       user:{
+        fullname : user.fullname,
+        email:user.email
+       }
+      });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Login failed" });
   }
 };
+const getLatestUsers = async(req,res)=>{
+  try {
+    const users = await User.find().sort({created: -1}).limit(5);
+    res.status(200).json(users);
+  }catch(err){
+    res.status(500).json({message: err.message});
+  }
+};
 
 module.exports = {
     signup,
-  loginUser
+    loginUser,
+    getLatestUsers
 };

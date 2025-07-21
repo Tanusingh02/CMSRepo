@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+//token generation
 const verifyToken =(req,res,next)=>{
     const token = req.header('Authorization');
     if(!token) return res.status(401).json({ error : 'Access denied'});
@@ -23,4 +24,4 @@ const verifyAdmin = (req,res,next)=>{
     next();
 }
 
-module.exports - { verifyToken, verifyAdmin}
+module.exports = { verifyToken, verifyAdmin};
