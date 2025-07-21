@@ -7,7 +7,7 @@ const pagesRoute=require('./routes/pages.routes')
 
 
 const app =express();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 

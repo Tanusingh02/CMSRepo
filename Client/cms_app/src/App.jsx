@@ -1,19 +1,20 @@
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
-import AddUser from './components/Login-Signup/Adduser.jsx'
 import LoginForm from './features/auth/components/LoginForm.jsx';
-import AddPageForm from './pages/AddPageForm.jsx';
-import ShowPages from './pages/ShowPages.jsx';
+import MainLayout from './layouts/Mainlayout.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 
 const App=()=>{
+  const handleLogin = ({email,password})=>{
+    
+  }
   return(
-    // <BrowserRouter>
-    // <LoginForm/>
-    // {/* <AddUser></AddUser> */}
-    // </BrowserRouter>
-    // <AddPageForm></AddPageForm>
-    <ShowPages></ShowPages>
+<div>
+  <AppRoutes >
+  <LoginForm onLogin={handleLogin}/>
+  </AppRoutes>
+
+    </div>
   )
 }
 export default App;
