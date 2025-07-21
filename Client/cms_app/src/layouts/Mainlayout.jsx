@@ -3,18 +3,20 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
 
-const MainLayout = ({ children })=>{
+const MainLayout = ({ title ,children })=>{
     return(
-    <div>
-       <Navbar></Navbar>
-       <Sidebar/>
-        <div>
-            
-            <main >
-                {children}
-            </main>
+    <div className="layout">
+       <Navbar/>
+       <div className="main-content">
+        <Sidebar/>
+        <div className="page-content">
+            <div className="page-container">
+            <h1 className="page-title">{title}</h1>
+            {children}
+            </div>
+            </div>
         </div>
-    </div>
+       </div>
     )
 }
 

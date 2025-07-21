@@ -1,10 +1,12 @@
 import React from "react";
+
 const Dashboard=()=>{
-    const fullname = localStorage.getItem("fullname");
+    
     return(
         <div>
-        {/* <h2>Welcome, {fullname}</h2> */}
-        </div>
+            <h1 className="page-title">Dashboard</h1>
+            <section className="section-heading">Latest Pages</section>
+            </div>
     )
 }
 export default Dashboard;
