@@ -1,18 +1,28 @@
 import React,{useState} from 'react';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm({ onLogin }){
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const navigate = useNavigate();
+    
+    const handleLogout=()=>{
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        navigate('/login');
+    }
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-       
-        if(typeof onLogin === 'function'){
-            onLogin({email,password});
-        }else{
-            console.error('onLogin prop is not a function');
-        }
-    };
+        onLogin({email,password});
+        
+
+    }
+    LoginForm.PropTypes ={
+        onLogin:PropTypes.func.isRequired,
+    }
 
     return(
         <div className="d-flex justify-content-center align-items-center" 

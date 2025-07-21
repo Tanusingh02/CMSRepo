@@ -9,10 +9,12 @@ const LoginPage = () => {
 
   const handleLogin = async (credentials) => {
     try {
-      const token = await login(credentials);
+      const {token,fullname} = await login(credentials);
       localStorage.setItem("token", token);
+      localStorage.setItem("fullname", fullname);
+      
       setMsg("Login successful!");
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       setMsg("Login failed" + (error.response?.data?.message || error.message));
     }
