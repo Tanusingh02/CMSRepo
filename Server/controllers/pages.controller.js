@@ -1,15 +1,15 @@
 const Pagemodel = require("../models/pages.model")
 
-exoprts.addPages=(req,res)=>
+exports.addPage=(req,res)=>
 {
-   var page=Pagemodel({
+   const page=Pagemodel({
        page_title:req.body.page_title,
        category:req.body.page_title,
        content:req.body.content,
        author:req.body.author
    })
    page.save().then(
-    (result)=>res.send(result),
+    (result)=>res.send({"message":"Inserted",data:result}),
     (error)=>res.send(error)
    )
 }
@@ -20,10 +20,10 @@ exports.getAllPages=(req,res)=>
     (error)=>res.send(error)
   )
 }
-exports.getUserPages=(req,res)=>
+exports.getUserPage=(req,res)=>
 {
     var id=req.params.id;
-    Pagemodel.find({user_id:id}).then(
+    Pagemodel.find({_id:id}).then(
         (result)=>res.send(result),
         (error)=>res.send(error)
     )

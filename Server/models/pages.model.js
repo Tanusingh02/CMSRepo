@@ -11,7 +11,10 @@ var pageSchema=new mongoose.Schema({
         required:true},
     author:{
         type:String,
-        required:true}
+        required:true},
+    createdAt:{
+        type:Date,
+        default:Date.now()}
 });
 
 var pagemodel=mongoose.model('Page',pageSchema);
