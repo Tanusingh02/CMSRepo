@@ -11,10 +11,30 @@ function AddUser()
    const[age,setAge]=useState();
    const[course,setCourse]=useState('');
    const [ageError, setAgeError] = useState('');
-
+   const [emailError, setEmailError]=useState('');
+   const[passwordError,setPasswordError]=useState('');
 
    const handleSubmit=(e)=>{
     e.preventDefault();
+    //Email validation
+    const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(email)){
+        setEmailError('Inavlid email format');
+        return;
+    }else{
+        setEmailError('');
+    }
+
+    //Password validation
+    const passwordRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if(!passwordRegex.test(password)){
+        setPasswordError('Emter a valid passowrd');
+        return;
+    }else{
+        setPasswordError('');
+    }
+
+    //Age validation
     if(parseInt(age)<22)
         setAgeError('Age cannot be less than 22');
       return;
@@ -29,6 +49,35 @@ function AddUser()
      age:age,
      course:course
     }
+    const handleEmailChange=(e)=>{
+        const value=e.target.value;
+        setEmail(value);
+     
+        const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(email)){
+        setEmailError('Inavlid email format');
+        return;
+    }else{
+        setEmailError('');
+    }
+    }
+
+     const handlePasswordChange=(e)=>{
+        const value=e.target.value;
+        setPassword(value);
+     
+        const passwordRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if(!passwordRegex.test(password)){
+        setPasswordError('Enter a valid password ');
+        return;
+    }else{
+        setPasswordError('');
+    }
+    }
+
+
+
+
    const handleAgeChange = (e) => {
     const value = e.target.value;
     setAge(value);
@@ -51,11 +100,22 @@ function AddUser()
                 </div>
             <div className="mb-3">
                 <label >Email</label>
-                <input type="email"  value={email} onChange={(e)=>setEmail(e.target.value)} className="form-control" ></input>
+                 <input type="email"  value={email} className="form-control" onChange={handleEmailChange}></input>
+                 {emailError &&(
+                    <div className='text-danger' style={{fontSize:'0.9em'}}>
+                        {emailError}
+                        </div>
+                 )}
                 </div>
+                
             <div className="mb-3">
                 <label >Password</label>
-                <input type="password"  value={password} onChange={(e)=>setPassword(e.target.value)} className="form-control" ></input>
+                <input type="password"  value={password} className="form-control" onChange={handlePasswordChange}></input>
+                {passwordError &&(
+                    <div className='text-danger' style={{fontSize:'0.9em'}}>
+                        {passwordError}
+                        </div>
+                 )}
                 </div> 
             <div className="mb-3">
                 <label >Role</label>

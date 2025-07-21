@@ -6,6 +6,7 @@ function LoginForm({ onLogin }){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+       
         if(typeof onLogin === 'function'){
             onLogin({email,password});
         }else{
@@ -26,14 +27,14 @@ function LoginForm({ onLogin }){
                 width:'350px'
              }}>
                 <h2 className='text-center' style={{color:'white'}}>DCX CMS</h2>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" onChange={(e)=>setEmail(e.target.value)} required autoFocus
+                <input type="email" id="inputEmail" className="form-control" placeholder="Email address" onChange={(e)=>setEmail(e.target.value)} required autoFocus
                 style={{
                     height:'52px',
                     marginBottom:'-1px',
                     borderBottomRightRadius:'0px',
                     borderBottomLeftRadius:'0px'
                     }}/>
-                <input type='password' className='form-control' placeholder='Password' onChange={(e)=>setPassword(e.target.value)} required autoFocus
+                <input type='password' value={password} className='form-control' placeholder='Password' onChange={(e)=>setPassword(e.target.value)} required autoFocus
                     style={{
                     height:'52px',
                     marginBottom:'-1px',

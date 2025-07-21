@@ -7,8 +7,8 @@ import LoginForm from './features/auth/components/LoginForm.jsx';
 const App=()=>{
   return(
     <BrowserRouter>
-    <LoginForm/>
-    {/* <AddUser></AddUser> */}
+    {/* <LoginForm/> */}
+    <AddUser></AddUser>
     </BrowserRouter>
   )
 }
