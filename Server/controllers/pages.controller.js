@@ -5,7 +5,8 @@ exoprts.addPages=(req,res)=>
    var page=Pagemodel({
        page_title:req.body.page_title,
        category:req.body.page_title,
-       content:req.body.content
+       content:req.body.content,
+       author:req.body.author
    })
    page.save().then(
     (result)=>res.send(result),
@@ -19,7 +20,7 @@ exports.getAllPages=(req,res)=>
     (error)=>res.send(error)
   )
 }
-exports.getAllUserPages=(req,res)=>
+exports.getUserPages=(req,res)=>
 {
     var id=req.params.id;
     Pagemodel.find({user_id:id}).then(
@@ -27,4 +28,25 @@ exports.getAllUserPages=(req,res)=>
         (error)=>res.send(error)
     )
 }
-
+exports.editPage=(req,res)=>
+{
+  var details={
+    id:req.params.id,
+    page_title:req.body.page_title,
+    category:req.body.category,
+    content:req.body.category,
+    author:req.body.author
+  }
+  Pagemodel.findByIdAndUpdate(req.params.id,details)
+  .then(
+    (result)=>res.send({'message':"Updated",data:result}),
+    (error)=>res.send(error))
+}
+exports.deletePage=(req,res)=>
+{
+  Pagemodel.findByIdAndDelete(req.params.id)
+  .then(
+    (result)=>res.send({'message':'Deleted',data:result}),
+    (error)=>res.send(error)
+  )
+}

@@ -9,6 +9,9 @@ var pageSchema=new mongoose.Schema({
     content:{
         type:String,
         required:true},
+    author:{
+        type:String,
+        required:true}
 });
 
 var pagemodel=mongoose.model('Page',pageSchema);
