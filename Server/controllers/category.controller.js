@@ -38,6 +38,8 @@ exports.getCategories = async (req, res)=> {
         }
     };
 
+   
+
     //update category
     exports.updateCategory = async(req,res)=>{
         try{

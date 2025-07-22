@@ -3,6 +3,8 @@ const connectDb = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
 const userRoute = require('./routes/user.route')
+const pagesRoute=require('./routes/pages.routes')
+
 const categoryRoute = require('./routes/category.routes');
 
 const app =express();
@@ -18,6 +20,8 @@ app.use(cors({
     origin : 'http://localhost:5173',
     credentials: true
 }))
+app.use('/user',userRoute)
+app.use('/pages',pagesRoute)
 //server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

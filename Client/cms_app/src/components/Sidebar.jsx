@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link, Route} from "react-router-dom";
 
 const Sidebar = () => {
 
@@ -16,15 +17,16 @@ const Sidebar = () => {
                 <a href='#' className='nav-link text-dark hover'>Dashboard</a>
             </li>
             <li className='nav-item '>
-                <a href='#' className='nav-link text-dark'>Pages</a>
+                 <a href='/pages' className='nav-link text-dark hover'>Pages</a>
             </li>
             <li className='nav-item '>
-                <a href='#' className='nav-link text-dark'>Categories</a>
+                <a href='/categories' className='nav-link text-dark'>Categories</a>
             </li>
             <li className='nav-item '>
                 <a href='#' className='nav-link text-dark'>User Accounts</a>
             </li>
         </ul>
+           
     </div>
     )
 }

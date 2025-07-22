@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import handleLogout from '../features/auth/components/LoginForm';
+import Pages from '../components/ShowPages';
 
 const Navbar = () => (
   <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#3aa8e8', padding: '10px 20px', width: '100%', fontSize: '15px' }}>
@@ -17,10 +18,10 @@ const Navbar = () => (
           <a className="nav-link text-white" href="#">Dashboard</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" href="#">Pages</a>
+          <a className="nav-link text-white" href="/pages">Pages</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" href="#">Categories</a>
+          <a className="nav-link text-white" href="/categories">Categories</a>
         </li>
         <li className="nav-item">
           <a className="nav-link text-white" href="#">Users</a>
