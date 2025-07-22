@@ -3,10 +3,10 @@ import {Routes, Route} from 'react-router-dom';
 import LoginPage from '../features/auth/pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
 import MainLayout from '../layouts/Mainlayout';
-import Pages from '../components/ShowPages';
-import PageForm from '../components/PageForm';
-import EditPage from '../components/EditPage';
-import DeletePage from '../components/DeletePage';
+import Pages from '../components/Pages.component/ShowPages';
+import PageForm from '../components/Pages.component/PageForm';
+import EditPage from '../components/Pages.component/EditPage';
+import DeletePage from '../components/Pages.component/DeletePage';
 
 import CategoryForm from '../components/Category/CategoryForm';
 import ShowCategories from '../components/Category/ShowCategory';
