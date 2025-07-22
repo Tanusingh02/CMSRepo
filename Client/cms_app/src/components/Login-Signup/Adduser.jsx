@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function AddUser()
+function AddUser({ onUserAdded })
 {
    const[fullname,setFullname]=useState('');
    const[email,setEmail]=useState('');
@@ -13,13 +14,54 @@ function AddUser()
    const [ageError, setAgeError] = useState('');
 
 
-   const handleSubmit=(e)=>{
+   /*const handleSubmit=(e)=>{
     e.preventDefault();
     if(parseInt(age)<22)
         setAgeError('Age cannot be less than 22');
       return;
-    }
-    const data={
+    }*/
+   const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (parseInt(age) < 22) {
+    setAgeError("Age cannot be less than 22");
+    return;
+  }
+
+  const data = {
+    fullname,
+    email,
+    password,
+    role,
+    doj,
+    location,
+    age,
+    course,
+  };
+
+  axios.post("http://localhost:8080/user/signup", data)
+    .then((res) => {
+      console.log("User added:", res.data.message);
+
+      // Notify parent to refresh user list
+      if (onUserAdded) onUserAdded();
+
+      // Optionally clear the form
+      setFullname("");
+      setEmail("");
+      setPassword("");
+      setRole("");
+      setDoj("");
+      setLocation("");
+      setAge("");
+      setCourse("");
+      setAgeError("");
+    })
+    .catch((error) => {
+      console.error("Error adding user:", error);
+    });
+};
+   /* const data={
      fullname:fullname,
      email:email,
      password:password,
@@ -28,7 +70,7 @@ function AddUser()
      location:location,
      age:age,
      course:course
-    }
+    }*/
    const handleAgeChange = (e) => {
     const value = e.target.value;
     setAge(value);

@@ -80,7 +80,7 @@ const loginUser = async (req, res) => {
 };
 const getLatestUsers = async(req,res)=>{
   try {
-    const users = await User.find().sort({created: -1}).limit(5);
+    const users = await User.find().sort({created: -1}).limit(15);
     res.status(200).json(users);
   }catch(err){
     res.status(500).json({message: err.message});

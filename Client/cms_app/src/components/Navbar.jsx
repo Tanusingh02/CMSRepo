@@ -2,7 +2,9 @@
   import React, { useState } from "react";
   import handleLogout from '../features/auth/components/LoginForm';
 
-  const Navbar = () => {
+  const Navbar = ({ customBrand }) => {
+    const brandName = customBrand || "DCX CMS";
+
     const [activeLink, setActiveLink] = useState(null);
 
     const navLinkStyle = (label) => ({
@@ -17,7 +19,10 @@
 
     return (
       <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#3aa8e8', padding: '10px'  , width: '100%' }}>
-        <a className="navbar-brand text-white" href="#">DCX CMS</a>
+        <a className="navbar-brand text-white" href="#">
+        {brandName}
+      </a>
+
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
