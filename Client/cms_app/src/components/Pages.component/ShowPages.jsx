@@ -1,9 +1,10 @@
 import { use, useEffect, useState } from "react"
 import {useNavigate} from "react-router-dom";
 import {Routes,Route,Link} from "react-router-dom";
-import PageForm from "./PageForm";
-import EditPage from "../components/EditPage";
+import PageForm from "../Pages.component/PageForm";
+import EditPage from "../Pages.component/EditPage";
 import MainLayout from "../../layouts/Mainlayout";
+import ActionButton from "../buttoncomponent";
 
 function ShowPages(){
     
@@ -67,11 +68,26 @@ function ShowPages(){
     return(
          <div>
              <MainLayout>
+                    <div className="mb-3">
+                    <div
+                        className="px-3 py-2 border rounded"
+                        style={{
+                        width: "100%",
+                        maxWidth: "100%",
+                        backgroundColor: "#f0f0f0",
+                        }}
+                    >
+                        <strong>
+                        <Link to="/" className="text-decoration-none text-blue me-1">Dashboard</Link>/Pages</strong>
+                    </div>
+                    </div>
               <div className="container mt-4">
             <div className="d-flex justify-content-end mb-3">
-          <Link to="/pages/add" className="btn btn-primary me-2">+New</Link>
-          <button className="btn btn-primary me-2" onClick={handleEditClick} disabled={!selectedPageId}>Edit</button>
-          <button className="btn btn-danger me-2" onClick={handleDeleteNavigation} disabled={!selectedPageId}>Delete</button>
+          <Link to="/pages/add" className="btn btn-light me-2"><i className="me-1 bi bi-plus-lg"></i> New</Link>
+          {/* <button className="btn btn-primary me-2" onClick={handleEditClick} disabled={!selectedPageId}>Edit</button> */}
+          <ActionButton label="Edit" iconClass="bi bi-plus-lg" variant="light" onClick={handleEditClick} />
+          {/* <button className="btn btn-danger me-2" onClick={handleDeleteNavigation} disabled={!selectedPageId}>Delete</button> */}
+          <ActionButton label="Delete" iconClass="bi bi-plus-lg" variant="light" onClick={handleDeleteNavigation}  />
            </div>
                   <table className="table table-striped">
                     <thead>
