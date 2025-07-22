@@ -1,7 +1,8 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import Footer from "../components/Footer";import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from "../components/Footer";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -23,18 +24,11 @@ const MainLayout = ({ title, children }) => {
             {title && <h1 className="page-title">{title}</h1>}
             {children}
           </main>
-const MainLayout = ({ children })=>{
-    return(
-    <div className="layout container">
-      <Navbar />
-      <div className="row">
-        <div className="col-md-4">
-          <Sidebar />
-        </div>
-        <div className="col-md-8">
-          {children}
         </div>
         </div>
+        <footer className="footer">
+      <div>Copyright 2017, All Rights Reserved</div>
+    </footer>
       </div>
     )
 }

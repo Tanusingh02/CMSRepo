@@ -1,13 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 import handleLogout from '../features/auth/components/LoginForm';
-
-
+ 
   const Navbar = ({ customBrand }) => {
     const brandName = customBrand || "DCX CMS";
-
-    const [activeLink, setActiveLink] = useState(null);
-
+  const [activeLink, setActiveLink] = useState(null);
+ 
   const navLinkStyle = (label) => ({
     color: 'white',
     marginRight: '8px',
@@ -17,32 +15,16 @@ import handleLogout from '../features/auth/components/LoginForm';
     textDecoration: 'none',
     cursor: 'pointer'
   });
-
+ 
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(31,135,194,255)', padding: '10px', width: '100%' }}>
       <a className="navbar-brand text-white" href="#">DCX CMS</a>
-
+ 
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
-
-    <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-      {/* Left Nav Links */}
-      <ul className="navbar-nav">
-        <li className="nav-item active">
-          <a className="nav-link text-white" href="#">Dashboard</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link text-white" href="/pages">Pages</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link text-white" href="#">Categories</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link text-white" href="#">Users</a>
-        </li>
-      </ul>
+ 
       <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
         {/* Left Nav Links + Search */}
         <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
@@ -51,7 +33,7 @@ import handleLogout from '../features/auth/components/LoginForm';
               <li className="nav-item" key={label}>
                 <a
                   className="nav-link"
-                  href="#"
+                  href="/"
                   style={navLinkStyle(label)}
                   onClick={() => setActiveLink(label)}
                 >
@@ -60,7 +42,7 @@ import handleLogout from '../features/auth/components/LoginForm';
               </li>
             ))}
           </ul>
-
+ 
           {/* Search */}
           <form className="form-inline d-flex align-items-center mt-2 mt-lg-0 ml-lg-3">
             <input
@@ -79,7 +61,7 @@ import handleLogout from '../features/auth/components/LoginForm';
             </button>
           </form>
         </div>
-
+ 
         {/* Right Account Section */}
         <ul className="navbar-nav d-flex flex-row align-items-center mt-2 mt-lg-0">
           <li className="nav-item dropdown">
@@ -101,5 +83,6 @@ import handleLogout from '../features/auth/components/LoginForm';
     </nav>
   );
 };
-
+ 
 export default Navbar;
+ 
