@@ -10,6 +10,9 @@ exports.createCategory = async(req, res) => {
 
         res.status(201).json(category);
     } catch(err){
+        if(err.code === 11000){
+            return res.status(400).json({error:"Category title must be unique"});
+        }
         res.status(500).json({error: err.message});
     }
 };
