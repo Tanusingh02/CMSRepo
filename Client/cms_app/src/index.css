@@ -5,11 +5,15 @@ body {
 }
 .dashboard-header{
   color: #3d85b1;
+  
+}
+.dashboard-title{
+  margin-top: 3.5rem;
 }
 
+
 footer{
-  margin-top: 5px;
-  
+  margin-top: 5px; 
   color:white ;
   text-align:center ;
   background-color: rgba(31,135,194,255);

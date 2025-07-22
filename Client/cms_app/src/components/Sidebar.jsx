@@ -10,7 +10,7 @@ const Sidebar = () => {
     { name: 'Dashboard', key: '/', icon: '📊' },
     { name: 'Pages', key: '/pages', icon: '📄' },
     { name: 'Categories', key: '/categories', icon: '🗂️' },
-    { name: 'User Accounts', key: '/users', icon: '👥' }
+    { name: 'User Accounts', key: '/useraccount', icon: '👥' }
   ];
 
   const getClassNames = (itemKey) =>

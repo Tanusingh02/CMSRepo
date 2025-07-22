@@ -2,8 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 import handleLogout from '../features/auth/components/LoginForm';
 
-const Navbar = () => {
-  const [activeLink, setActiveLink] = useState(null);
+
   const Navbar = ({ customBrand }) => {
     const brandName = customBrand || "DCX CMS";
 
@@ -18,12 +17,6 @@ const Navbar = () => {
     textDecoration: 'none',
     cursor: 'pointer'
   });
-
-    return (
-      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#3aa8e8', padding: '10px'  , width: '100%' }}>
-        <a className="navbar-brand text-white" href="#">
-        {brandName}
-      </a>
 
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(31,135,194,255)', padding: '10px', width: '100%' }}>

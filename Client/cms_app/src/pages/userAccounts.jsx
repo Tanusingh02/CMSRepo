@@ -6,6 +6,7 @@ import AddUser from "../components/Login-Signup/Adduser";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import EditUserForm from "../components/EditUserForm";
+import MainLayout from '../layouts/Mainlayout'
 
 function UserPage(){
   const [users,setUsers]=useState([]);
@@ -97,22 +98,21 @@ const handleUserUpdated = () => {
 };
 
 return(
-     <div className="w-100">
-         <Navbar customBrand="Alpha CMS" />
+   
 
-    <div className="d-flex">
-        <Sidebar/>
-       
-    <div className="container-fluid mt-4">
-        <h2 className="mb-0">
-            <i className="bi bi-people-fill me-2"></i>Users
-        </h2>
-        <div className="d-flex justify-content-end gap-2  mb-3  ">
-            
-            <ActionButton label="New" iconClass="bi bi-plus-lg" variant="secondary" onClick={handleNew}  />
+    // <div className="d-flex">
+    //     <Sidebar/>
+       <MainLayout>   
+        <div className="d-flex justify-content-end mt-3 ">
+            <ActionButton className="" label="New" iconClass="bi bi-plus-lg" variant="secondary" onClick={handleNew}  />
             <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="secondary" onClick={handleEdit} disabled={!selectedUserId}/>
             <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="secondary" onClick={handleDelete}/>
         </div>
+    <div className="container-fluid ">
+        <h1 className="mb-0 dashboard-header">
+            <i className="bi bi-people-fill me-2"></i>Users
+        </h1>
+        <hr/>
          <div className="mb-3">
   <div
     className="px-3 py-2 border rounded"
@@ -197,8 +197,10 @@ return(
          </table>
       
     </div>
-    </div>
-    </div>
+    
+    </MainLayout>
+    
+    // </div>
 );
 
 };

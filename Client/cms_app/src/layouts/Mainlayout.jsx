@@ -7,9 +7,8 @@ const MainLayout = ({ title, children }) => {
   return (
     <div className="layout">
       <header>
-        <Navbar />
+        <Navbar/>
       </header>
-
       <div className="container-fluid">
         <div className="row flex-column flex-md-row">
           {/* Sidebar: full width on small screens, 4 columns on md+ */}
