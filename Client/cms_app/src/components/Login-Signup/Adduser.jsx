@@ -1,83 +1,77 @@
 import { useState } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function AddUser() {
-    const [fullname, setFullname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    const [doj, setDoj] = useState();
-    const [location, setLocation] = useState('');
-    const [age, setAge] = useState();
-    const [course, setCourse] = useState('');
-    const [ageError, setAgeError] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        //Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            setEmailError('Inavlid email format');
-            return;
-        } else {
-            setEmailError('');
-        }
-
-        //Password validation
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!passwordRegex.test(password)) {
-            setPasswordError('Emter a valid passowrd');
-            return;
-        } else {
-            setPasswordError('');
-        }
-
-        //Age validation
-        if (parseInt(age) < 22)
-            setAgeError('Age cannot be less than 22');
-        return;
-    }
-    // const data={
-    //  fullname:fullname,
-    //  email:email,
-    //  password:password,
-    //  role:role,
-    //  doj:doj,
-    //  location:location,
-    //  age:age,
-    //  course:course
-
-const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        setEmailError('Inavlid email format');
-        return;
-    } else {
-        setEmailError('');
-    }
-}
-
-const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-        setPasswordError('Enter a valid password ');
-        return;
-    } else {
-        setPasswordError('');
-    }
-}
+function AddUser({ onUserAdded })
+{
+   const[fullname,setFullname]=useState('');
+   const[email,setEmail]=useState('');
+   const[password,setPassword]=useState('');
+   const[role,setRole]=useState('');
+   const[doj,setDoj]=useState();
+   const[location,setLocation]=useState('');
+   const[age,setAge]=useState();
+   const[course,setCourse]=useState('');
+   const [ageError, setAgeError] = useState('');
 
 
+   /*const handleSubmit=(e)=>{
+    e.preventDefault();
+    if(parseInt(age)<22)
+        setAgeError('Age cannot be less than 22');
+      return;
+    }*/
+   const handleSubmit = (e) => {
+  e.preventDefault();
 
+  if (parseInt(age) < 22) {
+    setAgeError("Age cannot be less than 22");
+    return;
+  }
 
-const handleAgeChange = (e) => {
+  const data = {
+    fullname,
+    email,
+    password,
+    role,
+    doj,
+    location,
+    age,
+    course,
+  };
+
+  axios.post("http://localhost:8080/user/signup", data)
+    .then((res) => {
+      console.log("User added:", res.data.message);
+
+      // Notify parent to refresh user list
+      if (onUserAdded) onUserAdded();
+
+      // Optionally clear the form
+      setFullname("");
+      setEmail("");
+      setPassword("");
+      setRole("");
+      setDoj("");
+      setLocation("");
+      setAge("");
+      setCourse("");
+      setAgeError("");
+    })
+    .catch((error) => {
+      console.error("Error adding user:", error);
+    });
+};
+   /* const data={
+     fullname:fullname,
+     email:email,
+     password:password,
+     role:role,
+     doj:doj,
+     location:location,
+     age:age,
+     course:course
+    }*/
+   const handleAgeChange = (e) => {
     const value = e.target.value;
     setAge(value);
     if (parseInt(value) < 22) {

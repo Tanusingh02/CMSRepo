@@ -11,9 +11,8 @@ function LoginForm({ onLogin }) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         navigate('/login');
-    };
-
-    const handleSubmit = (e) => {
+    }
+    const handleSubmit = (e) =>{
         e.preventDefault();
         onLogin({ email, password });
     };
