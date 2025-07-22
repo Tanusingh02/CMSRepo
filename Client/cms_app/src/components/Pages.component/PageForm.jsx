@@ -15,6 +15,24 @@ const AddPageForm = () => {
      totalPages: 0,
      currentPage: 1
   });
+  const [authorData,setAuthorData]=useState(
+    {
+      fullname:'',
+      email:'',
+      password:'',
+      role:'',
+      doj:'',
+      location:'',
+      age:'',
+      course:''
+    }
+  )
+  // Check if all fields are filled
+    const isFormValid =
+    page_title.trim() !== '' &&
+    category.trim() !== '' &&
+    content.trim() !== '' &&
+    author.trim() !== '';
 
    useEffect(() => {
     fetch('http://localhost:8080/categories/', {
@@ -67,7 +85,6 @@ const AddPageForm = () => {
         console.error('Error inserting data:', error);
         alert('Error inserting data');
       });
-
   };
     return(
         <div>
@@ -78,14 +95,14 @@ const AddPageForm = () => {
             <form onSubmit={add_pages}>
                 <div className="mb-3">
                 <label>Page Title</label>
-                <input type="text"  value={page_title} onChange={(e)=>setPageTitle(e.target.value)} className="form-control" ></input>
+                <input type="text"  value={page_title} onChange={(e)=>setPageTitle(e.target.value)} className="form-control"></input>
                 </div>
             <div className="mb-3">
                 <label>Category</label>
                 <select
                   className="form-control"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}>
+                  onChange={(e) => setCategory(e.target.value)} >
                   <option value="">Select a category</option>
                   {categoryData.categories.map((cat) => (
                     <option key={cat.type} value={cat.type}>
@@ -97,15 +114,28 @@ const AddPageForm = () => {
 
             <div className="mb-3">
                 <label >Content</label>
-                <textarea  value={content} onChange={(e)=>setContent(e.target.value)} row={6} className="form-control" style={{ resize: "vertical" }}/>
+                <textarea value={content} onChange={(e)=>setContent(e.target.value)} row={6} className="form-control" style={{ resize: "vertical" }}/>
                 </div> 
             <div className="mb-3">
-                <label >Author</label>
-                <input type="text"  value={author} onChange={(e)=>setAuthor(e.target.value)} className="form-control" ></input>
+              <lable>Author</lable>
+              <select className="form-control" value={author} onChange={(e)=>setAuthor(e.target.value)}>
+                <option value="">Select a Category</option>
+                {authorData.fullname.map((user)=>
+                (
+                  <option key={user.fullname} value={user.fullname}>
+                    {user.fullname}
+                  </option>
+                ))}
+              </select>
+                {/* <label >Author</label>
+                <input type="text"  value={author} onChange={(e)=>setAuthor(e.target.value)} className="form-control"></input> */}
                 </div> 
-             <div className="text-center">
-                <button type="submit" className='btn btn-primary w-100 w-md-auto mt-2'>Add Page</button>
-                </div> 
+            <div className="text-center">
+                <button type="submit" className='btn btn-primary w-100 w-md-auto mt-2'disabled={!isFormValid}>Add Page</button>
+                {!isFormValid && (
+                  <small className="text-muted d-block mt-2">
+                    Please fill out all fields to enable submission.</small>)}
+              </div>
             </form>
         </div>
     </div>
