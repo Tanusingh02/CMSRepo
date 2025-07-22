@@ -1,9 +1,9 @@
 import { use, useEffect, useState } from "react"
 import {useNavigate} from "react-router-dom";
 import {Routes,Route,Link} from "react-router-dom";
-import PageForm from "../components/PageForm";
+import PageForm from "./PageForm";
 import EditPage from "../components/EditPage";
-import MainLayout from "../layouts/Mainlayout";
+import MainLayout from "../../layouts/Mainlayout";
 
 function ShowPages(){
     

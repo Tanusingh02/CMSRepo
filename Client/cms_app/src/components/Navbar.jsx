@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import handleLogout from '../features/auth/components/LoginForm';
-import Pages from '../components/ShowPages';
+import Pages from './Pages.component/ShowPages';
 
 const Navbar = () => (
   <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#3aa8e8', padding: '10px 20px', width: '100%', fontSize: '15px' }}>

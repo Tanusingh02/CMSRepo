@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MainLayout from "../layouts/Mainlayout";
+import MainLayout from "../../layouts/Mainlayout";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
