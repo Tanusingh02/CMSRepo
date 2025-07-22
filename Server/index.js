@@ -5,6 +5,7 @@ require('dotenv').config();
 const userRoute = require('./routes/user.route')
 const pagesRoute=require('./routes/pages.routes')
 
+const categoryRoute = require('./routes/category.routes');
 
 const app =express();
 app.use(cors());
@@ -13,6 +14,8 @@ app.use(express.urlencoded({extended:true}));
 
 //mongodb connection
 connectDb();
+app.use('/user',userRoute)
+app.use('/categories', categoryRoute)
 app.use(cors({
     origin : 'http://localhost:5173',
     credentials: true
