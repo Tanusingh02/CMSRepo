@@ -1,0 +1,167 @@
+
+.body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: white;
+  
+}
+.dashboard-header{
+  color: #3d85b1;
+  
+}
+.dashboard-title{
+  margin-top: 3.5rem;
+}
+
+
+footer{
+  margin-top: 10%;
+  color:white ;
+  text-align:center ;
+  background-color: rgba(31,135,194,255);
+  padding:20px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid #007bff;
+  color: #007bff;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.pagination li.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination li.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+
+/* Sidebar.css */
+
+.sidebar-container {
+  width: 350px;
+  margin-left: 40px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+}
+
+.sidebar-nav-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  color: grey;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-nav-item:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar-nav-item.active {
+  background-color: rgba(31,135,194,255);
+  color: white;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 100%;
+    margin-left: 0;
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    border-radius: 0;
+    padding: 10px;
+  }
+
+  .sidebar-nav-item {
+    width: 100%;
+    justify-content: center;
+    font-size: 16px;
+  }
+}
+
+.layout {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.view-button {
+  
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: lightgray;
+  
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.2rem;
+  }
+
+  .view-button {
+    width: 100%;
+    float: none;
+  }
+  /* Responsive Sidebar */
+  @media (max-width: 1064px) {
+    .sidebar-container {
+      width: 100%;
+      margin-left: 0;
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      border-radius: 0;
+      padding: 10px;
+    }
+
+    .sidebar-nav-item {
+      width: 100%;
+      justify-content: center;
+      font-size: 16px;
+    }
+  }
+}
