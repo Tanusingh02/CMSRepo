@@ -27,6 +27,22 @@ import handleLogout from '../features/auth/components/LoginForm';
         <span className="navbar-toggler-icon"></span>
       </button>
 
+    <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+      {/* Left Nav Links */}
+      <ul className="navbar-nav">
+        <li className="nav-item active">
+          <a className="nav-link text-white" href="#">Dashboard</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link text-white" href="/pages">Pages</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link text-white" href="#">Categories</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link text-white" href="#">Users</a>
+        </li>
+      </ul>
       <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
         {/* Left Nav Links + Search */}
         <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
