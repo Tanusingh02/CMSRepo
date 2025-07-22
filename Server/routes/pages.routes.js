@@ -4,7 +4,7 @@ var pagesController=require('../controllers/pages.controller');
 
 
 router.get('/getAll',pagesController.getAllPages);
-router.get('/getAll/:id',pagesController.getUserPage);
+router.get('/get/:id',pagesController.getUserPage);
 
 router.post('/addPage',pagesController.addPage);
 router.put('/editPage/:id',pagesController.editPage);

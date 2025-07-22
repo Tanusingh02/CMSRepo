@@ -23,7 +23,7 @@ exports.getAllPages=(req,res)=>
 exports.getUserPage=(req,res)=>
 {
     var id=req.params.id;
-    Pagemodel.find({_id:id}).then(
+    Pagemodel.findById(id).then(
         (result)=>res.send(result),
         (error)=>res.send(error)
     )
@@ -34,7 +34,7 @@ exports.editPage=(req,res)=>
     id:req.params.id,
     page_title:req.body.page_title,
     category:req.body.category,
-    content:req.body.category,
+    content:req.body.content,
     author:req.body.author
   }
   Pagemodel.findByIdAndUpdate(req.params.id,details)
@@ -44,7 +44,8 @@ exports.editPage=(req,res)=>
 }
 exports.deletePage=(req,res)=>
 {
-  Pagemodel.findByIdAndDelete(req.params.id)
+  const id=req.params.id;
+  Pagemodel.findByIdAndDelete(id)
   .then(
     (result)=>res.send({'message':'Deleted',data:result}),
     (error)=>res.send(error)

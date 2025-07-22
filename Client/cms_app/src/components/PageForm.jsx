@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import MainLayout from "../layouts/Mainlayout";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const AddPageForm = () => {
+  const navigate = useNavigate();
   const [page_title, setPageTitle] = useState('');
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
@@ -31,6 +36,7 @@ const AddPageForm = () => {
         if (result.message === 'Inserted') 
         {
           alert('Data inserted');
+          navigate('/pages');
         } 
       }).catch((error) => 
         {
@@ -40,8 +46,9 @@ const AddPageForm = () => {
   };
     return(
         <div>
-        <div className="d-flex justify-content-center align-items-start vh-100 bg-light" style={{width:"450px"}}>
-        <div className="p-4 rounded shadow bg-white" style={{width:"100%",maxWidth:"900px"}}>
+          <MainLayout>
+            <div className="d-flex justify-content-center align-items-start min-vh-100 bg-light">
+            <div className="p-3 p-md-4 rounded  bg-white w-100" style={{ maxWidth: "900px" }}>
              <h3 className='text-center mb-4 ' style={{color:" #1f87c2"}}>Add-Page</h3>
             <form onSubmit={add_pages}>
                 <div className="mb-3">
@@ -50,22 +57,23 @@ const AddPageForm = () => {
                 </div>
             <div className="mb-3">
                 <label >Category</label>
-                <input type="text"  value={category} onChange={(e)=>setCategory(e.target.value)} className="form-control" ></input>
+                <input type="text"  value={category} onChange={(e)=>setCategory(e.target.value)}  className="form-control" ></input>
                 </div>
             <div className="mb-3">
                 <label >Content</label>
-                <input type="text"  value={content} onChange={(e)=>setContent(e.target.value)} className="form-control" ></input>
+                <textarea  value={content} onChange={(e)=>setContent(e.target.value)} row={6} className="form-control" style={{ resize: "vertical" }}/>
                 </div> 
             <div className="mb-3">
                 <label >Author</label>
                 <input type="text"  value={author} onChange={(e)=>setAuthor(e.target.value)} className="form-control" ></input>
                 </div> 
              <div className="text-center">
-                <button type="submit" className='btn btn-primary mt-2'>Add Page</button>
+                <button type="submit" className='btn btn-primary w-100 w-md-auto mt-2'>Add Page</button>
                 </div> 
             </form>
         </div>
     </div>
+     </MainLayout>
     </div>
     )
 }
