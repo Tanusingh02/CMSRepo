@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 function AddUser({ onUserAdded })
 {
@@ -20,7 +21,8 @@ function AddUser({ onUserAdded })
         setAgeError('Age cannot be less than 22');
       return;
     }*/
-   const handleSubmit = (e) => {
+    const navigate = useNavigate();
+    const handleSubmit = (e) => {
   e.preventDefault();
 
   if (parseInt(age) < 22) {
@@ -43,8 +45,8 @@ function AddUser({ onUserAdded })
     .then((res) => {
       console.log("User added:", res.data.message);
 
-      // Notify parent to refresh user list
-      if (onUserAdded) onUserAdded();
+      // Redirect to user page
+      navigate('/useraccount');
 
       // Optionally clear the form
       setFullname("");
@@ -82,9 +84,9 @@ function AddUser({ onUserAdded })
   };
 
    return(
-    <div>
-        <div className="d-flex justify-content-center align-items-start vh-100 bg-light" style={{width:"450px"}}>
-        <div className="p-4 rounded shadow bg-white" style={{width:"100%",maxWidth:"900px"}}>
+    <div className="container my-4">
+        <div className="row justify-content-center" >
+        <div className="col-12 col-md-10 col-lg-8 bg-white p-4 rounded shadow">
              <h3 className='text-center mb-4 ' style={{color:" #1f87c2"}}>Add-User</h3>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">

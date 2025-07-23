@@ -26,7 +26,7 @@
       // </MainLayout>
       <MainLayout>
         <div className="dashboard-header mt-5">
-          <h1>📊 Dashboard</h1>
+          <h1> <i className="bi bi-speedometer2 me-2"></i>Dashboard</h1>
           <hr/>
           <h3>Latest Pages</h3>
         

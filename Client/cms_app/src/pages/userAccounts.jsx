@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ActionButton from "../components/ActionButton";
@@ -8,13 +9,13 @@ import Sidebar from "../components/Sidebar";
 import EditUserForm from "../components/EditUserForm";
 
 function UserPage(){
-  const [users,setUsers]=useState([]);
-const [showModal, setShowModal] = useState(false);
+const [users,setUsers]=useState([]);
+//const [showModal, setShowModal] = useState(false);
 const [editModalVisible, setEditModalVisible] = useState(false);
 const [selectedUser, setSelectedUser] = useState(null);
 //in order to track the selected id for edit aur delete
 const [selectedUserId, setSelectedUserId] = useState(null);
-
+  const navigate = useNavigate(); 
   useEffect(()=>{
    console.log("Token from localStorage:", localStorage.getItem("token"));
    axios.get("http://localhost:8080/user/latest-users", {
@@ -28,12 +29,8 @@ const [selectedUserId, setSelectedUserId] = useState(null);
   console.error("error fetching latest users:", error)
 );
   },[]);
-  useEffect(() => {
-  document.body.classList.toggle("modal-open", showModal);
-}, [showModal]);
-
  const handleNew = () => {
-  setShowModal(true);
+ navigate("/user/add");
 };
 
 const handleClose = () => {
@@ -109,9 +106,9 @@ return(
         </h2>
         <div className="d-flex justify-content-end gap-2  mb-3  ">
             
-            <ActionButton label="New" iconClass="bi bi-plus-lg" variant="secondary" onClick={handleNew}  />
-            <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="secondary" onClick={handleEdit} disabled={!selectedUserId}/>
-            <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="secondary" onClick={handleDelete}/>
+            <ActionButton label="New" iconClass="bi bi-plus-lg" variant="light" onClick={handleNew}  />
+            <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="light" onClick={handleEdit} disabled={!selectedUserId}/>
+            <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="light" onClick={handleDelete}/>
         </div>
          <div className="mb-3">
   <div
@@ -128,27 +125,6 @@ return(
     </strong>
   </div>
 </div>
-
-        {showModal && (
-  <div className="modal d-block" tabIndex="-1" role="dialog">
-    <div className="modal-dialog modal-lg" role="document">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">Add New User</h5>
-          <button
-            type="button"
-            className="btn-close"
-            onClick={handleClose}
-          ></button>
-        </div>
-        <div className="modal-body">
-          <AddUser onUserAdded={handleUserAdded} />
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
 {editModalVisible && selectedUser && (
   <div className="modal d-block" tabIndex="-1" role="dialog">
     <div className="modal-dialog modal-md" role="document">
@@ -170,7 +146,7 @@ return(
   <tr>
     <th>Select</th>
     <th>Full Name</th>
-    <th>Email</th>
+    <th >Email</th>
     <th>Group</th>
   </tr>
 </thead>

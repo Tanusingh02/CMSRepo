@@ -57,6 +57,8 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
     // Generate JWT token
+  
+
     const token = jwt.sign(
       {
         userId: user._id,
@@ -70,9 +72,11 @@ const loginUser = async (req, res) => {
        message: "Login successful" ,
        user:{
         fullname : user.fullname,
-        email:user.email
+        email:user.email,
+        
        }
       });
+      
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Login failed" });
@@ -95,9 +99,21 @@ const deleteUser =async(req,res)=>{
   await User.findByIdAndDelete(req.params.id);
   res.status(204).send();
 }
+const getUserById = async(req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
     signup,
     loginUser,
-    getLatestUsers,updateUser,deleteUser
+    getLatestUsers,updateUser,deleteUser,getUserById
 };
