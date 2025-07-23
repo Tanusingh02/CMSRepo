@@ -1,10 +1,11 @@
 const Pagemodel = require("../models/pages.model")
+const Categorymodel=require("../models/category.model")
 
 exports.addPage=(req,res)=>
 {
    const page=Pagemodel({
        page_title:req.body.page_title,
-       category:req.body.page_title,
+       category:req.body.category,
        content:req.body.content,
        author:req.body.author
    })
@@ -51,3 +52,23 @@ exports.deletePage=(req,res)=>
     (error)=>res.send(error)
   )
 }
+exports.checkCombination=(req,res)=>{
+   const category=req.body.category;
+   const author=req.body.author;
+   Pagemodel.findOne({
+     category: category,
+     author: author })
+   .then((result)=>{
+       if(result)
+       {
+         res.send({exists:true})
+       }
+       else{
+        res.send({exists:false})
+       }
+      }).catch((error)=>
+      {
+        res.status(500).send({error:'Error checking combination'})
+      })
+}
+  

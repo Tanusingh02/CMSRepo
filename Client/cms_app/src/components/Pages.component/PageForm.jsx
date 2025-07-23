@@ -15,18 +15,8 @@ const AddPageForm = () => {
      totalPages: 0,
      currentPage: 1
   });
-  const [authorData,setAuthorData]=useState(
-    {
-      fullname:'',
-      email:'',
-      password:'',
-      role:'',
-      doj:'',
-      location:'',
-      age:'',
-      course:''
-    }
-  )
+  const [authorData,setAuthorData]=useState([])
+  
   // Check if all fields are filled
     const isFormValid =
     page_title.trim() !== '' &&
@@ -52,6 +42,16 @@ const AddPageForm = () => {
         console.error('Error fetching categories:', error);
       });
   }, []);
+   useEffect(()=>{
+    fetch('http://localhost:8080/user/latest-users',{
+      headers:{
+        "Content-type":"application/json",
+        Authorization:localStorage.getItem("token")
+      }
+    }).then((res)=>res.json())
+    .then((response)=>setAuthorData(response))
+  .catch((error)=>console.error("error fetching latest users:", error))
+ },[])
 
   const add_pages = (e) => {
     e.preventDefault();
@@ -63,29 +63,52 @@ const AddPageForm = () => {
       author:author
     };
 
-    fetch('http://localhost:8080/pages/addPage', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((response) => 
-      {
-          return response.json();
+    fetch('http://localhost:8080/pages/check',
+          {
+            method:'POST',
+            headers:{
+              "Content-Type":"application/JSON"
+            },
+            body:JSON.stringify(data)
+          }).then((response)=>
+          {
+            return response.json();
+          }).then((result)=>
+          {
+            if(result.exists)
+            {
+              alert('This author-category combination already exists. Please choose a different one.')
+              return;
+            }
+        fetch('http://localhost:8080/pages/addPage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+          }).then((response) => 
+          {
+              return response.json();
 
-      }).then((result) => 
-        {
-        if (result.message === 'Inserted') 
-        {
-          alert('Data inserted');
-          navigate('/pages');
-        } 
-      }).catch((error) => 
-        {
-        console.error('Error inserting data:', error);
-        alert('Error inserting data');
-      });
-  };
+          }).then((result) => 
+            {
+            if (result.message === 'Inserted') 
+            {
+              console.log(result.data);
+              alert('Data inserted');
+              navigate('/pages');
+            } 
+          }).catch((error) => 
+            {
+            console.error('Error inserting data:', error);
+            alert('Error inserting data');
+          });
+          }).catch((error)=>
+          {
+            console.error("error checking data ",error);
+            alert('Error checking for duplicates');
+          })
+    };
     return(
         <div>
           <MainLayout>
@@ -117,12 +140,10 @@ const AddPageForm = () => {
                 <textarea value={content} onChange={(e)=>setContent(e.target.value)} row={6} className="form-control" style={{ resize: "vertical" }}/>
                 </div> 
             <div className="mb-3">
-              <lable>Author</lable>
-              <select className="form-control" value={author} onChange={(e)=>setAuthor(e.target.value)}>
-                <option value="">Select a Category</option>
-                {authorData.fullname.map((user)=>
-                (
-                  <option key={user.fullname} value={user.fullname}>
+              <select className="form-control" value={author} onChange={(e) => setAuthor(e.target.value)}>
+                <option value="">Select an Author</option>
+                {Array.isArray(authorData) && authorData.map((user) => (
+                  <option key={user.email} value={user.fullname}>
                     {user.fullname}
                   </option>
                 ))}

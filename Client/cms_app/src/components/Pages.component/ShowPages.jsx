@@ -41,32 +41,6 @@ function ShowPages() {
     }
     navigate(`/pages/edit/${selectedPageId}`);
   };
-  useEffect(() => {
-    fetch("http://localhost:8080/pages/getAll")
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        // console.log(result);
-        setPages(result);
-      })
-      .catch((error) => {
-        console.log("Error fetching ", error);
-        setError("Failed to fetch data");
-      });
-  }, []);
-
-  const handleCheckboxChange = (id) => {
-    setSelectedPageId(id === selectedPageId ? null : id);
-  };
-
-  const handleEditClick = () => {
-    if (!selectedPageId) {
-      alert("Please select a page to edit");
-      return;
-    }
-    navigate(`/pages/edit/${selectedPageId}`);
-  };
 
   const handleDeleteNavigation = () => {
     if (!selectedPageId) {
@@ -75,26 +49,8 @@ function ShowPages() {
     }
     navigate(`/pages/delete/${selectedPageId}`);
   };
-  const handleDeleteNavigation = () => {
-    if (!selectedPageId) {
-      alert("Please select a page to delete");
-      return;
-    }
-    navigate(`/pages/delete/${selectedPageId}`);
-  };
 
-  const handleSortClick = () => {
-    const newOrder = sortOrder === "asc" ? "desc" : "asc";
-    const sortedPages = [...pages].sort((a, b) => {
-      const titleA = a.page_title.toLowerCase();
-      const titleB = b.page_title.toLowerCase();
-      if (titleA < titleB) return newOrder === "asc" ? -1 : 1;
-      if (titleA > titleB) return newOrder === "asc" ? 1 : -1;
-      return 0;
-    });
-    setPages(sortedPages);
-    setSortOrder(newOrder);
-  };
+
   const handleSortClick = () => {
     const newOrder = sortOrder === "asc" ? "desc" : "asc";
     const sortedPages = [...pages].sort((a, b) => {
@@ -154,7 +110,7 @@ function ShowPages() {
             <thead>
               <tr>
                 <th scope="col">
-                  <input type="checkbox"></input>
+                  
                 </th>
                 <th scope="col">
                   Page Title{" "}

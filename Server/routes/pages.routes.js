@@ -10,4 +10,8 @@ router.post('/addPage',pagesController.addPage);
 router.put('/editPage/:id',pagesController.editPage);
 router.delete('/deletePage/:id',pagesController.deletePage)
 
+router.post('/check',pagesController.checkCombination);
+
 module.exports=router;
+
+
