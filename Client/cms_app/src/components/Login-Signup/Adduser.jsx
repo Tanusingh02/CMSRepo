@@ -12,6 +12,10 @@ function AddUser({ onUserAdded })
    const[age,setAge]=useState();
    const[course,setCourse]=useState('');
    const [ageError, setAgeError] = useState('');
+   // eslint-disable-next-line no-unused-vars
+   const[emailError,setEmailError]=useState('');
+   // eslint-disable-next-line no-unused-vars
+   const[passwordError,setPasswordError]=useState('');
 
 
    /*const handleSubmit=(e)=>{
@@ -93,7 +97,7 @@ return (
                     </div>
                     <div className="mb-3">
                         <label >Email</label>
-                        <input type="email" value={email} className="form-control" onChange={handleEmailChange}></input>
+                        <input type="email" value={email} className="form-control" ></input>
                         {emailError && (
                             <div className='text-danger' style={{ fontSize: '0.9em' }}>
                                 {emailError}
@@ -103,7 +107,7 @@ return (
 
                     <div className="mb-3">
                         <label >Password</label>
-                        <input type="password" value={password} className="form-control" onChange={handlePasswordChange}></input>
+                        <input type="password" value={password} className="form-control" ></input>
                         {passwordError && (
                             <div className='text-danger' style={{ fontSize: '0.9em' }}>
                                 {passwordError}

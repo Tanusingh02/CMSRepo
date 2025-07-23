@@ -21,17 +21,17 @@ const Dashboard = () => {
     return a[userSortKey].localeCompare(b[userSortKey]);
   });
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/user/latest-users", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => setUsers(res.data))
-      .catch((error) => console.error("Error fetching latest users:", error));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8080/user/latest-users", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: localStorage.getItem("token"),
+  //       },
+  //     })
+  //     .then((res) => setUsers(res.data))
+  //     .catch((error) => console.error("Error fetching latest users:", error));
+  // }, []);
 
   return (
     <MainLayout>

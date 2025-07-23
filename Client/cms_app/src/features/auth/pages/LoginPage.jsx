@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import LoginForm from "../components/LoginForm";
 import login from "../authAPI";
 import { useNavigate } from "react-router-dom";
-
+ 
 const LoginPage = () => {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-
+ 
   const handleLogin = async (credentials) => {
     try {
       const {token,fullname} = await login(credentials);
       localStorage.setItem("token", token);
       localStorage.setItem("fullname", fullname);
-      
+     
       setMsg("Login successful!");
       navigate("/");
     } catch (error) {
@@ -27,5 +27,5 @@ const LoginPage = () => {
   </div>
   );
 };
-
+ 
 export default LoginPage;

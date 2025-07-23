@@ -1,38 +1,40 @@
 /* eslint-disable no-unused-vars */
-import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function DeleteCategory() {
-  const { id } = useParams(); // Get category ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!id) {
-      alert("No category selected");
-      return;
-    }
+    const confirmAndDelete = async () => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this category?");
+      // if (!confirmDelete) {
+      //   navigate("/categories");
+      //   return;
+      // }
 
-    fetch(`http://localhost:8080/categories/deleteCategory/${id}`, {
-      method: "DELETE"
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        navigate("/categories"); // Navigate back to category listing
-      })
-      .catch((error) => {
-        console.error("Delete failed", error);
-        alert("Error deleting category");
-      });
-  }, [id]);
+      try {
+        await axios.delete(`http://localhost:8080/categories/deleteCategory/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        });
+        alert("Category deleted successfully.");
+        navigate("/categories");
+      } catch (error) {
+        console.error("Failed to delete category:", error.message);
+        alert("Failed to delete category.");
+        navigate("/categories");
+      }
+    };
 
-  return (
-    
-      <div className="text-center mt-5">
-        <h4>Deleting category...</h4>
-      </div>
-    
-  );
+    confirmAndDelete();
+  }, [id, navigate]);
+
+  return null; // No UI needed
 }
 
 export default DeleteCategory;

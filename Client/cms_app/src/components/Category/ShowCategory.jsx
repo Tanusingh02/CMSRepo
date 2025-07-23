@@ -1,49 +1,52 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import MainLayout from "../../layouts/Mainlayout";
+import ActionButton from "../ActionButton";
+import CategoryForm from "../Category/CategoryForm";
+import { Link } from 'react-router-dom';
+import DeleteCategory from "./DeleteCategory";
 
 function ShowCategories() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [showModal, setShowModal] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
 
- useEffect(() => {
-console.log("token value",localStorage.getItem('token'))
-  axios.get("http://localhost:8080/categories/getAll", {
-    headers: {
-      "Content-Type":"application/json",
-      Authorization:localStorage.getItem('token'),
-
-    }
-  })
-    .then((res) =>{
-      console.log("Full API response",JSON.stringify(res,null,2))
-      const result=res.data;
-      console.log("API response data",result);
-      if(Array.isArray(result.categories)){
-        console.log('result.categories',result.categories)
-        setCategories(result.categories);
-      }else if(result && Array.isArray(result.data)){
-        setCategories(result.categories);
-      }
-      else{
-        console.log("unexpected response format",result);
-        setCategories([]);
-      }
-    } )
-    
-    .catch((error) => {
-      console.error("Error fetching categories:", error);
-      setError("Failed to fetch data");
-    });
-}, [categories]);
-
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/categories/getAll", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        const result = res.data;
+        if (Array.isArray(result.categories)) {
+          setCategories(result.categories);
+        } else {
+          console.log("Unexpected response format", result);
+          setCategories([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+        setError("Failed to fetch data");
+      });
+  }, []);
 
   const handleCheckboxChange = (id) => {
     setSelectedCategoryId(id === selectedCategoryId ? null : id);
+  };
+
+  const handleNew = () => {
+    setShowModal(true);
+    navigate("/categories/new");
   };
 
   const handleEditClick = () => {
@@ -77,19 +80,38 @@ console.log("token value",localStorage.getItem('token'))
 
   return (
     <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2>Category List</h2>
-        <div>
-          <Link to="/categories/add" className="btn btn-primary me-2">New</Link>
-          <button className="btn btn-primary me-2" onClick={handleEditClick} disabled={!selectedCategoryId}>Edit</button>
-          <button className="btn btn-danger" onClick={handleDeleteNavigation} disabled={!selectedCategoryId}>Delete</button>
-        </div>
+      <div className="d-flex justify-content-end mt-3" style={{marginTop:'60px'}}>
+        <ActionButton label="New" iconClass="bi bi-plus-lg" variant="secondary" onClick={handleNew} />
+        <ActionButton label="Edit" iconClass="bi bi-pencil" variant="secondary" onClick={handleEditClick} disabled={!selectedCategoryId} />
+        <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="secondary" onClick={handleDeleteNavigation} />
       </div>
+
+      <div>
+        <h1 className="mb-0 dashboard-header">
+          <span>🗂️</span>Categories
+        </h1>
+        <hr />
+        </div>
+        <div
+    className="px-3 py-2 border rounded"
+    style={{
+      width: "100%",
+      maxWidth: "100%",
+      backgroundColor: "#f0f0f0",
+    }}
+  >
+    <strong>
+      <Link to="/" className="text-decoration-none text-blue me-1">Dashboard</Link>
+      / Users
+    </strong>
+  </div>
+      
+      
 
       <table className="table table-striped">
         <thead>
           <tr>
-            <th><input type="checkbox" disabled /></th>
+            <th>Select</th>
             <th>
               Title
               <button className="btn btn-sm btn-light ms-1" onClick={handleSortClick}>
@@ -101,7 +123,7 @@ console.log("token value",localStorage.getItem('token'))
           </tr>
         </thead>
         <tbody>
-         {Array.isArray(categories) &&categories.length === 0 ? (
+          {Array.isArray(categories) && categories.length === 0 ? (
             <tr>
               <td colSpan="4" className="text-center">No categories found.</td>
             </tr>
@@ -123,6 +145,21 @@ console.log("token value",localStorage.getItem('token'))
           )}
         </tbody>
       </table>
+
+      {/* Modal for CategoryForm
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <CategoryForm
+              onClose={() => setShowModal(false)}
+              onSuccess={(newCategory) => {
+                setCategories([...categories, newCategory]);
+                setShowModal(false);
+              }}
+            />
+          </div>
+        </div>
+      )} */}
     </div>
   );
 }

@@ -3,18 +3,20 @@ const router = express.Router();
 const{
     createCategory,
     getCategories,
+    getCategoryById,
     updateCategory,
-    deleteCategories
+    deleteCategories,
+    
 }= require("../controllers/category.controller");
 
 const {verifyToken, verifyAdmin} = require("../middleware/auth");
 const { route } = require("./pages.routes");
 
 router.get("/getAll",getCategories);
-router.get("/get/:id",getCategories);
-router.post("/createCategory",verifyToken,verifyAdmin,createCategory);
+router.post("/",verifyToken,verifyAdmin,createCategory);
+router.get("/get/:id",verifyToken,verifyAdmin,getCategoryById);
 
 router.put("/editCategory/:id",verifyToken, verifyAdmin,updateCategory);
-router.delete("/deleteCtaegory/:id",verifyToken,verifyAdmin,deleteCategories);
+router.delete("/deleteCategory/:id",verifyToken,verifyAdmin,deleteCategories);
 
 module.exports = router;
