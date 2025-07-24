@@ -35,15 +35,10 @@ const AppRoutes = () =>{
             <Route path='/user/add' element={<MainLayout><AddUser/></MainLayout>}/>
             <Route path='/profile' element={ <PrivateRoute> <MainLayout><ProfilePage /></MainLayout> </PrivateRoute>}/>
             <Route path="/useraccount/:id" element={<MainLayout><AdminUserProfile /></MainLayout>} />
-<<<<<<< HEAD
-            <Route path="/categories" element={<MainLayout><ShowCategories></ShowCategories></MainLayout>}/>
-            {/* <Route path="/categories" element={<ShowCategories></ShowCategories>}/> */}
-=======
             <Route path="/categories" element={<ShowCategories></ShowCategories>}/>
->>>>>>> 3614f96732803ccf946828335ad5d8c6cf18ca4c
             <Route path="/categories/details/:id" element={<MainLayout><CategoryDetails /></MainLayout>} />
             <Route path="/categories/new" element={<MainLayout><CategoryForm /></MainLayout>} />
-            <Route path='/categories/edit/:id' element={<MainLayout><EditCategory/></MainLayout>}/>
+            <Route path='/categories/edit/:id' element={<EditCategory/>}/>
             <Route path='/categories/delete/:id' element={<DeleteCategory></DeleteCategory>}/>
             <Route path='/pages' element={<Pages/>} />
             <Route path='/pages/add' element={<PageForm/>} />

@@ -59,8 +59,8 @@ function CategoryForm() {
 
 
   return (
-    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-      <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "600px" }}>
+    <div className="d-flex   min-vh-100 bg-light">
+      <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "1000px",maxHeight:"900px" }}>
         <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
           Add New Category
         </h3>
@@ -115,7 +115,7 @@ function CategoryForm() {
           <div className="text-center mt-4">
             <div className="d-inline-flex gap-3">
               <button type="submit" className="btn btn-primary">
-                Save
+                Add Category
               </button>
               
             </div>

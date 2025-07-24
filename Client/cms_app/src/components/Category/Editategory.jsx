@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import MainLayout from "../../layouts/Mainlayout";
 
 function EditCategory() {
   const { id } = useParams();
@@ -74,8 +75,9 @@ function EditCategory() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-      <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "600px" }}>
+    <MainLayout>
+    <div className="d-flex  min-vh-100 bg-light">
+      <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "1000px",maxHeight:"1000px"}}>
         <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
           Edit Category
         </h3>
@@ -144,6 +146,7 @@ function EditCategory() {
         </form>
       </div>
     </div>
+    </MainLayout>
   );
 }
 

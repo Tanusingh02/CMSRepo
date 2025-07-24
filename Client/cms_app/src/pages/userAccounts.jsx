@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import { Link } from "react-router-dom";
@@ -35,6 +36,7 @@ const [showConfirmDelete, setShowConfirmDelete] = useState(false);
  navigate("/user/add");
 };
 
+// eslint-disable-next-line no-unused-vars
 const handleClose = () => {
   setShowModal(false);
 };
@@ -74,6 +76,7 @@ const confirmDelete = async () => {
 const cancelDelete = () => {
   setShowConfirmDelete(false);
 };
+    // eslint-disable-next-line no-unused-vars
     const handleUserAdded = () => {
   // Refetch users after adding one
   axios.get("http://localhost:8080/user/latest-users", {
@@ -101,7 +104,7 @@ const cancelDelete = () => {
 return(
   <MainLayout>
     <div className="container-fluid mt-4">
-    <div className="d-flex justify-content-end gap-2 ">
+    <div className="d-flex justify-content-end  ">
             <ActionButton label="New" iconClass="bi bi-plus-lg" variant="light" onClick={handleNew}  />
             <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="light" onClick={handleEdit} disabled={!selectedUserId} />
             <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="light" onClick={handleDelete} disabled={!selectedUserId}/>
