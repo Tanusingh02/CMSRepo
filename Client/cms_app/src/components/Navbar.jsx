@@ -14,7 +14,7 @@ const Navbar = ({ customBrand }) => {
 
   // Define nav items based on role
   const navItems = [
-    { label: 'Dashboard', path: '/' },
+    { label: 'Dashboard', path: '/dashboard' },
     { label: 'Pages', path: '/pages' },
   ];
 
@@ -43,7 +43,7 @@ const Navbar = ({ customBrand }) => {
   });
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(31,135,194,255)', padding: '10px', width: '100%' }}>
-      <a className="navbar-brand text-white" href="#">DCX CMS</a>
+      <a className="navbar-brand text-white" href="/dashboard">DCX CMS</a>
       <button
         className="navbar-toggler"
         type="button"
@@ -63,19 +63,6 @@ const Navbar = ({ customBrand }) => {
         {/* Left Nav Links + Search */}
         <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
           <ul className="navbar-nav d-flex flex-row flex-wrap">
-            {/* {navItems.map((item) => (
-              <li className="nav-item" key={item.label}>
-                <a
-                  className="nav-link"
-                  href="#"
-                  style={navLinkStyle(item.label)}
-                  onClick={() => {
-                    setActiveLink(item.label);
-                    navigate(item.path); // 👈 Navigate to page
-                  }}
-                >
-                  {item.label}
-                </a> */}
             {navItems.map(({ label, path }) => (
               <li className="nav-item" key={label}>
                 <Link to={path} className="nav-link" style={navLinkStyle(path)}>
@@ -135,7 +122,7 @@ const Navbar = ({ customBrand }) => {
           <li className="nav-item ml-3">
             <Link
               className="nav-link text-white"
-              to="/login"
+              to="/"
               onClick={handleLogout}
             >
               Logout

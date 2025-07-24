@@ -36,7 +36,7 @@ function LoginForm({ onLogin }) {
  
       setError('');
       onLogin(data.user);
-      navigate(from, { replace: true });
+      navigate("/dashboard", { replace: true });
     } catch (err) {
       setError(err.message);
     }
@@ -45,8 +45,9 @@ function LoginForm({ onLogin }) {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>DCX CMS</h2>
- 
+        
+        <h1>DCX CMS</h1>
+        <h2>Login</h2>
         <input
           type="email"
           className="form-control"

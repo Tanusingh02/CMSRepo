@@ -22,14 +22,14 @@ import Userpage from '../pages/userAccounts'
 const AppRoutes = () =>{
     return(
         <Routes>
-            <Route path='/login' element={<LoginPage/>}/>
-            <Route path='/' element={<PrivateRoute><Dashboard/></PrivateRoute>}></Route>
-            <Route path='/' element={<Dashboard/>}></Route>
+            <Route path='/' element={<LoginPage/>}/>
+            <Route path='/dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}></Route>
+            <Route path='/dashboard' element={<Dashboard/>}></Route>
             <Route path='/useraccount' element={<Userpage></Userpage>}></Route>
             <Route path='/user/add' element={<MainLayout><AddUser/></MainLayout>}/>
             <Route path='/profile' element={ <PrivateRoute> <MainLayout><ProfilePage /></MainLayout> </PrivateRoute>}/>
             <Route path="/useraccount/:id" element={<MainLayout><AdminUserProfile /></MainLayout>} />
-            <Route path="/categories" element={<MainLayout><ShowCategories></ShowCategories></MainLayout>}/>
+            <Route path="/categories" element={<ShowCategories></ShowCategories>}/>
             <Route path="/categories/details/:id" element={<MainLayout><CategoryDetails /></MainLayout>} />
             <Route path="/categories/new" element={<MainLayout><CategoryForm /></MainLayout>} />
             <Route path='/categories/edit/:id' element={<MainLayout><EditCategory/></MainLayout>}/>
