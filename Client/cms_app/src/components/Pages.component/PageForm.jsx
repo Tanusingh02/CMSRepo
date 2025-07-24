@@ -19,7 +19,8 @@ const AddPageForm = () => {
   });
   const [authorData, setAuthorData] = useState([]);
   const [duplicateData,setDuplicateData]=useState(false);
-  
+
+  const [showAlert, setShowAlert] = useState(false);
   // Check if all fields are filled
   const isFormValid =
     page_title.trim() !== "" &&
@@ -80,9 +81,6 @@ const AddPageForm = () => {
       })
       .then((result) => {
         if (result.exists) {
-          // alert(
-          //   "This author-category combination already exists. Please choose a different one."
-          // );
           setDuplicateData(true);
           return;
         }
@@ -97,10 +95,11 @@ const AddPageForm = () => {
             return response.json();
           })
           .then((result) => {
-            if (result.message === "Inserted") {
+            if (result.message === "Inserted") 
+              {
               console.log(result.data);
-              alert("Data inserted");
-              navigate("/pages");
+              setShowAlert(true);
+              setTimeout(() => navigate("/pages"), 2000);
             }
           })
           .catch((error) => {
@@ -122,6 +121,12 @@ const AddPageForm = () => {
             style={{ maxWidth: "900px" }}>
             <h3 className="text-center mb-4 " style={{ color: " #1f87c2" }}>
               Add-Page</h3>
+
+            {showAlert && (
+            <div className="alert alert-success" role="alert"><p>
+                 Data successfully Inserted!</p>
+            </div>)}
+
             <form onSubmit={add_pages}>
               <div className="mb-3">
                 <label>
@@ -153,7 +158,6 @@ const AddPageForm = () => {
                   ))}
                 </select>
                 <i className="bi bi-caret-down-fill"></i>
-                {duplicateData && (<small className="text-danger d-block mt-2">This author-category combination already exists</small>)}
               </div>
 
               <div className="mb-3">

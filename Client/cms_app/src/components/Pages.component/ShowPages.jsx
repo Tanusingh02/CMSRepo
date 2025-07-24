@@ -19,9 +19,14 @@ function ShowPages() {
   const [selectedPageId, setSelectedPageId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [pageSortKey, setPageSortKey] = useState(null);
+
+  //userRole
+   const userRole=localStorage.getItem('userRole');
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
   const usersPerPage = 3;
+
 
   const sortedPages = [...pages].sort((a, b) => {
     if (!pageSortKey) return 0;
@@ -101,21 +106,21 @@ function ShowPages() {
               <i className="me-1 bi bi-plus-lg"></i> New
             </Link>
             {/* <button className="btn btn-primary me-2" onClick={handleEditClick} disabled={!selectedPageId}>Edit</button> */}
-            <ActionButton
+            {userRole==="admin" &&(<ActionButton
               label="Edit"
               iconClass="bi bi-plus-lg"
               variant="light"
               onClick={handleEditClick}
               disabled={!selectedPageId}
-            />
+            />)}
             {/* <button className="btn btn-danger me-2" onClick={handleDeleteNavigation} disabled={!selectedPageId}>Delete</button> */}
-            <ActionButton
+            {userRole==="admin"&& (<ActionButton
               label="Delete"
               iconClass="bi bi-trash"
               variant="light"
               onClick={handleDeleteNavigation}
               disabled={!selectedPageId}
-            />
+            />)}
           </div>
           <div className="mb-3">
             <div
@@ -133,8 +138,7 @@ function ShowPages() {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col">
-                  
+                <th scope="col">Select
                 </th>
                 <th scope="col">
                   Page Title{" "}

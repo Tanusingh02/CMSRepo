@@ -108,8 +108,7 @@ const Dashboard = () => {
                   data-label="Page Title"
                   className="searchable"
                   dangerouslySetInnerHTML={{
-                    __html: `<a href="/pages/${
-                      page.id
+                    __html: `<a href="/page-details/${page._id
                     }" class="text-link">${highlight(page.page_title)}</a>`,
                   }}
                 />
