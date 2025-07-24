@@ -20,7 +20,7 @@ const Sidebar = () => {
 
   // Add User Accounts only if admin
   if (userRole === "admin") {
-    menuItems.push({ name: 'User Accounts', key: '/useraccount', icon: '👥' }, { name: 'Categories', key: '/categories', icon: '🗂️' });
+    menuItems.push( { name: 'Categories', key: '/categories', icon: '🗂️' },{ name: 'User Accounts', key: '/useraccount', icon: '👥' });
   }
 
   const getClassNames = (itemKey) =>

@@ -6,6 +6,7 @@ import ActionButton from "../components/ActionButton";
 import AddUser from "../components/Login-Signup/Adduser";
 import EditUserForm from "../components/EditUserForm";
 import  "../index.css";
+import MainLayout from "../layouts/Mainlayout";
 
 
 function UserPage(){
@@ -98,23 +99,19 @@ const cancelDelete = () => {
   };
 
 return(
-     <div className="w-100">
-         <Navbar customBrand="Alpha CMS" />
-
-    <div className="d-flex">
-        <Sidebar/>
-       
+  <MainLayout>
     <div className="container-fluid mt-4">
-        <h2 className="mb-0">
-            <i className="bi bi-people-fill me-2"></i>Users
-        </h2>
-        <div className="d-flex justify-content-end gap-2  mb-3  ">
-            
+    <div className="d-flex justify-content-end gap-2 ">
             <ActionButton label="New" iconClass="bi bi-plus-lg" variant="light" onClick={handleNew}  />
             <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="light" onClick={handleEdit} disabled={!selectedUserId} />
             <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="light" onClick={handleDelete} disabled={!selectedUserId}/>
         </div>
+        <h1 className="mb-0 title">
+            <i className="bi bi-people-fill me-2"></i>Users
+        </h1>
+       
          <div className="mb-3">
+          <hr/>
   <div
     className="px-3 py-2 border rounded"
     style={{
@@ -210,8 +207,7 @@ return(
          </table>
       
     </div>
-    </div>
-    </div>
+    </MainLayout>
 );
 
 };
