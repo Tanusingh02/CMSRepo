@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MainLayout from '../../layouts/Mainlayout';
 function AddUser({ onUserAdded ,users})
 {
    const[fullname,setFullname]=useState('');
@@ -127,10 +128,10 @@ const validateEmail = (email) => {
 };
 
    return(
-    
+    <MainLayout>
     <div className="container my-4">
         <div className="row justify-content-center" >
-        <div className="col-12 col-md-10 col-lg-8 bg-white p-4 rounded shadow">
+        <div className="col-12 col-md-10 col-lg-8 bg-white p-4 rounded">
              <h3 className='text-center mb-4 ' style={{color:" #1f87c2"}}>Add-User</h3>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -269,7 +270,8 @@ const validateEmail = (email) => {
         </div>
     </div>
     </div>
+     </MainLayout>
    )
-   
+  
 }
 export default AddUser;

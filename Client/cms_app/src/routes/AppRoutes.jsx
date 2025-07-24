@@ -32,13 +32,13 @@ const AppRoutes = () =>{
             <Route path='/dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}></Route>
             <Route path='/dashboard' element={<Dashboard/>}></Route>
             <Route path='/useraccount' element={<Userpage></Userpage>}></Route>
-            <Route path='/user/add' element={<MainLayout><AddUser/></MainLayout>}/>
+            <Route path='/user/add' element={<AddUser/>}/>
             <Route path='/profile' element={ <PrivateRoute> <MainLayout><ProfilePage /></MainLayout> </PrivateRoute>}/>
-            <Route path="/useraccount/:id" element={<MainLayout><AdminUserProfile /></MainLayout>} />
+            <Route path="/useraccount/:id" element={<AdminUserProfile />} />
             <Route path="/categories" element={<ShowCategories></ShowCategories>}/>
-            <Route path="/categories/details/:id" element={<MainLayout><CategoryDetails /></MainLayout>} />
-            <Route path="/categories/new" element={<MainLayout><CategoryForm /></MainLayout>} />
-            <Route path='/categories/edit/:id' element={<MainLayout><EditCategory/></MainLayout>}/>
+            <Route path="/categories/details/:id" element={<CategoryDetails />} />
+            <Route path="/categories/new" element={<CategoryForm />} />
+            <Route path='/categories/edit/:id' element={<EditCategory/>}/>
             <Route path='/categories/delete/:id' element={<DeleteCategory></DeleteCategory>}/>
             <Route path='/pages' element={<Pages/>} />
             <Route path='/pages/add' element={<PageForm/>} />

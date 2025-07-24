@@ -9,7 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import ReactPaginate from "react-paginate";
 import '../../components/Pagination.css';
 import '../../index.css';
-
+import '../../components/Pagination';
 
 
 function ShowPages() {

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import MainLayout from '../layouts/Mainlayout';
 
 const AdminUserProfile = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const AdminUserProfile = () => {
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
+    <MainLayout>
     <div style={{ padding: '20px', maxWidth: '500px', margin: '0 auto' }}>
       <h2>🔍 Admin View: User Profile</h2>
       <p><strong>Name:</strong> {user.fullname}</p>
@@ -29,6 +31,7 @@ const AdminUserProfile = () => {
       <p><strong>Location:</strong> {user.location}</p>
       <p><strong>Course:</strong> {user.course}</p>
     </div>
+    </MainLayout>
   );
 };
 

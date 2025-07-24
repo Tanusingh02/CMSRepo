@@ -192,12 +192,18 @@ return(
       <tr key={index}>
         <td>
           <input
-            type="checkbox"
-            checked={selectedUserId === user._id}
-            onChange={() => setSelectedUserId(user._id)}
-          />
+  type="checkbox"
+  checked={selectedUserId === user._id}
+  onChange={() => {
+    setSelectedUserId(prevId => (prevId === user._id ? null : user._id));
+  }}
+/>
         </td>
-        <td>{user.fullname}</td>
+        <td>
+  <Link to={`/useraccount/${user._id}`} className="text-link">
+    {user.fullname}
+  </Link>
+</td>
         <td>{user.email}</td>
         <td>{user.role}</td>
       </tr>
