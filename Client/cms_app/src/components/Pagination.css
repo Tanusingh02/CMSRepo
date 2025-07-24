@@ -16,7 +16,7 @@
       line-height: 1.43;
       font-size: 13px;
       min-width: 32px;
-  
+   
       &.dots:hover {
         background-color: transparent;
         cursor: default;

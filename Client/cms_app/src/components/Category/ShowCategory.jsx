@@ -87,6 +87,7 @@ const handleDeleteNavigation = () => {
   };
 
   return (
+    <MainLayout>
     <div className="container mt-4">
       <div className="d-flex justify-content-end mt-3">
         <ActionButton label="New" iconClass="bi bi-plus-lg" variant="light" onClick={handleNew} />
@@ -157,6 +158,7 @@ const handleDeleteNavigation = () => {
 </tbody>
 </table>
     </div>
+    </MainLayout>
   );
 }
 

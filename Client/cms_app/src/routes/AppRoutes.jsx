@@ -12,25 +12,35 @@ import AddUser from '../components/Login-Signup/Adduser';
 import ProfilePage from '../pages/ProfilePage';
 import PrivateRoute from './PrivateRoute';
 import AdminUserProfile from '../pages/AdminUserProfile';
-import Pages from '../components/Pages.component/ShowPages'
-import PageForm from '../components/Pages.component/PageForm'
-import EditPage from '../components/Pages.component/EditPage'
-import DeletePage from '../components/Pages.component/DeletePage'
+import Pages from '../pages/Pages/ShowPages'
+import PageForm from '../pages/Pages/PageForm'
+import EditPage from '../pages/Pages/EditPage'
+import DeletePage from '../pages/Pages/DeletePage'
+import Details from "../pages/Pages/PageDetails"
 import Userpage from '../pages/userAccounts'
+
+
+
+
+
 
 
 const AppRoutes = () =>{
     return(
         <Routes>
-            <Route path='/login' element={<LoginPage/>}/>
-            <Route path='/' element={<PrivateRoute><Dashboard/></PrivateRoute>}></Route>
-            <Route path='/' element={<Dashboard/>}></Route>
+            <Route path='/' element={<LoginPage/>}/>
+            <Route path='/dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}></Route>
+            <Route path='/dashboard' element={<Dashboard/>}></Route>
             <Route path='/useraccount' element={<Userpage></Userpage>}></Route>
             <Route path='/user/add' element={<MainLayout><AddUser/></MainLayout>}/>
             <Route path='/profile' element={ <PrivateRoute> <MainLayout><ProfilePage /></MainLayout> </PrivateRoute>}/>
             <Route path="/useraccount/:id" element={<MainLayout><AdminUserProfile /></MainLayout>} />
+<<<<<<< HEAD
             <Route path="/categories" element={<MainLayout><ShowCategories></ShowCategories></MainLayout>}/>
             {/* <Route path="/categories" element={<ShowCategories></ShowCategories>}/> */}
+=======
+            <Route path="/categories" element={<ShowCategories></ShowCategories>}/>
+>>>>>>> 3614f96732803ccf946828335ad5d8c6cf18ca4c
             <Route path="/categories/details/:id" element={<MainLayout><CategoryDetails /></MainLayout>} />
             <Route path="/categories/new" element={<MainLayout><CategoryForm /></MainLayout>} />
             <Route path='/categories/edit/:id' element={<MainLayout><EditCategory/></MainLayout>}/>
@@ -39,6 +49,8 @@ const AppRoutes = () =>{
             <Route path='/pages/add' element={<PageForm/>} />
             <Route path='/pages/edit/:id' element={<EditPage/>} />
             <Route path='/pages/delete/:id' element={<DeletePage/>}></Route>
+            <Route path='/useraccount' element={<Userpage/>}></Route>
+            <Route path="/page-details/:id" element={<Details />} />
         </Routes>
     )
 }

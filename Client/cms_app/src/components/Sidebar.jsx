@@ -13,7 +13,7 @@ const Sidebar = () => {
   }, [location]);
 
   const menuItems = [
-    { name: 'Dashboard', key: '/', icon: '📊' },
+    { name: 'Dashboard', key: '/dashboard', icon: '📊' },
     { name: 'Pages', key: '/pages', icon: '📄' },
    
   ];
