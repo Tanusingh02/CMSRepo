@@ -63,6 +63,7 @@ function EditCategory() {
         <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
           Edit Category
         </h3>
+
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <div className="mb-3">
@@ -115,10 +116,20 @@ function EditCategory() {
             />
           </div>
 
-          <div className="text-center">
-            <button type="submit" className="btn btn-primary mt-2">
-              Update
-            </button>
+          {/* Centered Buttons */}
+          <div className="text-center mt-4">
+            <div className="d-inline-flex gap-3">
+              <button type="submit" className="btn btn-primary">
+                Update
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => navigate("/categories")}
+              >
+                Back
+              </button>
+            </div>
           </div>
         </form>
       </div>

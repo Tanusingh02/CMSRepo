@@ -29,13 +29,17 @@ function CategoryForm() {
       navigate("/categories");
     } catch (error) {
       console.error("Error occurred:", error);
+      alert("Failed to create category");
     }
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
       <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "600px" }}>
-        <h2>Add New Category</h2>
+        <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
+          Add New Category
+        </h3>
+
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <div className="mb-3">
@@ -47,6 +51,8 @@ function CategoryForm() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              onInvalid={(e) => e.target.setCustomValidity("Please fill out the title")}
+              onInput={(e) => e.target.setCustomValidity("")}
             />
           </div>
 
@@ -60,6 +66,8 @@ function CategoryForm() {
               value={type}
               onChange={(e) => setType(e.target.value)}
               required
+              onInvalid={(e) => e.target.setCustomValidity("Please fill out the type")}
+              onInput={(e) => e.target.setCustomValidity("")}
             />
           </div>
 
@@ -73,12 +81,26 @@ function CategoryForm() {
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               required
+              onInvalid={(e) => e.target.setCustomValidity("Please fill out the description")}
+              onInput={(e) => e.target.setCustomValidity("")}
             />
           </div>
 
-          <button type="submit" className="btn btn-primary me-4">
-            Save
-          </button>
+          {/* Centered Buttons */}
+          <div className="text-center mt-4">
+            <div className="d-inline-flex gap-3">
+              <button type="submit" className="btn btn-primary">
+                Save
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => navigate("/categories")}
+              >
+                Back
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
