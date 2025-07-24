@@ -43,7 +43,6 @@ const Navbar = ({ customBrand }) => {
       <Link className="navbar-brand text-white" to="/">
         {brandName}
       </Link>
-
       <button
         className="navbar-toggler"
         type="button"
@@ -74,7 +73,7 @@ const Navbar = ({ customBrand }) => {
 
           {/* Search */}
           <form
-            className="d-flex"
+            className="d-flex gap-2"
             onSubmit={(e) => {
               e.preventDefault();
               const keyword = e.target.elements.search.value.trim();

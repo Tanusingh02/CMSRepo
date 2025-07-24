@@ -44,7 +44,7 @@ function CategoryForm() {
           {/* Title */}
           <div className="mb-3">
             <label className="form-label">
-              Title <span className="text-danger">*</span>
+             Title <span className="text-danger">*</span>
             </label>
             <input
               className="form-control"
