@@ -2,11 +2,11 @@ import React from 'react';
 import {Routes, Route, Router} from 'react-router-dom';
 import LoginPage from '../features/auth/pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
-import CategoryForm from '../components/Category/CategoryForm';
-import DeleteCategory from '../components/Category/DeleteCategory';
-import EditCategory from '../components/Category/Editategory';
-import ShowCategories from '../components/Category/ShowCategory';
-import CategoryDetails from "../components/Category/CategoryDetails";
+import CategoryForm from '../pages/Category/CategoryForm';
+import DeleteCategory from '../pages/Category/DeleteCategory';
+import EditCategory from '../pages/Category/Editategory';
+import ShowCategories from '../pages/Category/ShowCategory';
+import CategoryDetails from "../pages/Category/CategoryDetails";
 import MainLayout from '../layouts/Mainlayout';
 import AddUser from '../components/Login-Signup/Adduser';
 import ProfilePage from '../pages/ProfilePage';
@@ -18,11 +18,6 @@ import EditPage from '../pages/Pages/EditPage'
 import DeletePage from '../pages/Pages/DeletePage'
 import Details from "../pages/Pages/PageDetails"
 import Userpage from '../pages/userAccounts'
-
-
-
-
-
 
 
 const AppRoutes = () =>{
@@ -38,7 +33,7 @@ const AppRoutes = () =>{
             <Route path="/categories" element={<ShowCategories></ShowCategories>}/>
             <Route path="/categories/details/:id" element={<MainLayout><CategoryDetails /></MainLayout>} />
             <Route path="/categories/new" element={<MainLayout><CategoryForm /></MainLayout>} />
-            <Route path='/categories/edit/:id' element={<MainLayout><EditCategory/></MainLayout>}/>
+            <Route path='/categories/edit/:id' element={<EditCategory/>}/>
             <Route path='/categories/delete/:id' element={<DeleteCategory></DeleteCategory>}/>
             <Route path='/pages' element={<Pages/>} />
             <Route path='/pages/add' element={<PageForm/>} />

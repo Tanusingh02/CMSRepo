@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import MainLayout from "../../layouts/Mainlayout";
 
 function EditCategory() {
   const { id } = useParams();
@@ -11,6 +12,8 @@ function EditCategory() {
     type: "",
     desc: "",
   });
+
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     axios
@@ -35,10 +38,24 @@ function EditCategory() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" }); // Clear error on change
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.title.trim()) newErrors.title = "Title is required";
+    if (!formData.type.trim()) newErrors.type = "Type is required";
+    if (!formData.desc.trim()) newErrors.desc = "Description is required";
+    return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
     axios
       .put(`http://localhost:8080/categories/editCategory/${id}`, formData, {
@@ -58,8 +75,9 @@ function EditCategory() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-      <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "600px" }}>
+    <MainLayout>
+    <div className="d-flex  min-vh-100 bg-light">
+      <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "1000px",maxHeight:"1000px"}}>
         <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
           Edit Category
         </h3>
@@ -75,11 +93,11 @@ function EditCategory() {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="form-control"
-              required
-              onInvalid={(e) => e.target.setCustomValidity("Please fill out the title")}
-              onInput={(e) => e.target.setCustomValidity("")}
+              className={`form-control ${errors.title ? "is-invalid" : ""}`}
             />
+            {errors.title && (
+              <div className="text-danger mt-1">{errors.title}</div>
+            )}
           </div>
 
           {/* Type */}
@@ -92,11 +110,11 @@ function EditCategory() {
               name="type"
               value={formData.type}
               onChange={handleChange}
-              className="form-control"
-              required
-              onInvalid={(e) => e.target.setCustomValidity("Please fill out the type")}
-              onInput={(e) => e.target.setCustomValidity("")}
+              className={`form-control ${errors.type ? "is-invalid" : ""}`}
             />
+            {errors.type && (
+              <div className="text-danger mt-1">{errors.type}</div>
+            )}
           </div>
 
           {/* Description */}
@@ -109,31 +127,26 @@ function EditCategory() {
               name="desc"
               value={formData.desc}
               onChange={handleChange}
-              className="form-control"
-              required
-              onInvalid={(e) => e.target.setCustomValidity("Please fill out the description")}
-              onInput={(e) => e.target.setCustomValidity("")}
+              className={`form-control ${errors.desc ? "is-invalid" : ""}`}
             />
+            {errors.desc && (
+              <div className="text-danger mt-1">{errors.desc}</div>
+            )}
           </div>
 
-          {/* Centered Buttons */}
+          {/* Buttons */}
           <div className="text-center mt-4">
             <div className="d-inline-flex gap-3">
               <button type="submit" className="btn btn-primary">
                 Update
               </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => navigate("/categories")}
-              >
-                Back
-              </button>
+             
             </div>
           </div>
         </form>
       </div>
     </div>
+    </MainLayout>
   );
 }
 
