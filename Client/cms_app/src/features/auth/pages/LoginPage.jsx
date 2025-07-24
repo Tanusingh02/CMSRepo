@@ -8,7 +8,7 @@ const LoginPage = () => {
   
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-
+ 
   const handleLogin = async (credentials) => {
     try {
       const {token,fullname} = await login(credentials);
@@ -29,5 +29,5 @@ const LoginPage = () => {
   </div>
   );
 };
-
+ 
 export default LoginPage;

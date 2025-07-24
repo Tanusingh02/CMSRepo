@@ -1,7 +1,9 @@
-
 import React, { useState } from 'react';
+
+//import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import LoginFormStructure from './LoginFormStructure';
 import './LoginForm.css'; // External CSS file
 
 function LoginForm({ onLogin }) {
@@ -67,6 +69,7 @@ function LoginForm({ onLogin }) {
     </div>
   );
 }
+ 
 
 LoginForm.propTypes = {
   onLogin: PropTypes.func.isRequired,

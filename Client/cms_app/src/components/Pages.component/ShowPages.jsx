@@ -1,12 +1,13 @@
-import { use, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Routes, Route, Link } from "react-router-dom";
+import { useEffect, useState } from "react"
+import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import MainLayout from "../../layouts/Mainlayout";
 import ActionButton from "../ActionButton";
 
 function ShowPages() {
   const navigate = useNavigate();
   const [pages, setPages] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
   const [selectedPageId, setSelectedPageId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");

@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import MainLayout from "../../layouts/Mainlayout";
@@ -18,6 +17,7 @@ function DeletePage() {
     })
       .then((res) => {
         return res.json()})
+      // eslint-disable-next-line no-unused-vars
       .then((data) => {
         navigate("/pages"); // Navigate back to listing
       })
