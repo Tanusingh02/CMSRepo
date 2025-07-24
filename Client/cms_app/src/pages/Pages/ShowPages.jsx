@@ -1,14 +1,12 @@
 import { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
-import PageForm from "../Pages.component/PageForm";
-import EditPage from "../Pages.component/EditPage";
+import PageForm from "../Pages/PageForm";
+import EditPage from "../Pages/EditPage";
 import MainLayout from "../../layouts/Mainlayout";
-import ActionButton from "../ActionButton";
+import ActionButton from "../../components/ActionButton";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import ReactPaginate from "react-paginate";
-
-
 
 
 function ShowPages() {

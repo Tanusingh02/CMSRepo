@@ -12,12 +12,13 @@ import AddUser from '../components/Login-Signup/Adduser';
 import ProfilePage from '../pages/ProfilePage';
 import PrivateRoute from './PrivateRoute';
 import AdminUserProfile from '../pages/AdminUserProfile';
-import Pages from '../components/Pages.component/ShowPages'
-import PageForm from '../components/Pages.component/PageForm'
-import EditPage from '../components/Pages.component/EditPage'
-import DeletePage from '../components/Pages.component/DeletePage'
+import Pages from '../pages/Pages/ShowPages'
+import PageForm from '../pages/Pages/PageForm'
+import EditPage from '../pages/Pages/EditPage'
+import DeletePage from '../pages/Pages/DeletePage'
+import Details from "../pages/Pages/PageDetails"
 import Userpage from '../pages/userAccounts'
-import Details from "../components/Pages.component/PageDetails"
+
 
 
 
