@@ -13,7 +13,8 @@ function AddUser({ onUserAdded })
    const[age,setAge]=useState();
    const[course,setCourse]=useState('');
    const [ageError, setAgeError] = useState('');
-
+   const [emailError, setEmailError] = useState('');
+   const [showValidation, setShowValidation] = useState(false);
 
    /*const handleSubmit=(e)=>{
     e.preventDefault();
@@ -29,6 +30,16 @@ function AddUser({ onUserAdded })
     setAgeError("Age cannot be less than 22");
     return;
   }
+  if (!email) {
+  setEmailError('Email is required');
+  setShowValidation(true); // optional: if you track validation globally
+  return;
+} else if (!validateEmail(email)) {
+  setEmailError('Invalid email format');
+  setShowValidation(true);
+  return;
+}
+
 
   const data = {
     fullname,
@@ -62,6 +73,11 @@ function AddUser({ onUserAdded })
     .catch((error) => {
       console.error("Error adding user:", error);
     });
+}; 
+const validateEmail = (email) => {
+  // Basic pattern: user@domain.extension
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
 };
    /* const data={
      fullname:fullname,
@@ -74,14 +90,17 @@ function AddUser({ onUserAdded })
      course:course
     }*/
    const handleAgeChange = (e) => {
-    const value = e.target.value;
-    setAge(value);
-    if (parseInt(value) < 22) {
-      setAgeError('Age cannot be less than 22');
-    } else {
-      setAgeError('');
-    }
-  };
+  const value = e.target.value;
+  setAge(value);
+
+  if (!value) {
+    setAgeError("Age is required");
+  } else if (parseInt(value) < 22) {
+    setAgeError("Age cannot be less than 22");
+  } else {
+    setAgeError("");
+  }
+};
 
    return(
     <div className="container my-4">
@@ -90,38 +109,112 @@ function AddUser({ onUserAdded })
              <h3 className='text-center mb-4 ' style={{color:" #1f87c2"}}>Add-User</h3>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                <label>Full Name</label>
-                <input type="text"  value={fullname} onChange={(e)=>setFullname(e.target.value)} className="form-control" ></input>
+                <label>Full Name <span className="text-danger">*</span></label>
+ <input
+  type="text"
+  value={fullname}
+  onChange={(e) => setFullname(e.target.value)}
+  className={`form-control ${showValidation && !fullname ? 'is-invalid' : ''}`}
+/>
+{showValidation && !fullname && <div className="invalid-feedback">Full name is required.</div>}
                 </div>
             <div className="mb-3">
-                <label >Email</label>
-                <input type="email"  value={email} onChange={(e)=>setEmail(e.target.value)} className="form-control" ></input>
-                </div>
+  <label>Email <span className="text-danger">*</span></label>
+  <input
+    type="email"
+    value={email}
+    onChange={(e) => {
+      const value = e.target.value;
+      setEmail(value);
+
+      if (!value) {
+        setEmailError("Email is required");
+      } else if (!validateEmail(value)) {
+        setEmailError("Invalid email format");
+      } else {
+        setEmailError("");
+      }
+    }}
+    className={`form-control ${emailError ? 'is-invalid' : ''}`}
+  />
+  {emailError && <div className="invalid-feedback">{emailError}</div>}
+</div>
             <div className="mb-3">
-                <label >Password</label>
-                <input type="password"  value={password} onChange={(e)=>setPassword(e.target.value)} className="form-control" ></input>
+                <label >Password<span className="text-danger">*</span></label>
+               <input
+  type="text"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  className={`form-control ${showValidation && !password ? 'is-invalid' : ''}`}
+/>
+{showValidation && !password && <div className="invalid-feedback">Password is required.</div>}
+
                 </div> 
             <div className="mb-3">
-                <label >Role</label>
-                <input type="text"  value={role} onChange={(e)=>setRole(e.target.value)} className="form-control" ></input>
-                </div> 
+                <label >Role <span className="text-danger">*</span></label>
+<div className="mb-3">
+  <input
+    type="text"
+    value={role}
+    onChange={(e) => setRole(e.target.value)}
+    className={`form-control ${showValidation && !role ? 'is-invalid' : ''}`}
+  />
+  {showValidation && !role && <div className="invalid-feedback">Role is required.</div>}
+</div>                </div> 
             <div className="mb-3">
-                <label>DOJ</label>
-                <input type="date"  value={doj} onChange={(e)=>setDoj(e.target.value)} className="form-control" ></input>
+                <label>DOJ <span className="text-danger">*</span></label>
+                <div className="mb-3">
+  <input
+    type="date"
+    value={doj}
+    onChange={(e) => setDoj(e.target.value)}
+    min="2025-05-29"
+    className={`form-control ${showValidation && !doj ? 'is-invalid' : ''}`}
+  />
+  {showValidation && !doj && <div className="invalid-feedback">Date of joining is required.</div>}
+</div>
                 </div>  
             <div className="mb-3">
-                <label>Location</label>
-                <input type="text"  value={location} onChange={(e)=>setLocation(e.target.value)} className="form-control" ></input>
+                <label>Location <span className="text-danger">*</span></label>
+                <div className="mb-3">
+  <input
+    type="text"
+    value={location}
+    onChange={(e) => setLocation(e.target.value)}
+    className={`form-control ${showValidation && !location ? 'is-invalid' : ''}`}
+  />
+  {showValidation && !location && <div className="invalid-feedback">Location is required.</div>}
+</div>
                 </div>  
             <div className="mb-3">
-                <label >Age</label>
-                <input type="number"  value={age} onChange={handleAgeChange}
-                className={`form-control ${ageError ? 'is-invalid' : ''}`}/>
-              {ageError && <div className="invalid-feedback">{ageError}</div>}
-            </div> 
+  <label>Age <span className="text-danger">*</span></label>
+  <input
+    type="number"
+    value={age}
+    onChange={handleAgeChange}
+    className={`form-control ${
+      (showValidation && !age) || ageError ? 'is-invalid' : ''
+    }`}
+  />
+  {(showValidation && !age) && (
+    <div className="invalid-feedback">Age is required.</div>
+  )}
+  {ageError && (
+    <div className="invalid-feedback">{ageError}</div>
+  )}
+</div> 
             <div className="mb-3">
-                <label>Course</label>
-                <input type="text"  value={course} onChange={(e)=>setCourse(e.target.value)} className="form-control" ></input>
+                <label>Course <span className="text-danger">*</span></label>
+                <div className="mb-3">
+  
+  <input
+    type="text"
+    value={course}
+    onChange={(e) => setCourse(e.target.value)}
+    className={`form-control ${showValidation && !course ? 'is-invalid' : ''}`}
+  />
+  {showValidation && !course && <div className="invalid-feedback">Course is required.</div>}
+</div>
                 </div> 
             <div className="text-center">
                 <button type="submit" className='btn btn-primary mt-2'>Add User</button>

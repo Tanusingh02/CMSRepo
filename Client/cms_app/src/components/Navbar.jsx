@@ -1,10 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
-import handleLogout from '../features/auth/components/LoginForm';
+import { useNavigate } from 'react-router-dom';
 
-  const Navbar = ({ customBrand }) => {
-    const brandName = customBrand || "DCX CMS";
+const Navbar = ({ customBrand }) => {
+  const brandName = customBrand || "DCX CMS";
+  const navigate = useNavigate();
   const [activeLink, setActiveLink] = useState(null);
+
+  const userRole = localStorage.getItem("userRole"); // ✅ Get role from storage
+
+  // Define nav items based on role
+  const navItems = [
+    { label: 'Dashboard', path: '/' },
+    { label: 'Pages', path: '/pages' },
+  ];
+
+  // Add admin-only links
+  if (userRole === 'admin') {
+    navItems.push(
+      { label: 'Categories', path: '/categories' },
+      { label: 'Users', path: '/useraccount' }
+    );
+  }
 
   const navLinkStyle = (label) => ({
     color: 'white',
@@ -15,6 +32,13 @@ import handleLogout from '../features/auth/components/LoginForm';
     textDecoration: 'none',
     cursor: 'pointer'
   });
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("fullname");
+    localStorage.removeItem("userRole"); // 🚫 Remove role on logout
+    navigate('/login');
+  };
 
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(31,135,194,255)', padding: '10px', width: '100%' }}>
@@ -29,15 +53,18 @@ import handleLogout from '../features/auth/components/LoginForm';
         {/* Left Nav Links + Search */}
         <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
           <ul className="navbar-nav d-flex flex-row flex-wrap">
-            {['Dashboard', 'Pages', 'Categories', 'Users'].map((label) => (
-              <li className="nav-item" key={label}>
+            {navItems.map((item) => (
+              <li className="nav-item" key={item.label}>
                 <a
                   className="nav-link"
                   href="#"
-                  style={navLinkStyle(label)}
-                  onClick={() => setActiveLink(label)}
+                  style={navLinkStyle(item.label)}
+                  onClick={() => {
+                    setActiveLink(item.label);
+                    navigate(item.path); // 👈 Navigate to page
+                  }}
                 >
-                  {label}
+                  {item.label}
                 </a>
               </li>
             ))}
@@ -70,7 +97,9 @@ import handleLogout from '../features/auth/components/LoginForm';
               My Account
             </a>
             <div className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-              <a className="dropdown-item" href="#" >Profile</a>
+              <a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); navigate('/profile') }}>
+                Profile
+              </a>
             </div>
           </li>
           <li className="nav-item ml-3">

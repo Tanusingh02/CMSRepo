@@ -71,8 +71,11 @@ const loginUser = async (req, res) => {
        token, 
        message: "Login successful" ,
        user:{
+        _id: user._id,
         fullname : user.fullname,
         email:user.email,
+        //added this line today
+        role:user.role,
         
        }
       });

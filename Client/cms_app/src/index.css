@@ -7,6 +7,7 @@ body {
   color: #3d85b1;
 }
 
+
 footer{
   margin-top: 5px;
   
@@ -14,6 +15,16 @@ footer{
   text-align:center ;
   background-color: rgba(31,135,194,255);
   padding:10px;
+}
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* dark transparent background */
+  backdrop-filter: blur(6px); /* creates blur effect */
+  z-index: 1040;
 }
 
 /* Sidebar.css */
@@ -128,5 +139,6 @@ footer{
       justify-content: center;
       font-size: 16px;
     }
+   
   }
 }

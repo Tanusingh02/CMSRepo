@@ -66,7 +66,7 @@
             {users.map((user, index) => (
               <tr key={index}>
                 <td data-label="Name">
-                  <Link to={`/userAccounts/${user.id}`} className="text-link">
+                  <Link to={`/useraccount/${user._id}`} className="text-link">
                     {user.fullname}
                   </Link>
                 </td>

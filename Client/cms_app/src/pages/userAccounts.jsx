@@ -7,6 +7,8 @@ import AddUser from "../components/Login-Signup/Adduser";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import EditUserForm from "../components/EditUserForm";
+import  "../index.css";
+
 
 function UserPage(){
 const [users,setUsers]=useState([]);
@@ -15,6 +17,7 @@ const [editModalVisible, setEditModalVisible] = useState(false);
 const [selectedUser, setSelectedUser] = useState(null);
 //in order to track the selected id for edit aur delete
 const [selectedUserId, setSelectedUserId] = useState(null);
+const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const navigate = useNavigate(); 
   useEffect(()=>{
    console.log("Token from localStorage:", localStorage.getItem("token"));
@@ -41,34 +44,36 @@ const handleEdit = () => {
   if (user) {
     setSelectedUser(user);
     setEditModalVisible(true);
-  } else {
-    alert("Please select a user to edit.");
   }
 };
- const handleDelete = async () => {
-  if (!selectedUserId) {
-    alert("Please select a user to delete.");
-    return;
-  }
-
+  const handleDelete = () => {
+  
+  setShowConfirmDelete(true); // open modal
+};
+const confirmDelete = async () => {
   try {
     await axios.delete(`http://localhost:8080/user/${selectedUserId}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
     });
-    //  Refresh the user list
     const res = await axios.get("http://localhost:8080/user/latest-users", {
       headers: {
-        Authorization:localStorage.getItem("token"),
+        Authorization: localStorage.getItem("token"),
       },
     });
     setUsers(res.data);
-    setSelectedUserId(null); // clear selection
+    setSelectedUserId(null);
+    setShowConfirmDelete(false); // close modal
   } catch (error) {
     console.error("Error deleting user:", error);
     alert("Failed to delete the user.");
+    setShowConfirmDelete(false); // close modal anyway
   }
+};
+
+const cancelDelete = () => {
+  setShowConfirmDelete(false);
 };
     const handleUserAdded = () => {
   // Refetch users after adding one
@@ -107,8 +112,8 @@ return(
         <div className="d-flex justify-content-end gap-2  mb-3  ">
             
             <ActionButton label="New" iconClass="bi bi-plus-lg" variant="light" onClick={handleNew}  />
-            <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="light" onClick={handleEdit} disabled={!selectedUserId}/>
-            <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="light" onClick={handleDelete}/>
+            <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="light" onClick={handleEdit} disabled={!selectedUserId} />
+            <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="light" onClick={handleDelete} disabled={!selectedUserId}/>
         </div>
          <div className="mb-3">
   <div
@@ -140,8 +145,41 @@ return(
     </div>
   </div>
 )}
+{showConfirmDelete && (
+  <>
+    {/* Backdrop Overlay */}
+    <div className="custom-modal-backdrop"></div>
 
-         <table className="table table-striped">
+    {/* Modal */}
+    <div className="modal d-block" tabIndex="-1" role="dialog" style={{ zIndex: 1050 }}>
+      <div className="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Confirm Delete</h5>
+            <button type="button" className="btn-close" onClick={cancelDelete}></button>
+          </div>
+          <div className="modal-body">
+            <p>Are you sure you want to delete this user?</p>
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-danger btn-md"
+              style={{fontWeight: "bold" }}
+              onClick={confirmDelete}
+            >
+              Yes, Delete
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={cancelDelete}>
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </>
+)}
+       <table className="table table-striped">
             <thead>
   <tr>
     <th>Select</th>
@@ -178,4 +216,5 @@ return(
 );
 
 };
+
 export default UserPage;
