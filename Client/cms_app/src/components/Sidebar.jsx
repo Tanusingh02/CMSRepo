@@ -1,30 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../index.css';
- 
+
+
 const Sidebar = () => {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(location.pathname);
- 
+
+  useEffect(() => {
+    setActiveItem(location.pathname);
+  }, [location]);
+
   const menuItems = [
     { name: 'Dashboard', key: '/', icon: '📊' },
     { name: 'Pages', key: '/pages', icon: '📄' },
     { name: 'Categories', key: '/categories', icon: '🗂️' },
     { name: 'User Accounts', key: '/useraccount', icon: '👥' }
   ];
- 
+
   const getClassNames = (itemKey) =>
     `sidebar-nav-item ${activeItem === itemKey ? 'active' : ''}`;
- 
+
   return (
-    <div className='d-flex flex-column mt-3 sidebar-container'style={{float:"left"}}>
+    <div className='d-flex flex-column mt-3 sidebar-container' style={{ float: "left" }}>
       <ul className='nav nav-pills flex-column'>
         {menuItems.map((item) => (
           <li className='nav-item' key={item.key}>
             <Link
               to={item.key}
               className={getClassNames(item.key)}
-              onClick={() => setActiveItem(item.key)}
             >
               <span>{item.icon}</span>
               <span>{item.name}</span>
@@ -35,5 +39,5 @@ const Sidebar = () => {
     </div>
   );
 };
- 
+
 export default Sidebar;

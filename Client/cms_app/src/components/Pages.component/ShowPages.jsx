@@ -14,6 +14,7 @@ import ReactPaginate from "react-paginate";
 function ShowPages() {
   const navigate = useNavigate();
   const [pages, setPages] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
   const [selectedPageId, setSelectedPageId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
