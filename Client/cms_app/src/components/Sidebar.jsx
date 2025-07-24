@@ -6,6 +6,7 @@ import '../index.css';
 const Sidebar = () => {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(location.pathname);
+  const userRole = localStorage.getItem("userRole"); // ✅ Retrieve role
 
   useEffect(() => {
     setActiveItem(location.pathname);
@@ -14,9 +15,13 @@ const Sidebar = () => {
   const menuItems = [
     { name: 'Dashboard', key: '/', icon: '📊' },
     { name: 'Pages', key: '/pages', icon: '📄' },
-    { name: 'Categories', key: '/categories', icon: '🗂️' },
-    { name: 'User Accounts', key: '/useraccount', icon: '👥' }
+   
   ];
+
+  // Add User Accounts only if admin
+  if (userRole === "admin") {
+    menuItems.push({ name: 'User Accounts', key: '/useraccount', icon: '👥' }, { name: 'Categories', key: '/categories', icon: '🗂️' });
+  }
 
   const getClassNames = (itemKey) =>
     `sidebar-nav-item ${activeItem === itemKey ? 'active' : ''}`;

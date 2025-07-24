@@ -72,6 +72,17 @@ const sortedUsers = [...users].sort((a, b) => new Date(b.createdAt) - new Date(a
     setCurrentPage(selected);
   };
 
+    return (
+      // <MainLayout>
+
+      // </MainLayout>
+      <MainLayout>
+        <div className="dashboard-header mt-5">
+          <h1> <i className="bi bi-speedometer2 me-2"></i>Dashboard</h1>
+          <hr/>
+          <h3>Latest Pages</h3>
+        
+        
   return (
     <MainLayout>
       <div className="dashboard-header">
@@ -101,6 +112,33 @@ const sortedUsers = [...users].sort((a, b) => new Date(b.createdAt) - new Date(a
                 <td data-label="Author" className="searchable" dangerouslySetInnerHTML={{
                   __html: highlight(page.author)
                 }} />
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button className="view-button">View All Pages</button>
+        
+        <div className="mt-5">
+        <hr/>
+        <h3>Latest Users</h3>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Name </th>
+              <th scope="col">Email</th>
+              <th scope="col">Group</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={index}>
+                <td data-label="Name">
+                  <Link to={`/useraccount/${user._id}`} className="text-link">
+                    {user.fullname}
+                  </Link>
+                </td>
+                <td data-label="Email">{user.email}</td>
+                <td data-label="Group">{user.role}</td>
               </tr>
             ))}
           </tbody>

@@ -19,37 +19,18 @@ footer{
   color:white ;
   text-align:center ;
   background-color: rgba(31,135,194,255);
-  padding:20px;
+  padding:10px;
 }
-.pagination {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin-top: 1rem;
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* dark transparent background */
+  backdrop-filter: blur(6px); /* creates blur effect */
+  z-index: 1040;
 }
-
-.pagination li {
-  margin: 0 5px;
-  cursor: pointer;
-  padding: 6px 12px;
-  border: 1px solid #007bff;
-  color: #007bff;
-  border-radius: 4px;
-  user-select: none;
-}
-
-.pagination li.active {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-}
-
-.pagination li.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 
 /* Sidebar.css */
 
@@ -171,6 +152,7 @@ footer{
       justify-content: center;
       font-size: 16px;
     }
+   
   }
 }
 

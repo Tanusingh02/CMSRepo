@@ -9,6 +9,11 @@ import EditCategory from '../components/Category/Editategory';
 import ShowCategories from '../components/Category/ShowCategory';
 import CategoryDetails from "../components/Category/CategoryDetails";
 import MainLayout from '../layouts/Mainlayout';
+import UserPage from '../pages/userAccounts';
+import AddUser from '../components/Login-Signup/Adduser';
+import ProfilePage from '../pages/ProfilePage';
+import PrivateRoute from './PrivateRoute';
+import AdminUserProfile from '../pages/AdminUserProfile';
 
 import Pages from '../components/Pages.component/ShowPages'
 import PageForm from '../components/Pages.component/PageForm'
@@ -24,10 +29,15 @@ import Userpage from '../pages/userAccounts'
 const AppRoutes = () =>{
     return(
         <Routes>
+            <Route path='/login' element={<LoginPage/>}/>
+            <Route path='/' element={<PrivateRoute><Dashboard/></PrivateRoute>}></Route>
             <Route path='/login' element={<LoginPage></LoginPage>}/>
             
             <Route path='/' element={<Dashboard/>}></Route>
             <Route path='/useraccount' element={<UserPage></UserPage>}></Route>
+            <Route path='/user/add' element={<MainLayout><AddUser/></MainLayout>}/>
+            <Route path='/profile' element={ <PrivateRoute> <MainLayout><ProfilePage /></MainLayout> </PrivateRoute>}/>
+            <Route path="/useraccount/:id" element={<MainLayout><AdminUserProfile /></MainLayout>} />
 
             <Route path="/categories" element={<MainLayout><ShowCategories></ShowCategories></MainLayout>}/>
             <Route path="/categories/details/:id" element={<MainLayout><CategoryDetails /></MainLayout>} />
@@ -43,7 +53,6 @@ const AppRoutes = () =>{
             <Route path='/pages/delete/:id' element={<DeletePage/>}></Route>
             <Route path='/useraccount' element={<Userpage/>}></Route>
         </Routes>
-     
     )
 }
 export default AppRoutes;
