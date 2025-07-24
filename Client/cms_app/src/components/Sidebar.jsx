@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../index.css';
+
 
 const Sidebar = () => {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(location.pathname);
   const userRole = localStorage.getItem("userRole"); // ✅ Retrieve role
 
+  useEffect(() => {
+    setActiveItem(location.pathname);
+  }, [location]);
+
   const menuItems = [
-    { name: 'Dashboard', key: '/', icon: '📊' },
+    { name: 'Dashboard', key: '/dashboard', icon: '📊' },
     { name: 'Pages', key: '/pages', icon: '📄' },
    
   ];
 
   // Add User Accounts only if admin
   if (userRole === "admin") {
-    menuItems.push({ name: 'User Accounts', key: '/useraccount', icon: '👥' }, { name: 'Categories', key: '/categories', icon: '🗂️' });
+    menuItems.push( { name: 'Categories', key: '/categories', icon: '🗂️' },{ name: 'User Accounts', key: '/useraccount', icon: '👥' });
   }
 
   const getClassNames = (itemKey) =>
@@ -29,7 +34,6 @@ const Sidebar = () => {
             <Link
               to={item.key}
               className={getClassNames(item.key)}
-              onClick={() => setActiveItem(item.key)}
             >
               <span>{item.icon}</span>
               <span>{item.name}</span>

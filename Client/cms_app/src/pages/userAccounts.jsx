@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ActionButton from "../components/ActionButton";
 import AddUser from "../components/Login-Signup/Adduser";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
 import EditUserForm from "../components/EditUserForm";
 import  "../index.css";
+import MainLayout from "../layouts/Mainlayout";
 
 
 function UserPage(){
@@ -85,37 +84,34 @@ const cancelDelete = () => {
   .then((res) => setUsers(res.data))
   .catch((error) => console.error("error fetching latest users:", error));
 
-  setShowModal(false); // Close modal
-};
-const handleUserUpdated = () => {
-  setEditModalVisible(false);
-  axios.get("http://localhost:8080/user/latest-users", {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  })
-  .then((res) => setUsers(res.data))
-  .catch((error) => console.error("Error fetching updated users:", error));
-};
+    setShowModal(false); // Close modal
+  };
+  const handleUserUpdated = () => {
+    setEditModalVisible(false);
+    axios
+      .get("http://localhost:8080/user/latest-users", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => setUsers(res.data))
+      .catch((error) => console.error("Error fetching updated users:", error));
+  };
 
 return(
-     <div className="w-100">
-         <Navbar customBrand="Alpha CMS" />
-
-    <div className="d-flex">
-        <Sidebar/>
-       
+  <MainLayout>
     <div className="container-fluid mt-4">
-        <h2 className="mb-0">
-            <i className="bi bi-people-fill me-2"></i>Users
-        </h2>
-        <div className="d-flex justify-content-end gap-2  mb-3  ">
-            
+    <div className="d-flex justify-content-end gap-2 ">
             <ActionButton label="New" iconClass="bi bi-plus-lg" variant="light" onClick={handleNew}  />
             <ActionButton label="Edit"   iconClass="bi bi-pencil"  variant="light" onClick={handleEdit} disabled={!selectedUserId} />
             <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="light" onClick={handleDelete} disabled={!selectedUserId}/>
         </div>
+        <h1 className="mb-0 title">
+            <i className="bi bi-people-fill me-2"></i>Users
+        </h1>
+       
          <div className="mb-3">
+          <hr/>
   <div
     className="px-3 py-2 border rounded"
     style={{
@@ -125,7 +121,7 @@ return(
     }}
   >
     <strong>
-      <Link to="/" className="text-decoration-none text-blue me-1">Dashboard</Link>
+      <Link to="/dashboard" className="text-decoration-none text-blue me-1">Dashboard</Link>
       / Users
     </strong>
   </div>
@@ -211,8 +207,7 @@ return(
          </table>
       
     </div>
-    </div>
-    </div>
+    </MainLayout>
 );
 
 };

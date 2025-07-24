@@ -56,6 +56,14 @@ const loginUser = async (req, res) => {
     if (!await bcrypt.compare(password,user.password)) {
       return res.status(401).json({ message: "Invalid password" });
     }
+    
+  if (!password) {
+    return res.status(401).json({
+      success: false,
+      message: 'Password is incorrect',
+    });
+  }
+
     // Generate JWT token
   
 
