@@ -10,23 +10,23 @@ exports.addPage=(req,res)=>
        author:req.body.author
    })
    page.save().then(
-    (result)=>res.send({"message":"Inserted",data:result}),
-    (error)=>res.send(error)
+    (result)=>res.status(201).send({"message":"Inserted",data:result}),
+    (error)=>res.status(500).send(error)
    )
 }
 exports.getAllPages=(req,res)=>
 {
   Pagemodel.find().then(
-    (result)=>res.send(result),
-    (error)=>res.send(error)
+    (result)=>res.status(200).send(result),
+    (error)=>res.status(500).send(error)
   )
 }
 exports.getUserPage=(req,res)=>
 {
     var id=req.params.id;
     Pagemodel.findById(id).then(
-        (result)=>res.send(result),
-        (error)=>res.send(error)
+        (result)=>res.status(200).send(result),
+        (error)=>res.status(500).send(error)
     )
 }
 exports.editPage=(req,res)=>
@@ -40,16 +40,16 @@ exports.editPage=(req,res)=>
   }
   Pagemodel.findByIdAndUpdate(req.params.id,details)
   .then(
-    (result)=>res.send({'message':"Updated",data:result}),
-    (error)=>res.send(error))
+    (result)=>res.status(200).send({'message':"Updated",data:result}),
+    (error)=>res.status(500).send(error))
 }
 exports.deletePage=(req,res)=>
 {
   const id=req.params.id;
   Pagemodel.findByIdAndDelete(id)
   .then(
-    (result)=>res.send({'message':'Deleted',data:result}),
-    (error)=>res.send(error)
+    (result)=>res.status(200).send({'message':'Deleted',data:result}),
+    (error)=>res.status(500).send(error)
   )
 }
 exports.checkCombination=(req,res)=>{
@@ -61,10 +61,10 @@ exports.checkCombination=(req,res)=>{
    .then((result)=>{
        if(result)
        {
-         res.send({exists:true})
+         res.status(200).send({exists:true})
        }
        else{
-        res.send({exists:false})
+        res.status(200).send({exists:false})
        }
       }).catch((error)=>
       {

@@ -1,30 +1,33 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef ,useState} from "react";
+import { Modal, Button } from "react-bootstrap";
 import MainLayout from "../../layouts/Mainlayout";
 
 function DeletePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const hasRun = useRef(false); 
+  const [showModal,setShowModal]=useState( )
 
   useEffect(() => {
     if (hasRun.current) return;
     hasRun.current = true;
 
     if (!id) {
-      alert("No page selected");
-      navigate("/pages");
+      setTimeout(()=>{
+         navigate("/pages");
+      },1000);
       return;
     }
-
-    const confirmed = window.confirm("Are you sure you want to delete this page?");
-    if (!confirmed) {
-      navigate("/pages");
-      return;
-    }
-
-    fetch(`http://localhost:8080/pages/deletePage/${id}`, {
-      method: "DELETE"
+    setShowModal(true);
+  },[id,navigate]);
+const handleDelete=()=>{
+   fetch(`http://localhost:8080/pages/deletePage/${id}`, {
+      method: "DELETE",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:localStorage.getItem("token")
+      }
     })
       .then((res) => res.json())
       .then(() => {
@@ -35,13 +38,30 @@ function DeletePage() {
         alert("Error deleting page");
         navigate("/pages");
       });
-  }, [id, navigate]);
-
+}
+const handleCancel=()=>
+{
+  navigate("/pages")
+}
+ 
   return (
     <MainLayout>
-      <div className="text-center mt-5">
-        <h4>Deleting page...</h4>
-      </div>
+<Modal show={showModal} onHide={handleCancel} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this page?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+        </Modal>
     </MainLayout>
   );
 }

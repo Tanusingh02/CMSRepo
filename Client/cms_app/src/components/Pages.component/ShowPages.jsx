@@ -4,8 +4,11 @@ import { Routes, Route, Link } from "react-router-dom";
 import PageForm from "../Pages.component/PageForm";
 import EditPage from "../Pages.component/EditPage";
 import MainLayout from "../../layouts/Mainlayout";
-import ActionButton from "../buttoncomponent";
+import ActionButton from "../ActionButton";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import ReactPaginate from "react-paginate";
+
+
 
 
 function ShowPages() {
@@ -14,7 +17,27 @@ function ShowPages() {
   const [error, setError] = useState(null);
   const [selectedPageId, setSelectedPageId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [pageSortKey, setPageSortKey] = useState(null);
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(0);
+  const usersPerPage = 3;
 
+  const sortedPages = [...pages].sort((a, b) => {
+    if (!pageSortKey) return 0;
+    return a[pageSortKey].localeCompare(b[pageSortKey]);
+  });
+ 
+
+ // Paginated users
+  const offset = currentPage * usersPerPage;
+  const currentPages = sortedPages.slice(offset, offset + usersPerPage);
+  const pageCount = Math.ceil(sortedPages.length / usersPerPage);
+ 
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  
   useEffect(() => {
     fetch("http://localhost:8080/pages/getAll")
       .then((response) => {
@@ -125,7 +148,7 @@ function ShowPages() {
               </tr>
             </thead>
             <tbody>
-              {pages.map((page) => (
+              {currentPages.map((page,index) => (
                 <tr>
                   <td>
                     <input
@@ -134,7 +157,7 @@ function ShowPages() {
                       onChange={() => handleCheckboxChange(page._id)}
                     ></input>
                   </td>
-                  <td>{page.page_title}</td>
+                  <td><Link to={`/page-details/${page._id}`}>{page.page_title}</Link></td>
                   <td>{page.category}</td>
                   <td>{page.author}</td>
                 </tr>
@@ -142,6 +165,18 @@ function ShowPages() {
             </tbody>
           </table>
         </div>
+         {/* Pagination Component */}
+        <ReactPaginate
+          previousLabel={"<<"}
+          nextLabel={">>"}
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+        />
+        {/* Your existing content */}
       </MainLayout>
     </div>
   );

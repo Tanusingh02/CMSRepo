@@ -70,7 +70,8 @@ const loginUser = async (req, res) => {
        message: "Login successful" ,
        user:{
         fullname : user.fullname,
-        email:user.email
+        email:user.email,
+        role:user.role
        }
       });
   } catch (error) {
@@ -96,8 +97,16 @@ const deleteUser =async(req,res)=>{
   res.status(204).send();
 }
 
+// const getRole=async(req,res)=>
+// {
+//  const roleId=req.params.id;
+//  const role=recompileSchema.find(r=>)
+//  res.json({role:user.role});
+// }
+
 module.exports = {
     signup,
     loginUser,
-    getLatestUsers,updateUser,deleteUser
+    getLatestUsers,updateUser,deleteUser,
+    
 };

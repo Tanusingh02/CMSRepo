@@ -13,4 +13,6 @@ router.get('/latest-users', verifyToken,verifyAdmin,userController.getLatestUser
 router.put('/:id',verifyToken,verifyAdmin,userController.updateUser);
 // user information will be deleted can only be accessed by admin
 router.delete('/:id',verifyToken,verifyAdmin,userController.deleteUser);
+//
+// router.get('/getRole',verifyToken,userController.getRole);
 module.exports = router;
