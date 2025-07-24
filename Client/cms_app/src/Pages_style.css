@@ -1,0 +1,56 @@
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-wrapper select {
+  padding-right: 2rem;
+}
+
+.dropdown-wrapper .bi-caret-down-fill {
+  position: absolute;
+  right: 10px;
+  top: 55%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.not-edit {
+  background-color: #f8f9fa; /* light Bootstrap gray */
+  border-color: #ced4da;     /* soften the border */
+  color: #6c757d;            /* muted text color */
+  cursor: not-allowed;
+}
+
+.page-details-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.page-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.page-content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+}
