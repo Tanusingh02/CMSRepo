@@ -14,7 +14,8 @@ const { route } = require("./pages.routes");
 
 router.get("/getAll",getCategories);
 router.post("/",verifyToken,verifyAdmin,createCategory);
-router.get("/get/:id",verifyToken,verifyAdmin,getCategoryById);
+// router.get("/get/:id",verifyToken,verifyAdmin,getCategoryById);
+router.get("/get/:id",getCategoryById);
 
 router.put("/editCategory/:id",verifyToken, verifyAdmin,updateCategory);
 router.delete("/deleteCategory/:id",verifyToken,verifyAdmin,deleteCategories);

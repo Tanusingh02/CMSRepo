@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "../../layouts/Mainlayout";
@@ -16,24 +17,24 @@ const AddPageForm = () => {
      currentPage: 1
   });
 
-   useEffect(() => {
-    fetch('http://localhost:8080/categories/', {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then((response) => response.json())
-      .then((result) => {
-          setCategoryData({
-            categories: result.categories,
-            totalPages: result.totalPages || 0,
-            currentPage: result.currentPage || 1
-          });
-      }).catch((error) => {
-        console.error('Error fetching categories:', error);
-      });
-  }, []);
+  //  useEffect(() => {
+  //   fetch('http://localhost:8080/categories/', {
+  //     method: 'GET',
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //         setCategoryData({
+  //           categories: result.categories,
+  //           totalPages: result.totalPages || 0,
+  //           currentPage: result.currentPage || 1
+  //         });
+  //     }).catch((error) => {
+  //       console.error('Error fetching categories:', error);
+  //     });
+  // }, []);
 
   const add_pages = (e) => {
     e.preventDefault();

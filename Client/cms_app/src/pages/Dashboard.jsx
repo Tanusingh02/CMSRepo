@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import MainLayout from "../layouts/Mainlayout";
 import "../index.css";
 
 const Dashboard = () => {
   const [pages, setPages] = useState([]);
   const [users, setUsers] = useState([]);
-
   const [pageSortKey, setPageSortKey] = useState(null);
   const [userSortKey, setUserSortKey] = useState(null);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(0);
+  const usersPerPage = 3;
 
   const sortedPages = [...pages].sort((a, b) => {
     if (!pageSortKey) return 0;
@@ -21,22 +25,43 @@ const Dashboard = () => {
     return a[userSortKey].localeCompare(b[userSortKey]);
   });
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8080/user/latest-users", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: localStorage.getItem("token"),
-  //       },
-  //     })
-  //     .then((res) => setUsers(res.data))
-  //     .catch((error) => console.error("Error fetching latest users:", error));
-  // }, []);
+  // Paginated users
+  const offset = currentPage * usersPerPage;
+  const currentUsers = sortedUsers.slice(offset, offset + usersPerPage);
+  const currentPages = sortedPages.slice(offset, offset + usersPerPage);
+  const pageCount = Math.ceil(sortedUsers.length / usersPerPage);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/user/latest-users", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => setUsers(res.data))
+      .catch((error) => console.error("Error fetching latest users:", error));
+
+    axios
+      .get("http://localhost:8080/pages/getAll", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => setPages(res.data))
+      .catch((error) => console.error("Error fetching latest pages:", error));
+  }, []);
 
   return (
     <MainLayout>
       <div className="dashboard-header">
-        <h1 className="dashboard-title">📊 Dashboard</h1>
+        <h1 className="dashboard-title">
+          <i className="bi bi-speedometer2 me-2"></i>Dashboard
+        </h1>
         <hr />
         <h3>Latest Pages</h3>
 
@@ -55,18 +80,25 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {pages.map((page, index) => (
+            {currentPages.map((pages, index) => (
               <tr key={index}>
-                <td data-label="Page Title">{page.title}</td>
-                <td data-label="Category">{page.category}</td>
-                <td data-label="Author">{page.author}</td>
+                <td data-label="Page Title">
+                  <Link to={`/pages/${pages.id}`} className="text-link">
+                    {pages.page_title}
+                  </Link>
+                </td>
+                <td data-label="Email">{pages.category}</td>
+                <td data-label="Group">{pages.author}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <button className="view-button">View All Pages</button>
 
-        <div className="mt-5">
+        <Link to="/pages">
+          <button className="view-button mb-2">View All Pages</button>
+        </Link>
+
+        <div className="mt-3">
           <hr />
           <h3>Latest Users</h3>
           <table className="table table-striped">
@@ -83,8 +115,9 @@ const Dashboard = () => {
                 </th>
               </tr>
             </thead>
+
             <tbody>
-              {users.map((user, index) => (
+              {currentUsers.map((user, index) => (
                 <tr key={index}>
                   <td data-label="Name">
                     <Link to={`/userAccounts/${user.id}`} className="text-link">
@@ -98,8 +131,22 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
-        <button className="view-button mb-5">View All Users</button>
+
+        <Link to="/useraccount">
+          <button className="view-button mb-5">View All Users</button>
+        </Link>
       </div>
+      {/* Pagination Component */}
+      <ReactPaginate
+        previousLabel={"<<"}
+        nextLabel={">>"}
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        activeClassName={"active"}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+      />
     </MainLayout>
   );
 };

@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-//import MainLayout from "../layouts/Mainlayout";
+import MainLayout from '../../layouts/Mainlayout'
 
 function EditPage()
 {
@@ -15,6 +16,7 @@ function EditPage()
     const[loading,setLoading]=useState(true);
     // eslint-disable-next-line no-unused-vars
     const[error,setError]=useState(null);
+
     useEffect(()=>{
         fetch(`http://localhost:8080/pages/get/${id}`)
         .then((res)=>
@@ -55,6 +57,7 @@ function EditPage()
             alert("Page updated successfully");
             console.log("Fetched result:", result); 
             navigate('/pages');
+        // eslint-disable-next-line no-unused-vars
         }).catch((error)=>
         {
             console.error("Error fetching page",err)

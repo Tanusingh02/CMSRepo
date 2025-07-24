@@ -16,6 +16,8 @@ function ShowCategories() {
   const [showModal, setShowModal] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [actionMessage, setActionMessage] = useState("");
+
 
   useEffect(() => {
     axios
@@ -40,6 +42,15 @@ function ShowCategories() {
       });
   }, []);
 
+  
+useEffect(() => {
+    if (actionMessage) {
+      const timer = setTimeout(() => setActionMessage(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [actionMessage]);
+
+
   const handleCheckboxChange = (id) => {
     setSelectedCategoryId(id === selectedCategoryId ? null : id);
   };
@@ -50,20 +61,22 @@ function ShowCategories() {
   };
 
   const handleEditClick = () => {
-    if (!selectedCategoryId) {
-      alert("Please select a category to edit");
-      return;
-    }
-    navigate(`/categories/edit/${selectedCategoryId}`);
-  };
+  if (!selectedCategoryId) {
+    setActionMessage("⚠️ Please select a category to edit.");
+    return;
+  }
+  setActionMessage(""); // Clear message
+  navigate(`/categories/edit/${selectedCategoryId}`);
+};
 
-  const handleDeleteNavigation = () => {
-    if (!selectedCategoryId) {
-      alert("Please select a category to delete");
-      return;
-    }
-    navigate(`/categories/delete/${selectedCategoryId}`);
-  };
+const handleDeleteNavigation = () => {
+  if (!selectedCategoryId) {
+    setActionMessage("⚠️ Please select a category to delete.");
+    return;
+  }
+  setActionMessage(""); // Clear message
+  navigate(`/categories/delete/${selectedCategoryId}`);
+};
 
   const handleSortClick = () => {
     const newOrder = sortOrder === "asc" ? "desc" : "asc";
@@ -85,6 +98,11 @@ function ShowCategories() {
         <ActionButton label="Edit" iconClass="bi bi-pencil" variant="secondary" onClick={handleEditClick} disabled={!selectedCategoryId} />
         <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="secondary" onClick={handleDeleteNavigation} />
       </div>
+        {actionMessage && (
+       <div className="alert alert-warning mt-3" role="alert">
+        {actionMessage}
+       </div>
+         )}
 
       <div>
         <h1 className="mb-0 dashboard-header">
@@ -118,48 +136,35 @@ function ShowCategories() {
                 {sortOrder === "asc" ? "↑" : "↓"}
               </button>
             </th>
-            <th>Type</th>
-            <th>Description</th>
+            {/* <th>Type</th>
+            <th>Description</th> */}
           </tr>
         </thead>
-        <tbody>
-          {Array.isArray(categories) && categories.length === 0 ? (
-            <tr>
-              <td colSpan="4" className="text-center">No categories found.</td>
-            </tr>
-          ) : (
-            categories.map((category) => (
-              <tr key={category._id}>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedCategoryId === category._id}
-                    onChange={() => handleCheckboxChange(category._id)}
-                  />
-                </td>
-                <td>{category.title}</td>
-                <td>{category.type}</td>
-                <td>{category.desc}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-
-      {/* Modal for CategoryForm
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <CategoryForm
-              onClose={() => setShowModal(false)}
-              onSuccess={(newCategory) => {
-                setCategories([...categories, newCategory]);
-                setShowModal(false);
-              }}
-            />
-          </div>
-        </div>
-      )} */}
+       <tbody>
+  {Array.isArray(categories) && categories.length === 0 ? (
+    <tr>
+      <td colSpan="2" className="text-center">No categories found.</td>
+    </tr>
+  ) : (
+    categories.map((category) => (
+      <tr key={category._id}>
+        <td>
+          <input
+            type="checkbox"
+            checked={selectedCategoryId === category._id}
+            onChange={() => handleCheckboxChange(category._id)}
+          />
+        </td>
+        <td>
+          <Link to={`/categories/details/${category._id}`} className="text-decoration-none text-primary">
+            {category.title}
+          </Link>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
+</table>
     </div>
   );
 }

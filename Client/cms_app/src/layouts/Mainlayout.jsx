@@ -2,6 +2,9 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const MainLayout = ({ title, children }) => {
   return (
@@ -22,10 +25,12 @@ const MainLayout = ({ title, children }) => {
             {children}
           </main>
         </div>
+        </div>
+        <footer className="footer">
+      <div>Copyright 2017, All Rights Reserved</div>
+    </footer>
       </div>
-      <footer><Footer/></footer>
-    </div>
-  );
-};
+    )
+}
 
 export default MainLayout;
