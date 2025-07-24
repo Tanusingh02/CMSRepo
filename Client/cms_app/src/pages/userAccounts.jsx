@@ -121,7 +121,7 @@ return(
     }}
   >
     <strong>
-      <Link to="/" className="text-decoration-none text-blue me-1">Dashboard</Link>
+      <Link to="/dashboard" className="text-decoration-none text-blue me-1">Dashboard</Link>
       / Users
     </strong>
   </div>

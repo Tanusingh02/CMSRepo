@@ -38,7 +38,7 @@ const MainLayout = ({ title, children }) => {
     
     <div className="layout">
       <header>
-        <Navbar />
+        <Navbar customBrand={"Alpha CMS"} />
       </header>
       <div className="container-fluid">
         <div className="row flex-column flex-md-row">
