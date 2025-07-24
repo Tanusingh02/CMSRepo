@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
-
-//import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import LoginFormStructure from './LoginFormStructure';
-import './LoginForm.css'; // External CSS file
-
+import { useNavigate, useLocation } from 'react-router-dom';
+import './LoginForm.css'// External CSS file
+ 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/'; // fallback if not coming from a protected route
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+ 
     try {
       const response = await fetch('http://localhost:8080/user/login', {
         method: 'POST',
@@ -23,28 +22,31 @@ function LoginForm({ onLogin }) {
         },
         body: JSON.stringify({ email, password })
       });
-
+ 
       if (!response.ok) {
         throw new Error('Incorrect email or password');
       }
-
+ 
       const data = await response.json();
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-
+      localStorage.setItem('userId', data.user._id); 
+      //added local storage role.
+      localStorage.setItem("userRole", data.user.role);
+ 
       setError('');
       onLogin(data.user);
-      navigate('/');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
     }
   };
-
+ 
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
         <h2>DCX CMS</h2>
-
+ 
         <input
           type="email"
           className="form-control"
@@ -61,18 +63,16 @@ function LoginForm({ onLogin }) {
           required
         />
   {error && <div className="error-message">{error}</div>}
-
-       
-
         <button type="submit" className="btn btn-primary w-100">Sign in</button>
       </form>
     </div>
   );
 }
- 
-
 LoginForm.propTypes = {
   onLogin: PropTypes.func.isRequired,
 };
 
+
 export default LoginForm;
+ 
+

@@ -131,7 +131,7 @@ const handleDeleteNavigation = () => {
           <tr>
             <th>Select</th>
             <th>
-              Title
+              Category Title
               <button className="btn btn-sm btn-light ms-1" onClick={handleSortClick}>
                 {sortOrder === "asc" ? "↑" : "↓"}
               </button>

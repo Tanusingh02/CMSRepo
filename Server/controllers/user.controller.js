@@ -65,6 +65,8 @@ const loginUser = async (req, res) => {
   }
 
     // Generate JWT token
+  
+
     const token = jwt.sign(
       {
         userId: user._id,
@@ -77,11 +79,15 @@ const loginUser = async (req, res) => {
        token, 
        message: "Login successful" ,
        user:{
+        _id: user._id,
         fullname : user.fullname,
         email:user.email,
-        role:user.role
+        //added this line today
+        role:user.role,
+        
        }
       });
+      
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Login failed" });
@@ -104,17 +110,21 @@ const deleteUser =async(req,res)=>{
   await User.findByIdAndDelete(req.params.id);
   res.status(204).send();
 }
-
-// const getRole=async(req,res)=>
-// {
-//  const roleId=req.params.id;
-//  const role=recompileSchema.find(r=>)
-//  res.json({role:user.role});
-// }
+const getUserById = async(req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
     signup,
     loginUser,
-    getLatestUsers,updateUser,deleteUser,
-    
+    getLatestUsers,updateUser,deleteUser,getUserById
 };
