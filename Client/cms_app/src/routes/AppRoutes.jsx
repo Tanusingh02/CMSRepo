@@ -2,11 +2,11 @@ import React from 'react';
 import {Routes, Route, Router} from 'react-router-dom';
 import LoginPage from '../features/auth/pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
-import CategoryForm from '../pages/Category/CategoryDetails';
-import DeleteCategory from '../pages/Category/CategoryForm';
-import EditCategory from '../pages/Category/DeleteCategory';
-import ShowCategories from '../pages/Category/Editategory';
-import CategoryDetails from "../pages/Category/ShowCategory";
+import CategoryForm from '../pages/Category/CategoryForm';
+import DeleteCategory from '../pages/Category/DeleteCategory';
+import EditCategory from '../pages/Category/Editategory';
+import ShowCategories from '../pages/Category/ShowCategory';
+import CategoryDetails from "../pages/Category/CategoryDetails";
 import MainLayout from '../layouts/Mainlayout';
 import AddUser from '../components/Login-Signup/Adduser';
 import ProfilePage from '../pages/ProfilePage';
@@ -18,11 +18,6 @@ import EditPage from '../pages/Pages/EditPage'
 import DeletePage from '../pages/Pages/DeletePage'
 import Details from "../pages/Pages/PageDetails"
 import Userpage from '../pages/userAccounts'
-
-
-
-
-
 
 
 const AppRoutes = () =>{
