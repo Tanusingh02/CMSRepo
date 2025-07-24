@@ -7,6 +7,8 @@ import CategoryForm from "./CategoryForm";
 import { Link } from 'react-router-dom';
 import DeleteCategory from "./DeleteCategory";
 import "../../index.css";
+import ReactPaginate from "react-paginate";
+import '../../components/Pagination.css';
 
 function ShowCategories() {
   const navigate = useNavigate();
@@ -18,8 +20,21 @@ function ShowCategories() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [actionMessage, setActionMessage] = useState("");
+  const [pageSortKey, setPageSortKey] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const usersPerPage = 3;
 
+  const sortedCategories = [...categories].sort((a, b) => {
+    if (!pageSortKey) return 0;
+    return a[pageSortKey].localeCompare(b[pageSortKey]);
+  });
+  const offset = currentPage * usersPerPage;
+  const currentCategories = sortedCategories.slice(offset, offset + usersPerPage);
+  const pageCount = Math.ceil(sortedCategories.length / usersPerPage);
 
+const handlePageClick = ({ selected }) => {
+  setCurrentPage(selected);
+};
   useEffect(() => {
     axios
       .get("http://localhost:8080/categories/getAll", {
@@ -138,7 +153,7 @@ const handleDeleteNavigation = () => {
       <td colSpan="2" className="text-center">No categories found.</td>
     </tr>
   ) : (
-    categories.map((category) => (
+    currentCategories.map((category) => (
       <tr key={category._id}>
         <td>
           <input
@@ -158,6 +173,16 @@ const handleDeleteNavigation = () => {
 </tbody>
 </table>
     </div>
+    <ReactPaginate
+          previousLabel={"<<"}
+          nextLabel={">>"}
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+        />
     </MainLayout>
   );
 }

@@ -8,7 +8,7 @@ import ActionButton from "../../components/ActionButton";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import ReactPaginate from "react-paginate";
 import '../../components/Pagination.css';
-import '../../index.css';
+
 
 
 
