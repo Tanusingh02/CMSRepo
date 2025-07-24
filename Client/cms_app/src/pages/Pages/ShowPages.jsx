@@ -7,7 +7,8 @@ import MainLayout from "../../layouts/Mainlayout";
 import ActionButton from "../../components/ActionButton";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import ReactPaginate from "react-paginate";
-
+import '../../components/Pagination.css';
+import '../../index.css';
 
 function ShowPages() {
   const navigate = useNavigate();
@@ -179,7 +180,6 @@ function ShowPages() {
           pageRangeDisplayed={3}
           marginPagesDisplayed={2}
         />
-        {/* Your existing content */}
       </MainLayout>
     </div>
   );
