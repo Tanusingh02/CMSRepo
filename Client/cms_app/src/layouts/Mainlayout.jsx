@@ -7,7 +7,7 @@ const MainLayout = ({ title, children }) => {
   return (
     <div className="layout">
       <header>
-        <Navbar />
+        <Navbar customBrand={'CMS APLHA'}/>
       </header>
 
       <div className="container-fluid">

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function AddUser({ onUserAdded })
+function AddUser({ onUserAdded ,users})
 {
    const[fullname,setFullname]=useState('');
    const[email,setEmail]=useState('');
@@ -15,7 +15,8 @@ function AddUser({ onUserAdded })
    const [ageError, setAgeError] = useState('');
    const [emailError, setEmailError] = useState('');
    const [showValidation, setShowValidation] = useState(false);
-
+   const [modalMessage, setModalMessage] = useState("");
+   const [showModal, setShowModal] = useState(false);
    /*const handleSubmit=(e)=>{
     e.preventDefault();
     if(parseInt(age)<22)
@@ -23,23 +24,24 @@ function AddUser({ onUserAdded })
       return;
     }*/
     const navigate = useNavigate();
-    const handleSubmit = (e) => {
+    //handle user is added-4:30.
+ const handleSubmit = (e) => {
   e.preventDefault();
+  setShowValidation(true); // Enable validation UI
 
+  // Frontend age and email validations
   if (parseInt(age) < 22) {
     setAgeError("Age cannot be less than 22");
     return;
   }
-  if (!email) {
-  setEmailError('Email is required');
-  setShowValidation(true); // optional: if you track validation globally
-  return;
-} else if (!validateEmail(email)) {
-  setEmailError('Invalid email format');
-  setShowValidation(true);
-  return;
-}
 
+  if (!email) {
+    setEmailError("Email is required");
+    return;
+  } else if (!validateEmail(email)) {
+    setEmailError("Invalid email format");
+    return;
+  }
 
   const data = {
     fullname,
@@ -54,12 +56,10 @@ function AddUser({ onUserAdded })
 
   axios.post("http://localhost:8080/user/signup", data)
     .then((res) => {
-      console.log("User added:", res.data.message);
+      alert(res.data.message); // "User created successfully"
+      navigate('/useraccount'); // Redirect after success
 
-      // Redirect to user page
-      navigate('/useraccount');
-
-      // Optionally clear the form
+      // Clear form fields
       setFullname("");
       setEmail("");
       setPassword("");
@@ -69,11 +69,35 @@ function AddUser({ onUserAdded })
       setAge("");
       setCourse("");
       setAgeError("");
+      setEmailError("");
+      setShowValidation(false);
     })
     .catch((error) => {
+      // Check for duplicate email response
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.message === "User already exists"
+      ) {
+         setModalMessage("User has already been created using the same email.");
+         setShowModal(true);
+
+      } else if (
+        error.response &&
+        error.response.status === 400
+      ) {
+         setModalMessage(error.response.data.message);
+         setShowModal(true);
+
+      } else {
+        setModalMessage("Something went wrong while adding the user.");
+        setShowModal(true);
+
+      }
+
       console.error("Error adding user:", error);
     });
-}; 
+};
 const validateEmail = (email) => {
   // Basic pattern: user@domain.extension
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -103,6 +127,7 @@ const validateEmail = (email) => {
 };
 
    return(
+    
     <div className="container my-4">
         <div className="row justify-content-center" >
         <div className="col-12 col-md-10 col-lg-8 bg-white p-4 rounded shadow">
@@ -220,9 +245,31 @@ const validateEmail = (email) => {
                 <button type="submit" className='btn btn-primary mt-2'>Add User</button>
                 </div>     
             </form>
+            {showModal && (
+              
+  <div className="modal d-block" tabIndex="-1" role="dialog">
+    <div className="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Validation Error</h5>
+          <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+        </div>
+        <div className="modal-body">
+          <p>{modalMessage}</p>
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
         </div>
     </div>
     </div>
    )
+   
 }
 export default AddUser;
