@@ -28,7 +28,7 @@ const AddPageForm = () => {
     author.trim() !== "";
 
   useEffect(() => {
-    fetch("http://localhost:8080/categories/", {
+    fetch("http://localhost:8080/categories/getAll", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
