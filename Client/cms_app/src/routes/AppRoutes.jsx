@@ -30,6 +30,7 @@ const AppRoutes = () =>{
             <Route path='/profile' element={ <PrivateRoute> <MainLayout><ProfilePage /></MainLayout> </PrivateRoute>}/>
             <Route path="/useraccount/:id" element={<MainLayout><AdminUserProfile /></MainLayout>} />
             <Route path="/categories" element={<MainLayout><ShowCategories></ShowCategories></MainLayout>}/>
+            {/* <Route path="/categories" element={<ShowCategories></ShowCategories>}/> */}
             <Route path="/categories/details/:id" element={<MainLayout><CategoryDetails /></MainLayout>} />
             <Route path="/categories/new" element={<MainLayout><CategoryForm /></MainLayout>} />
             <Route path='/categories/edit/:id' element={<MainLayout><EditCategory/></MainLayout>}/>

@@ -5,33 +5,58 @@ function CategoryForm() {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [desc, setDesc] = useState("");
+  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
 
+  const validate = () => {
+    const errors = {};
+    if (!title.trim()) errors.title = "Title is required";
+    if (!type.trim()) errors.type = "Type is required";
+    if (!desc.trim()) errors.desc = "Description is required";
+    return errors;
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  const errors = validate();
+  setFormErrors(errors);
 
-    const data = { title, type, desc };
+  if (Object.keys(errors).length > 0) return;
 
-    try {
-      const response = await fetch("http://localhost:8080/categories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify(data),
-      });
+  const data = { title, type, desc };
 
-      if (!response.ok) {
-        throw new Error("Failed to create category");
+  try {
+    const response = await fetch("http://localhost:8080/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      // Check for duplicate title error from backend
+      if (errorData.message === "Category title already exists") {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          title: "This title already exists. Please choose a different one.",
+        }));
+        return;
       }
 
-      navigate("/categories");
-    } catch (error) {
-      console.error("Error occurred:", error);
-      alert("Failed to create category");
+      throw new Error("Failed to create category");
     }
-  };
+
+    navigate("/categories");
+  } catch (error) {
+    console.error("Error occurred:", error);
+    alert("Failed to create category");
+  }
+};
+
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
@@ -44,16 +69,16 @@ function CategoryForm() {
           {/* Title */}
           <div className="mb-3">
             <label className="form-label">
-             Title <span className="text-danger">*</span>
+              Title <span className="text-danger">*</span>
             </label>
             <input
-              className="form-control"
+              className={`form-control ${formErrors.title ? "is-invalid" : ""}`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              required
-              onInvalid={(e) => e.target.setCustomValidity("Please fill out the title")}
-              onInput={(e) => e.target.setCustomValidity("")}
             />
+            {formErrors.title && (
+              <div className="invalid-feedback">{formErrors.title}</div>
+            )}
           </div>
 
           {/* Type */}
@@ -62,13 +87,13 @@ function CategoryForm() {
               Type <span className="text-danger">*</span>
             </label>
             <input
-              className="form-control"
+              className={`form-control ${formErrors.type ? "is-invalid" : ""}`}
               value={type}
               onChange={(e) => setType(e.target.value)}
-              required
-              onInvalid={(e) => e.target.setCustomValidity("Please fill out the type")}
-              onInput={(e) => e.target.setCustomValidity("")}
             />
+            {formErrors.type && (
+              <div className="invalid-feedback">{formErrors.type}</div>
+            )}
           </div>
 
           {/* Description */}
@@ -77,28 +102,22 @@ function CategoryForm() {
               Description <span className="text-danger">*</span>
             </label>
             <textarea
-              className="form-control"
+              className={`form-control ${formErrors.desc ? "is-invalid" : ""}`}
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
-              required
-              onInvalid={(e) => e.target.setCustomValidity("Please fill out the description")}
-              onInput={(e) => e.target.setCustomValidity("")}
             />
+            {formErrors.desc && (
+              <div className="invalid-feedback">{formErrors.desc}</div>
+            )}
           </div>
 
-          {/* Centered Buttons */}
+          {/* Buttons */}
           <div className="text-center mt-4">
             <div className="d-inline-flex gap-3">
               <button type="submit" className="btn btn-primary">
                 Save
               </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => navigate("/categories")}
-              >
-                Back
-              </button>
+              
             </div>
           </div>
         </form>

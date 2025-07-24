@@ -1,12 +1,28 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import "../../index.css";
 
 function DeleteCategory() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(true); // Show modal on mount
+  const hasRun = useRef(false);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
+    if (!id) {
+      setTimeout(() => {
+        navigate("/categories");
+      }, 1000);
+      return;
+    }
+    setShowModal(true);
+  }, [id, navigate]);
 
   const handleDelete = async () => {
     try {
@@ -30,51 +46,28 @@ function DeleteCategory() {
 
   return (
     <>
-      {showModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalStyle}>
-            <h3>Confirm Deletion</h3>
-            <p>Are you sure you want to delete this category?</p>
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-              <button onClick={handleCancel} style={buttonStyle}>Cancel</button>
-              <button onClick={handleDelete} style={{ ...buttonStyle, backgroundColor: "#d9534f", color: "#fff" }}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Custom Backdrop */}
+      {showModal && <div className="custom-modal-backdrop"></div>}
+
+      {/* Bootstrap Modal */}
+      <Modal show={showModal} onHide={handleCancel} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this category?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleDelete}>
+            Yes, Delete
+          </Button>
+          <Button variant="secondary" onClick={handleCancel}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
-
-// Modal styles
-const modalOverlayStyle = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100vw",
-  height: "100vh",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  zIndex: 1000,
-};
-
-const modalStyle = {
-  backgroundColor: "#fff",
-  padding: "20px",
-  borderRadius: "8px",
-  width: "300px",
-  boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
-};
-
-const buttonStyle = {
-  padding: "8px 16px",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-};
 
 export default DeleteCategory;

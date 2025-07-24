@@ -1,17 +1,25 @@
 const Category = require("../models/category.model");
 
 //for creating new category
-exports.createCategory = async(req, res) => {
-    try{
-        const {title, type, desc} = req.body;
+// const Category = require("../models/Category"); // adjust path as needed
 
-        const category = new Category({title, type, desc});
-        await category.save();
+exports.createCategory = async (req, res) => {
+  try {
+    const { title, type, desc } = req.body;
 
-        res.status(201).json(category);
-    } catch(err){
-        res.status(500).json({error: err.message});
+    // Check for duplicate title
+    const existingCategory = await Category.findOne({ title: title.trim() });
+    if (existingCategory) {
+      return res.status(400).json({ message: "Category title already exists" });
     }
+
+    const category = new Category({ title, type, desc });
+    await category.save();
+
+    res.status(201).json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 //get category with pagination
