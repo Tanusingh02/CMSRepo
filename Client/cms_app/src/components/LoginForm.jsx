@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './LoginForm.css'// External CSS file
+import '../styles/LoginForm.css'// External CSS file
  
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('');

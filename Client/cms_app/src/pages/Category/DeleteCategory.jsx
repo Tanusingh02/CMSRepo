@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
-import "../../index.css";
+import "../../styles/index.css";
 import MainLayout from "../../layouts/Mainlayout";
 function DeleteCategory() {
   const { id } = useParams();

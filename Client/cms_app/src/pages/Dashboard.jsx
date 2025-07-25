@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import MainLayout from "../layouts/Mainlayout";
-import "../index.css";
+import "../styles/index.css";
 
 const Dashboard = () => {
   const [pages, setPages] = useState([]);
@@ -103,7 +103,7 @@ const Dashboard = () => {
                     data-label="Page Title"
                     className="searchable"
                     dangerouslySetInnerHTML={{
-                      __html: `<a href="/page-details/${page._id}" class="text-link">${highlight(
+                      __html: `<a href="/pages/page-details/${page._id}" class="text-link">${highlight(
                         page.page_title
                       )}</a>`,
                     }}

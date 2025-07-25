@@ -6,9 +6,9 @@ import axios from "axios";
 import ActionButton from "../components/ActionButton";
 import AddUser from "../components/Adduser";
 import EditUserForm from "../components/EditUserForm";
-import "../index.css";
+import "../styles/index.css";
 import ReactPaginate from "react-paginate";
-import "../components/Pagination.css";
+import "../styles/Pagination.css";
 import MainLayout from "../layouts/Mainlayout";
 
 function UserPage() {
@@ -50,7 +50,7 @@ function UserPage() {
       .catch((error) => console.error("error fetching latest users:", error));
   }, []);
   const handleNew = () => {
-    navigate("/user/add");
+    navigate("/useraccount/add");
   };
 
   // eslint-disable-next-line no-unused-vars

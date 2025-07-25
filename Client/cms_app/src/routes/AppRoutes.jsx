@@ -1,6 +1,6 @@
 import React from 'react';
 import {Routes, Route, Router} from 'react-router-dom';
-import LoginPage from '../features/auth/pages/LoginPage';
+import LoginPage from '../pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
 import CategoryForm from '../pages/Category/CategoryForm';
 import DeleteCategory from '../pages/Category/DeleteCategory';
@@ -27,7 +27,7 @@ const AppRoutes = () =>{
             <Route path='/dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}></Route>
             <Route path='/dashboard' element={<Dashboard/>}></Route>
             <Route path='/useraccount' element={<Userpage></Userpage>}></Route>
-            <Route path='/user/add' element={<AddUser/>}/>
+            <Route path='/useraccount/add' element={<AddUser/>}/>
             <Route path='/profile' element={ <PrivateRoute> <ProfilePage /> </PrivateRoute>}/>
             <Route path="/useraccount/:id" element={<AdminUserProfile />} />
             <Route path="/categories" element={<ShowCategories></ShowCategories>}/>
@@ -40,7 +40,7 @@ const AppRoutes = () =>{
             <Route path='/pages/edit/:id' element={<EditPage/>} />
             <Route path='/pages/delete/:id' element={<DeletePage/>}></Route>
             <Route path='/useraccount' element={<Userpage/>}></Route>
-            <Route path="/page-details/:id" element={<Details />} />
+            <Route path="/pages/page-details/:id" element={<Details />} />
         </Routes>
     )
 }

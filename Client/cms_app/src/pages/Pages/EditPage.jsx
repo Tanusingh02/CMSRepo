@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MainLayout from "../../layouts/Mainlayout";
 import { Modal, Button } from "react-bootstrap";
-import "../../Pages_style.css";
+import "../../styles/Pages_style.css";
 
 function EditPage() {
   const { id } = useParams(); // Assuming the page ID is passed as a URL parameter

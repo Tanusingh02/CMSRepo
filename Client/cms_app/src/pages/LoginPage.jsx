@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LoginForm from "../components/LoginForm";
-import login from "../authAPI";
+import login from "../features/auth/authAPI";
 import { useNavigate } from "react-router-dom";
 
 

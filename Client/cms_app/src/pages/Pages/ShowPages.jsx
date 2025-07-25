@@ -7,7 +7,7 @@ import MainLayout from "../../layouts/Mainlayout";
 import ActionButton from "../../components/ActionButton";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import ReactPaginate from "react-paginate";
-import '../../components/Pagination.css';
+import '../../styles/Pagination.css';
 
 
 
@@ -99,12 +99,12 @@ function ShowPages() {
         <div className="container">
           <div className="mt-4 d-flex justify-content-end mb-3">
             {userRole==="admin" && <Link to="/pages/add" className="btn btn-light me-2">
-              <i className="me-1 bi bi-plus-lg"></i> New
+              <i className="me-1 bi bi-plus-lg"></i>New
             </Link>}
             {/* <button className="btn btn-primary me-2" onClick={handleEditClick} disabled={!selectedPageId}>Edit</button> */}
             {userRole==="admin" &&(<ActionButton
               label="Edit"
-              iconClass="bi bi-pencil-lg"
+              iconClass="bi bi-pencil"
               variant="light"
               onClick={handleEditClick}
               disabled={!selectedPageId}
@@ -112,7 +112,7 @@ function ShowPages() {
             {/* <button className="btn btn-danger me-2" onClick={handleDeleteNavigation} disabled={!selectedPageId}>Delete</button> */}
             {userRole==="admin"&& (<ActionButton
               label="Delete"
-              iconClass="bi bi-"
+              iconClass="bi bi-x-lg"
               variant="light"
               onClick={handleDeleteNavigation}
               disabled={!selectedPageId}
@@ -162,7 +162,7 @@ function ShowPages() {
                       onChange={() => handleCheckboxChange(page._id)}
                     ></input>
                   </td>
-                  <td><Link to={`/page-details/${page._id}`}>{page.page_title}</Link></td>
+                  <td><Link to={`/pages/page-details/${page._id}`}>{page.page_title}</Link></td>
                   <td>{page.category}</td>
                   <td>{page.author}</td>
                 </tr>

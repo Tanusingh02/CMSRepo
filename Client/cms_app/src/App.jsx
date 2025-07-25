@@ -1,6 +1,6 @@
 import React from 'react';
 import AppRoutes from './routes/AppRoutes';
-import LoginForm from './features/auth/components/LoginForm.jsx';
+import LoginForm from './components/LoginForm';
 
 
 

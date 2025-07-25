@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/Mainlayout";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../../Pages_style.css";
+import "../../styles/Pages_style.css";
 
 const AddPageForm = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const AddPageForm = () => {
     currentPage: 1,
   });
   const [authorData, setAuthorData] = useState([]);
-  const [duplicateData,setDuplicateData]=useState(false);
+  const [duplicateData, setDuplicateData] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   // Check if all fields are filled
@@ -95,8 +95,7 @@ const AddPageForm = () => {
             return response.json();
           })
           .then((result) => {
-            if (result.message === "Inserted") 
-              {
+            if (result.message === "Inserted") {
               console.log(result.data);
               setShowAlert(true);
               setTimeout(() => navigate("/pages"), 2000);
@@ -118,20 +117,25 @@ const AddPageForm = () => {
         <div className="d-flex justify-content-center align-items-start min-vh-100 bg-light">
           <div
             className="p-3 p-md-4 rounded  bg-white w-100"
-            style={{ maxWidth: "900px" }}>
+            style={{ maxWidth: "900px" }}
+          >
             <h3 className="text-center mb-4 " style={{ color: " #1f87c2" }}>
-              Add-Page</h3>
+              Add-Page
+            </h3>
 
             {showAlert && (
-            <div className="alert alert-success" role="alert"><p>
-                 Data successfully Inserted!</p>
-            </div>)}
+              <div className="alert alert-success" role="alert">
+                <p>Data successfully Inserted!</p>
+              </div>
+            )}
 
             <form onSubmit={add_pages}>
               <div className="mb-3">
                 <label>
                   Page Title
-                  <span className="required-asterisk" style={{ color: "red" }}>*</span>
+                  <span className="required-asterisk" style={{ color: "red" }}>
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -143,13 +147,16 @@ const AddPageForm = () => {
               <div className="mb-3 dropdown-wrapper">
                 <label>
                   Category
-                  <span className="required-asterisk" style={{ color: "red" }}>*</span>
+                  <span className="required-asterisk" style={{ color: "red" }}>
+                    *
+                  </span>
                 </label>
 
                 <select
                   className="form-control"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}>
+                  onChange={(e) => setCategory(e.target.value)}
+                >
                   <option value="">Select a category</option>
                   {categoryData.categories.map((cat) => (
                     <option key={cat.type} value={cat.type}>
@@ -163,36 +170,54 @@ const AddPageForm = () => {
               <div className="mb-3">
                 <label>
                   Content
-                  <span className="required-asterisk" style={{ color: "red" }}>*</span>
+                  <span className="required-asterisk" style={{ color: "red" }}>
+                    *
+                  </span>
                 </label>
                 <textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   row={6}
                   className="form-control"
-                  style={{ resize: "vertical" }}/>
-                  </div>
+                  style={{ resize: "vertical" }}
+                />
+              </div>
 
               <div className="mb-3 dropdown-wrapper">
-                <label>Author<span className="required-asterisk" style={{ color: "red" }}>*</span></label>
+                <label>
+                  Author
+                  <span className="required-asterisk" style={{ color: "red" }}>
+                    *
+                  </span>
+                </label>
                 <select
                   className="form-control"
                   value={author}
-                  onChange={(e) => setAuthor(e.target.value)}>
+                  onChange={(e) => setAuthor(e.target.value)}
+                >
                   <option value="">
                     Select an Author
-                    <span className="required-asterisk"style={{ color: "red" }}>*</span>
+                    <span
+                      className="required-asterisk"
+                      style={{ color: "red" }}
+                    >
+                      *
+                    </span>
                   </option>
 
                   {Array.isArray(authorData) &&
                     authorData.map((user) => (
                       <option key={user.email} value={user.fullname}>
                         {user.fullname}
-                      </option>//authorData.map is not a function
+                      </option> //authorData.map is not a function
                     ))}
                 </select>
                 <i className="bi bi-caret-down-fill"></i>
-                {duplicateData && (<small className="text-danger d-block mt-2">This author-category combination already exists</small>)}
+                {duplicateData && (
+                  <small className="text-danger d-block mt-2">
+                    This author-category combination already exists
+                  </small>
+                )}
               </div>
               <div className="text-center">
                 <button

@@ -1,16 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState} from "react";
-import { useNavigate } from 'react-router-dom';
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
-
-const Navbar = ({ customBrand }) => { 
+const Navbar = ({ customBrand }) => {
   const brandName = customBrand || "DCX CMS";
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeLink, setActiveLink] = useState(null);
-
-  const userRole = localStorage.getItem("userRole"); 
+  const userRole = localStorage.getItem("userRole");
 
   // Define nav items based on role
   const navItems = [
@@ -29,7 +25,7 @@ const Navbar = ({ customBrand }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("fullname");
-    localStorage.removeItem("userRole"); 
+    localStorage.removeItem("userRole");
     navigate('/login');
   };
 
@@ -37,13 +33,17 @@ const Navbar = ({ customBrand }) => {
     color: "white",
     marginRight: "8px",
     padding: "8px 12px",
-    backgroundColor: activeLink === path ? "#075a99" : "transparent",
+    backgroundColor: location.pathname.startsWith(path) ? "#075a99" : "transparent",
+    transition: "background-color 0.3s ease",
     textDecoration: "none",
     cursor: "pointer",
+    borderRadius: "4px"
   });
+  
+
   return (
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(31,135,194,255)', padding: '10px', width: '100%' }}>
-      <a className="navbar-brand text-white" href="/dashboard">DCX CMS</a>
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#1f87c2', padding: '10px', width: '100%' }}>
+      <Link className="navbar-brand text-white" to="/dashboard">DCX CMS</Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -56,10 +56,7 @@ const Navbar = ({ customBrand }) => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div
-        className="collapse navbar-collapse justify-content-between"
-        id="navbarSupportedContent"
-      >
+      <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
         {/* Left Nav Links + Search */}
         <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
           <ul className="navbar-nav d-flex flex-row flex-wrap">
@@ -74,7 +71,7 @@ const Navbar = ({ customBrand }) => {
 
           {/* Search */}
           <form
-            className="d-flex gap-2"
+            className="d-flex gap-2 mt-2 mt-lg-0"
             onSubmit={(e) => {
               e.preventDefault();
               const keyword = e.target.elements.search.value.trim();
@@ -92,13 +89,14 @@ const Navbar = ({ customBrand }) => {
             />
             <button
               type="submit"
-              className="btn btn-primary"
-              style={{ backgroundColor: "white", color: "black" }}
+              className="btn btn-light"
+              style={{ color: "#075a99" }}
             >
               Submit
             </button>
           </form>
         </div>
+
         {/* Right Account Section */}
         <ul className="navbar-nav d-flex flex-row align-items-center mt-2 mt-lg-0">
           <li className="nav-item dropdown">
@@ -119,7 +117,7 @@ const Navbar = ({ customBrand }) => {
               </a>
             </div>
           </li>
-          <li className="nav-item ml-3">
+          <li className="nav-item ms-3">
             <Link
               className="nav-link text-white"
               to="/"

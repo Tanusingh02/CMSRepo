@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MainLayout from "../../layouts/Mainlayout";
-import '../../Pages_style.css'
+import '../../styles/Pages_style.css';
 
 function Details()
 {

@@ -6,9 +6,9 @@ import ActionButton from "../../components/ActionButton";
 import CategoryForm from "./CategoryForm";
 import { Link } from 'react-router-dom';
 import DeleteCategory from "./DeleteCategory";
-import "../../index.css";
+import '../../styles/index.css';
 import ReactPaginate from "react-paginate";
-import '../../components/Pagination.css';
+import '../../styles/Pagination.css';
 
 function ShowCategories() {
   const navigate = useNavigate();
@@ -164,7 +164,7 @@ const handleDeleteNavigation = () => {
           />
         </td>
         <td>
-          <Link to={`/categories/details/${category._id}`} className="text-decoration-none text-primary">
+          <Link to={`/categories/details/${category._id}`}>
             {category.title}
           </Link>
         </td>
