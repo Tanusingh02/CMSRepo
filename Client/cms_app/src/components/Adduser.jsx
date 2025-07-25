@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MainLayout from '../../layouts/Mainlayout';
+import MainLayout from '../layouts/Mainlayout';
 function AddUser({ onUserAdded ,users})
 {
    const[fullname,setFullname]=useState('');

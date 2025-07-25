@@ -98,13 +98,13 @@ function ShowPages() {
       <MainLayout>
         <div className="container">
           <div className="mt-4 d-flex justify-content-end mb-3">
-            <Link to="/pages/add" className="btn btn-light me-2">
+            {userRole==="admin" && <Link to="/pages/add" className="btn btn-light me-2">
               <i className="me-1 bi bi-plus-lg"></i> New
-            </Link>
+            </Link>}
             {/* <button className="btn btn-primary me-2" onClick={handleEditClick} disabled={!selectedPageId}>Edit</button> */}
             {userRole==="admin" &&(<ActionButton
               label="Edit"
-              iconClass="bi bi-plus-lg"
+              iconClass="bi bi-pencil-lg"
               variant="light"
               onClick={handleEditClick}
               disabled={!selectedPageId}
@@ -112,7 +112,7 @@ function ShowPages() {
             {/* <button className="btn btn-danger me-2" onClick={handleDeleteNavigation} disabled={!selectedPageId}>Delete</button> */}
             {userRole==="admin"&& (<ActionButton
               label="Delete"
-              iconClass="bi bi-trash"
+              iconClass="bi bi-"
               variant="light"
               onClick={handleDeleteNavigation}
               disabled={!selectedPageId}
