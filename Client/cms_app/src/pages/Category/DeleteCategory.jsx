@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 import "../../index.css";
-
+import MainLayout from "../../layouts/Mainlayout";
 function DeleteCategory() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ function DeleteCategory() {
   };
 
   return (
-    <>
+    <MainLayout>
       {/* Custom Backdrop */}
       {showModal && <div className="custom-modal-backdrop"></div>}
 
@@ -66,7 +66,7 @@ function DeleteCategory() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+      </MainLayout>
   );
 }
 

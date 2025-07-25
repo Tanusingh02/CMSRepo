@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import MainLayout from "../../layouts/Mainlayout"
 function CategoryForm() {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
@@ -59,6 +59,7 @@ function CategoryForm() {
 
 
   return (
+    <MainLayout>
     <div className="d-flex   min-vh-100 bg-light">
       <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "1000px",maxHeight:"900px" }}>
         <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
@@ -123,6 +124,7 @@ function CategoryForm() {
         </form>
       </div>
     </div>
+    </MainLayout>
   );
 }
 
