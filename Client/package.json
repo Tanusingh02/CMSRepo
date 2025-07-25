@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest --watchAll",
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/Mainlayout";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../../Pages_style.css";
 
@@ -170,9 +170,9 @@ const AddPageForm = () => {
                   onChange={(e) => setContent(e.target.value)}
                   row={6}
                   className="form-control"
-                  style={{ resize: "vertical" }}
-                />
-              </div>
+                  style={{ resize: "vertical" }}/>
+                  </div>
+
               <div className="mb-3 dropdown-wrapper">
                 <label>Author<span className="required-asterisk" style={{ color: "red" }}>*</span></label>
                 <select
@@ -183,11 +183,12 @@ const AddPageForm = () => {
                     Select an Author
                     <span className="required-asterisk"style={{ color: "red" }}>*</span>
                   </option>
+
                   {Array.isArray(authorData) &&
                     authorData.map((user) => (
                       <option key={user.email} value={user.fullname}>
                         {user.fullname}
-                      </option>
+                      </option>//authorData.map is not a function
                     ))}
                 </select>
                 <i className="bi bi-caret-down-fill"></i>

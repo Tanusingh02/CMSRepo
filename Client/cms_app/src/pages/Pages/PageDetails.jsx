@@ -29,7 +29,6 @@ function Details()
         });
     }, [id]);
 
-
      return(
         <div>
             <MainLayout>

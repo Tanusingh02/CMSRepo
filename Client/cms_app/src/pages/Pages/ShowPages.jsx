@@ -15,7 +15,6 @@ import '../../components/Pagination.css';
 function ShowPages() {
   const navigate = useNavigate();
   const [pages, setPages] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
   const [selectedPageId, setSelectedPageId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -44,8 +43,8 @@ function ShowPages() {
     setCurrentPage(selected);
   };
 
-  
-  useEffect(() => {
+ //for getting all pages data 
+  useEffect(() => {                                        
     fetch("http://localhost:8080/pages/getAll")
       .then((response) => {
         return response.json();
@@ -97,19 +96,15 @@ function ShowPages() {
   return (
     <div>
       <MainLayout>
-        <div className="container mt-4">
-          <h2 className="mb-0">
-                    <i className="bi bi-file-earmark-fill me-2" style={{ color: "#3d85b1" }}></i>
-                    <span style={{ color: "#3d85b1" }}>Pages</span>
-                    </h2>
-          <div className="d-flex justify-content-end mb-3">
-            <Link to="/pages/add" className="btn btn-light me-2">
+        <div className="container">
+          <div className="mt-4 d-flex justify-content-end mb-3">
+            {userRole==="admin" && <Link to="/pages/add" className="btn btn-light me-2">
               <i className="me-1 bi bi-plus-lg"></i> New
-            </Link>
+            </Link>}
             {/* <button className="btn btn-primary me-2" onClick={handleEditClick} disabled={!selectedPageId}>Edit</button> */}
             {userRole==="admin" &&(<ActionButton
               label="Edit"
-              iconClass="bi bi-plus-lg"
+              iconClass="bi bi-pencil-lg"
               variant="light"
               onClick={handleEditClick}
               disabled={!selectedPageId}
@@ -117,12 +112,17 @@ function ShowPages() {
             {/* <button className="btn btn-danger me-2" onClick={handleDeleteNavigation} disabled={!selectedPageId}>Delete</button> */}
             {userRole==="admin"&& (<ActionButton
               label="Delete"
-              iconClass="bi bi-trash"
+              iconClass="bi bi-"
               variant="light"
               onClick={handleDeleteNavigation}
               disabled={!selectedPageId}
             />)}
           </div>
+          <h1 className="mb-0">
+            <i className="bi bi-file-earmark-fill me-2" style={{ color: "#3d85b1" }}></i>
+            <span style={{ color: "#3d85b1" }}>Pages</span>
+          </h1>
+          <hr/>
           <div className="mb-3">
             <div
               className="px-3 py-2 border rounded"
@@ -130,10 +130,9 @@ function ShowPages() {
                 width: "100%",
                 maxWidth: "100%",
                 backgroundColor: "#f0f0f0",
-              }}
-            >
-              <strong><Link to="/" className="text-decoration-none text-blue me-1">
-                   <span style={{ color: "#3d85b1" }}>Dashboard</span></Link>/Pages</strong>
+              }}>
+              <strong><Link to="/dashboard" className="text-decoration-none text-blue me-1">
+                   <span>Dashboard</span></Link>/Pages</strong>
             </div>
           </div>
           <table className="table table-striped">
