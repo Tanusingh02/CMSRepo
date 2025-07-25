@@ -98,7 +98,7 @@ function EditCategory() {
           </h3>
 
           {showAlert && (
-            <div className="alert alert-success" role="alert">
+            <div className="alert alert-primary" role="alert">
               <p>Category successfully updated!</p>
             </div>
           )}

@@ -74,7 +74,11 @@ function CategoryForm() {
         <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
           Add New Category
         </h3>
-
+        {showAlert && (
+            <div className="alert alert-success" role="alert">
+              <p>Category successfully updated!</p>
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             {/* Title */}
             <div className="mb-3">

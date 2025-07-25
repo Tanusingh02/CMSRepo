@@ -4,7 +4,7 @@ import LoginPage from '../features/auth/pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
 import CategoryForm from '../pages/Category/CategoryForm';
 import DeleteCategory from '../pages/Category/DeleteCategory';
-import EditCategory from '../pages/Category/Editategory';
+import EditCategory from '../pages/Category/EditCategory';
 import ShowCategories from '../pages/Category/ShowCategory';
 import CategoryDetails from "../pages/Category/CategoryDetails";
 import MainLayout from '../layouts/Mainlayout';
