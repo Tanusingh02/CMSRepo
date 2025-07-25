@@ -1,6 +1,5 @@
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import MainLayout from "../../layouts/Mainlayout";
 
 function EditCategory() {
@@ -14,31 +13,37 @@ function EditCategory() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const isFormValid =
+    formData.title.trim() !== "" &&
+    formData.type.trim() !== "" &&
+    formData.desc.trim() !== "";
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/categories/get/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        const category = res.data.categories?.[0] || res.data;
-        if (category) {
-          setFormData(category);
-        } else {
-          console.warn("No category found for ID:", id);
-        }
+    fetch(`http://localhost:8080/categories/get/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const category = data.categories?.[0] || data;
+        setFormData(category);
+        setLoading(false);
       })
       .catch((err) => {
-        console.error("Failed to load category", err.message);
+        console.error("Failed to load category", err);
+        setLoading(false);
       });
   }, [id]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" }); // Clear error on change
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const validate = () => {
@@ -57,96 +62,112 @@ function EditCategory() {
       return;
     }
 
-    axios
-      .put(`http://localhost:8080/categories/editCategory/${id}`, formData, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        console.log("Update successful:", res.data);
-        navigate("/categories");
+    fetch(`http://localhost:8080/categories/editCategory/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setShowAlert(true);
+        setTimeout(() => navigate("/categories"), 2000);
       })
       .catch((err) => {
-        console.error("Update failed:", err.message);
+        console.error("Update failed:", err);
         alert("Failed to update category");
       });
   };
 
+  if (loading) {
+    return (
+      <div className="text-center mt-5">
+        <h4>Loading category data...</h4>
+      </div>
+    );
+  }
+
   return (
     <MainLayout>
-    <div className="d-flex  min-vh-100 bg-light">
-      <div className="p-4 rounded bg-white w-100" style={{ maxWidth: "1000px",maxHeight:"1000px"}}>
-        <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
-          Edit Category
-        </h3>
-        
+      <div className="d-flex justify-content-center align-items-start min-vh-100 bg-light">
+        <div className="p-3 p-md-4 rounded bg-white w-100" style={{ maxWidth: "900px" }}>
+          <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
+            Edit Category
+          </h3>
 
-        <form onSubmit={handleSubmit}>
-          {/* Title */}
-          <div className="mb-3">
-            <label className="form-label">
-              Title <span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className={`form-control ${errors.title ? "is-invalid" : ""}`}
-            />
-            {errors.title && (
-              <div className="text-danger mt-1">{errors.title}</div>
-            )}
-          </div>
+          {showAlert && (
+            <div className="alert alert-success" role="alert">
+              <p>Category successfully updated!</p>
+            </div>
+          )}
 
-          {/* Type */}
-          <div className="mb-3">
-            <label className="form-label">
-              Type <span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              className={`form-control ${errors.type ? "is-invalid" : ""}`}
-            />
-            {errors.type && (
-              <div className="text-danger mt-1">{errors.type}</div>
-            )}
-          </div>
+          <form onSubmit={handleSubmit}>
+            {/* Title */}
+            <div className="mb-3">
+              <label>
+                Title <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className={`form-control ${errors.title ? "is-invalid" : ""}`}
+              />
+              {errors.title && <div className="invalid-feedback">{errors.title}</div>}
+            </div>
 
-          {/* Description */}
-          <div className="mb-3">
-            <label className="form-label">
-              Description <span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              name="desc"
-              value={formData.desc}
-              onChange={handleChange}
-              className={`form-control ${errors.desc ? "is-invalid" : ""}`}
-            />
-            {errors.desc && (
-              <div className="text-danger mt-1">{errors.desc}</div>
-            )}
-          </div>
+            {/* Type */}
+            <div className="mb-3">
+              <label>
+                Type <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                className={`form-control ${errors.type ? "is-invalid" : ""}`}
+              />
+              {errors.type && <div className="invalid-feedback">{errors.type}</div>}
+            </div>
 
-          {/* Buttons */}
-          <div className="text-center mt-4">
-            <div className="d-inline-flex gap-3">
-              <button type="submit" className="btn btn-primary">
+            {/* Description */}
+            <div className="mb-3">
+              <label>
+                Description <span className="text-danger">*</span>
+              </label>
+              <textarea
+                name="desc"
+                value={formData.desc}
+                onChange={handleChange}
+                rows={4}
+                className={`form-control ${errors.desc ? "is-invalid" : ""}`}
+                style={{ resize: "vertical" }}
+              />
+              {errors.desc && <div className="invalid-feedback">{errors.desc}</div>}
+            </div>
+
+            {/* Submit */}
+            <div className="text-center">
+              <button
+                type="submit"
+                className="btn btn-primary mt-2"
+                disabled={!isFormValid}
+              >
                 Update
               </button>
-             
+              {!isFormValid && (
+                <small className="text-muted d-block mt-2">
+                  Please fill out all fields to enable Update.
+                </small>
+              )}
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
     </MainLayout>
   );
 }
