@@ -144,8 +144,8 @@ const handleDeleteNavigation = () => {
                 {sortOrder === "asc" ? "↑" : "↓"}
               </button>
             </th>
-            {/* <th>Type</th>
-            <th>Description</th> */}
+            <th>Type</th>
+            {/* <th>Description</th> */}
           </tr>
         </thead>
        <tbody>
@@ -168,6 +168,8 @@ const handleDeleteNavigation = () => {
             {category.title}
           </Link>
         </td>
+        <td>{category.type}</td>
+        {/* <td>{category.desc}</td> */}
       </tr>
     ))
   )}

@@ -1,24 +1,24 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState, useCallback } from "react";
-import { useNavigate } from 'react-router-dom';
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 
-
-const Navbar = ({ customBrand }) => { 
+const Navbar = ({ customBrand }) => {
   const brandName = customBrand || "DCX CMS";
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeLink, setActiveLink] = useState(null);
+  const [activeLink, setActiveLink] = useState(location.pathname);
 
-  const userRole = localStorage.getItem("userRole"); 
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location]);
 
-  // Define nav items based on role
+  const userRole = localStorage.getItem("userRole");
+
   const navItems = [
     { label: 'Dashboard', path: '/dashboard' },
     { label: 'Pages', path: '/pages' },
   ];
 
-  // Add admin-only links
   if (userRole === 'admin') {
     navItems.push(
       { label: 'Categories', path: '/categories' },
@@ -29,21 +29,25 @@ const Navbar = ({ customBrand }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("fullname");
-    localStorage.removeItem("userRole"); 
+    localStorage.removeItem("userRole");
     navigate('/login');
   };
 
   const navLinkStyle = (path) => ({
     color: "white",
-    marginRight: "8px",
-    padding: "8px 12px",
+    margin: "6px", // uniform margin around each item
+    padding: "5px 5px", // consistent padding on all sides
     backgroundColor: activeLink === path ? "#075a99" : "transparent",
     textDecoration: "none",
-    cursor: "pointer",
+    borderRadius: "6px",
+    fontWeight: activeLink === path ? "bold" : "normal",
+    transition: "background-color 0.3s ease",
+    display: "inline-block",
   });
+
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(31,135,194,255)', padding: '10px', width: '100%' }}>
-      <a className="navbar-brand text-white" href="/dashboard">DCX CMS</a>
+      <Link className="navbar-brand text-white" to="/dashboard">{brandName}</Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -56,10 +60,7 @@ const Navbar = ({ customBrand }) => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div
-        className="collapse navbar-collapse justify-content-between"
-        id="navbarSupportedContent"
-      >
+      <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
         {/* Left Nav Links + Search */}
         <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
           <ul className="navbar-nav d-flex flex-row flex-wrap">
@@ -99,6 +100,7 @@ const Navbar = ({ customBrand }) => {
             </button>
           </form>
         </div>
+
         {/* Right Account Section */}
         <ul className="navbar-nav d-flex flex-row align-items-center mt-2 mt-lg-0">
           <li className="nav-item dropdown">
