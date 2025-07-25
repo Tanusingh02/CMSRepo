@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ActionButton from "../components/ActionButton";
-import AddUser from "../components/Login-Signup/Adduser";
+import AddUser from "../components/Adduser";
 import EditUserForm from "../components/EditUserForm";
 import  "../index.css";
 import ReactPaginate from "react-paginate";

@@ -8,7 +8,7 @@ import EditCategory from '../pages/Category/Editategory';
 import ShowCategories from '../pages/Category/ShowCategory';
 import CategoryDetails from "../pages/Category/CategoryDetails";
 import MainLayout from '../layouts/Mainlayout';
-import AddUser from '../components/Login-Signup/Adduser';
+import AddUser from '../components/Adduser';
 import ProfilePage from '../pages/ProfilePage';
 import PrivateRoute from './PrivateRoute';
 import AdminUserProfile from '../pages/AdminUserProfile';
