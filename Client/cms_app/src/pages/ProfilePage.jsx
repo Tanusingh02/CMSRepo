@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import MainLayout from '../layouts/Mainlayout';
  
 const ProfilePage = () => {
 
@@ -36,6 +37,7 @@ useEffect(() => {
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
+    <MainLayout>
     <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
       <h2>👤 User Profile</h2>
       <p><strong>Name:</strong> {user.fullname}</p>
@@ -45,6 +47,7 @@ useEffect(() => {
       <p><strong>location:</strong> {user.location}</p>
       <p><strong>course:</strong> {user.course}</p>
     </div>
+    </MainLayout>
   );
 };
 
