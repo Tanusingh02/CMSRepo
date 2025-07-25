@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from "react-router-dom";
 
 
-const Navbar = ({ customBrand }) => {
+const Navbar = ({ customBrand }) => { 
   const brandName = customBrand || "DCX CMS";
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLink, setActiveLink] = useState(null);
 
-  const userRole = localStorage.getItem("userRole"); // ✅ Get role from storage
+  const userRole = localStorage.getItem("userRole"); 
 
   // Define nav items based on role
   const navItems = [
@@ -29,7 +29,7 @@ const Navbar = ({ customBrand }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("fullname");
-    localStorage.removeItem("userRole"); // 🚫 Remove role on logout
+    localStorage.removeItem("userRole"); 
     navigate('/login');
   };
 

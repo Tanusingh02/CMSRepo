@@ -7,6 +7,8 @@ import ActionButton from "../components/ActionButton";
 import AddUser from "../components/Login-Signup/Adduser";
 import EditUserForm from "../components/EditUserForm";
 import  "../index.css";
+import ReactPaginate from "react-paginate";
+import '../components/Pagination.css';
 import MainLayout from "../layouts/Mainlayout";
 
 
@@ -18,6 +20,25 @@ const [selectedUser, setSelectedUser] = useState(null);
 //in order to track the selected id for edit aur delete
 const [selectedUserId, setSelectedUserId] = useState(null);
 const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+const [pageSortKey, setPageSortKey] = useState(null);
+const [currentPage, setCurrentPage] = useState(0);
+const usersPerPage = 3;
+
+
+const sortedUsers = [...users].sort((a, b) => {
+  if (!pageSortKey) return 0;
+  return a[pageSortKey].localeCompare(b[pageSortKey]);
+});
+
+
+const offset = currentPage * usersPerPage;
+const currentPages = sortedUsers.slice(offset, offset + usersPerPage);
+const pageCount = Math.ceil(sortedUsers.length / usersPerPage);
+
+const handlePageClick = ({ selected }) => {
+  setCurrentPage(selected);
+};
+
   const navigate = useNavigate(); 
   useEffect(()=>{
    console.log("Token from localStorage:", localStorage.getItem("token"));
@@ -189,18 +210,24 @@ return(
 </thead>
 
             <tbody>
-  {[...users]
+  {currentPages
     .sort((a, b) => a.fullname.localeCompare(b.fullname))
     .map((user, index) => (
       <tr key={index}>
         <td>
           <input
-            type="checkbox"
-            checked={selectedUserId === user._id}
-            onChange={() => setSelectedUserId(user._id)}
-          />
+  type="checkbox"
+  checked={selectedUserId === user._id}
+  onChange={() => {
+    setSelectedUserId(prevId => (prevId === user._id ? null : user._id));
+  }}
+/>
         </td>
-        <td>{user.fullname}</td>
+        <td>
+  <Link to={`/useraccount/${user._id}`} className="text-link">
+    {user.fullname}
+  </Link>
+</td>
         <td>{user.email}</td>
         <td>{user.role}</td>
       </tr>
@@ -208,7 +235,17 @@ return(
 </tbody>
 
          </table>
-      
+      {/* Pagination Component */}
+      <ReactPaginate
+          previousLabel={"<<"}
+          nextLabel={">>"}
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+        />
     </div>
     </MainLayout>
 );
