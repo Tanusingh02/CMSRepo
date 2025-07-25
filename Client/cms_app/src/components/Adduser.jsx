@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainLayout from '../layouts/Mainlayout';
-
+ 
 function AddUser({ onUserAdded, users }) {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
@@ -14,26 +14,34 @@ function AddUser({ onUserAdded, users }) {
   const [location, setLocation] = useState('');
   const [age, setAge] = useState('');
   const [course, setCourse] = useState('');
-
+ 
   const [ageError, setAgeError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [showValidation, setShowValidation] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-
+const [nameError, setNameError] = useState('');
   const navigate = useNavigate();
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSuccessMessage("✅ Data successfully edited!");
     setShowValidation(true);
-
+     if (!fullname.trim()) {
+  setNameError("Full name is required.");
+  return;
+} else if (!validateName(fullname)) {
+  setNameError("Name should only contain letters and be at least 2 characters long.");
+  return;
+} else {
+  setNameError('');
+}
     if (parseInt(age) < 22) {
       setAgeError("Age cannot be less than 22");
       return;
     }
-
+ 
     if (!email) {
       setEmailError("Email is required");
       return;
@@ -41,7 +49,7 @@ function AddUser({ onUserAdded, users }) {
       setEmailError("Invalid email format");
       return;
     }
-
+ 
     const data = {
       fullname,
       email,
@@ -52,7 +60,7 @@ function AddUser({ onUserAdded, users }) {
       age,
       course,
     };
-
+ 
     axios.post("http://localhost:8080/user/signup", data)
       .then((res) => {
         navigate('/useraccount');
@@ -86,20 +94,24 @@ function AddUser({ onUserAdded, users }) {
           setModalMessage("Something went wrong while adding the user.");
           setShowModal(true);
         }
-
+ 
         console.error("Error adding user:", error);
       });
   };
-
+  const validateName = (name) => {
+  const regex = /^[A-Za-z\s]{2,}$/;
+  return regex.test(name);
+};
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
-
+ 
+ 
   const handleAgeChange = (e) => {
     const value = e.target.value;
     setAge(value);
-
+ 
     if (!value) {
       setAgeError("Age is required");
     } else if (parseInt(value) < 22) {
@@ -108,9 +120,10 @@ function AddUser({ onUserAdded, users }) {
       setAgeError('');
     }
   };
-
+ 
   const isFormValid = () => {
     return (
+      validateName(fullname) &&
       fullname.trim() &&
       validateEmail(email) &&
       password.trim() &&
@@ -122,7 +135,7 @@ function AddUser({ onUserAdded, users }) {
       course.trim()
     );
   };
-
+ 
   return (
     <MainLayout>
       <div className="container my-4">
@@ -131,17 +144,28 @@ function AddUser({ onUserAdded, users }) {
             <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>Add-User</h3>
             <form onSubmit={handleSubmit}>
               {/* Full Name */}
-              <div className="mb-3">
-                <label>Full Name <span className="text-danger">*</span></label>
-                <input
-                  type="text"
-                  value={fullname}
-                  onChange={(e) => setFullname(e.target.value)}
-                  className={`form-control ${showValidation && !fullname ? 'is-invalid' : ''}`}
-                />
-                {showValidation && !fullname && <div className="invalid-feedback">Full name is required.</div>}
-              </div>
-
+            <div className="mb-3">
+  <label>Full Name <span className="text-danger">*</span></label>
+  <input
+    type="text"
+    value={fullname}
+    onChange={(e) => {
+      const value = e.target.value;
+      setFullname(value);
+ 
+      if (!value.trim()) {
+        setNameError("Full name is required.");
+      } else if (!validateName(value)) {
+        setNameError("Name should only contain letters and be at least 2 characters long.");
+      } else {
+        setNameError('');
+      }
+    }}
+    className={`form-control ${nameError ? 'is-invalid' : ''}`}
+   
+  />
+  {nameError && <div className="invalid-feedback">{nameError}</div>}
+</div>
               {/* Email */}
               <div className="mb-3">
                 <label>Email <span className="text-danger">*</span></label>
@@ -163,7 +187,7 @@ function AddUser({ onUserAdded, users }) {
                 />
                 {emailError && <div className="invalid-feedback">{emailError}</div>}
               </div>
-
+ 
               {/* Password */}
               <div className="mb-3">
                 <label>Password <span className="text-danger">*</span></label>
@@ -175,19 +199,22 @@ function AddUser({ onUserAdded, users }) {
                 />
                 {showValidation && !password && <div className="invalid-feedback">Password is required.</div>}
               </div>
-
+ 
               {/* Role */}
               <div className="mb-3">
-                <label>Role <span className="text-danger">*</span></label>
-                <input
-                  type="text"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className={`form-control ${showValidation && !role ? 'is-invalid' : ''}`}
-                />
-                {showValidation && !role && <div className="invalid-feedback">Role is required.</div>}
-              </div>
-
+  <label>Role <span className="text-danger">*</span></label>
+  <select
+    value={role}
+    onChange={(e) => setRole(e.target.value)}
+    className={`form-select ${showValidation && !role ? 'is-invalid' : ''}`}
+  >
+    <option value="">Select role</option>
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+  </select>
+  {showValidation && !role && <div className="invalid-feedback">Role is required.</div>}
+</div>
+ 
               {/* DOJ */}
               <div className="mb-3">
                 <label>DOJ <span className="text-danger">*</span></label>
@@ -200,7 +227,7 @@ function AddUser({ onUserAdded, users }) {
                 />
                 {showValidation && !doj && <div className="invalid-feedback">Date of joining is required.</div>}
               </div>
-
+ 
               {/* Location */}
               <div className="mb-3">
                 <label>Location <span className="text-danger">*</span></label>
@@ -212,7 +239,7 @@ function AddUser({ onUserAdded, users }) {
                 />
                 {showValidation && !location && <div className="invalid-feedback">Location is required.</div>}
               </div>
-
+ 
               {/* Age */}
               <div className="mb-3">
                 <label>Age <span className="text-danger">*</span></label>
@@ -229,7 +256,7 @@ function AddUser({ onUserAdded, users }) {
                   <div className="invalid-feedback">{ageError}</div>
                 )}
               </div>
-
+ 
               {/* Course */}
               <div className="mb-3">
                 <label>Course <span className="text-danger">*</span></label>
@@ -241,7 +268,7 @@ function AddUser({ onUserAdded, users }) {
                 />
                 {showValidation && !course && <div className="invalid-feedback">Course is required.</div>}
               </div>
-
+ 
               {/* Add Button */}
               <div className="text-center">
                 <button
@@ -253,7 +280,7 @@ function AddUser({ onUserAdded, users }) {
                 </button>
               </div>
             </form>
-
+ 
             {/* Modal */}
             {showModal && (
               <div className="modal d-block" tabIndex="-1" role="dialog">
@@ -267,9 +294,9 @@ function AddUser({ onUserAdded, users }) {
                       <p>{modalMessage}</p>
                     </div>
                     <div className="modal-footer">
-                      <button 
-                        type="button" 
-                        className="btn btn-secondary" 
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
                         onClick={() => setShowModal(false)}
                       >
                         Close
@@ -285,5 +312,6 @@ function AddUser({ onUserAdded, users }) {
     </MainLayout>
   );
 }
-
+ 
 export default AddUser;
+ 

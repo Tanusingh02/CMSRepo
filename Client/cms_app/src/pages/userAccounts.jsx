@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -10,7 +9,7 @@ import "../styles/index.css";
 import ReactPaginate from "react-paginate";
 import "../styles/Pagination.css";
 import MainLayout from "../layouts/Mainlayout";
-
+ 
 function UserPage() {
   const [users, setUsers] = useState([]);
   //const [showModal, setShowModal] = useState(false);
@@ -22,20 +21,20 @@ function UserPage() {
   const [pageSortKey, setPageSortKey] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const usersPerPage = 3;
-
+ 
   const sortedUsers = [...users].sort((a, b) => {
     if (!pageSortKey) return 0;
     return a[pageSortKey].localeCompare(b[pageSortKey]);
   });
-
+ 
   const offset = currentPage * usersPerPage;
   const currentPages = sortedUsers.slice(offset, offset + usersPerPage);
   const pageCount = Math.ceil(sortedUsers.length / usersPerPage);
-
+ 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
-
+ 
   const navigate = useNavigate();
   useEffect(() => {
     console.log("Token from localStorage:", localStorage.getItem("token"));
@@ -52,7 +51,7 @@ function UserPage() {
   const handleNew = () => {
     navigate("/useraccount/add");
   };
-
+ 
   // eslint-disable-next-line no-unused-vars
   const handleClose = () => {
     setShowModal(false);
@@ -61,7 +60,7 @@ function UserPage() {
     const user = users.find((u) => u._id === selectedUserId);
     if (user) {
       setSelectedUser(user);
-      setEditModalVisible(true);
+   navigate(`/useraccount/edit/${selectedUserId}`);
     }
   };
   const handleDelete = () => {
@@ -88,7 +87,7 @@ function UserPage() {
       setShowConfirmDelete(false); // close modal anyway
     }
   };
-
+ 
   const cancelDelete = () => {
     setShowConfirmDelete(false);
   };
@@ -103,7 +102,7 @@ function UserPage() {
       })
       .then((res) => setUsers(res.data))
       .catch((error) => console.error("error fetching latest users:", error));
-
+ 
     setShowModal(false); // Close modal
   };
   const handleUserUpdated = () => {
@@ -117,7 +116,7 @@ function UserPage() {
       .then((res) => setUsers(res.data))
       .catch((error) => console.error("Error fetching updated users:", error));
   };
-
+ 
   return (
     <MainLayout>
       <div className="container-fluid mt-4">
@@ -146,7 +145,7 @@ function UserPage() {
         <h1 className="mb-0 title">
           <i className="bi bi-people-fill me-2"></i>Users
         </h1>
-
+ 
         <div className="mb-3">
           <hr />
           <div
@@ -194,7 +193,7 @@ function UserPage() {
           <>
             {/* Backdrop Overlay */}
             <div className="custom-modal-backdrop"></div>
-
+ 
             {/* Modal */}
             <div
               className="modal d-block"
@@ -249,7 +248,7 @@ function UserPage() {
               <th>Group</th>
             </tr>
           </thead>
-
+ 
           <tbody>
             {currentPages
               .sort((a, b) => a.fullname.localeCompare(b.fullname))
@@ -292,5 +291,5 @@ function UserPage() {
     </MainLayout>
   );
 }
-
+ 
 export default UserPage;
