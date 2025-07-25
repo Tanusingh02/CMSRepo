@@ -2,10 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/Mainlayout";
-import ActionButton from "../ActionButton";
-import CategoryForm from "../Category/CategoryForm";
+import ActionButton from "../../components/ActionButton";
+import CategoryForm from "./CategoryForm";
 import { Link } from 'react-router-dom';
 import DeleteCategory from "./DeleteCategory";
+import "../../index.css";
+import ReactPaginate from "react-paginate";
+import '../../components/Pagination.css';
 
 function ShowCategories() {
   const navigate = useNavigate();
@@ -17,8 +20,21 @@ function ShowCategories() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [actionMessage, setActionMessage] = useState("");
+  const [pageSortKey, setPageSortKey] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const usersPerPage = 3;
 
+  const sortedCategories = [...categories].sort((a, b) => {
+    if (!pageSortKey) return 0;
+    return a[pageSortKey].localeCompare(b[pageSortKey]);
+  });
+  const offset = currentPage * usersPerPage;
+  const currentCategories = sortedCategories.slice(offset, offset + usersPerPage);
+  const pageCount = Math.ceil(sortedCategories.length / usersPerPage);
 
+const handlePageClick = ({ selected }) => {
+  setCurrentPage(selected);
+};
   useEffect(() => {
     axios
       .get("http://localhost:8080/categories/getAll", {
@@ -61,19 +77,13 @@ useEffect(() => {
   };
 
   const handleEditClick = () => {
-  if (!selectedCategoryId) {
-    setActionMessage("⚠️ Please select a category to edit.");
-    return;
-  }
+  
   setActionMessage(""); // Clear message
   navigate(`/categories/edit/${selectedCategoryId}`);
 };
 
 const handleDeleteNavigation = () => {
-  if (!selectedCategoryId) {
-    setActionMessage("⚠️ Please select a category to delete.");
-    return;
-  }
+  
   setActionMessage(""); // Clear message
   navigate(`/categories/delete/${selectedCategoryId}`);
 };
@@ -94,22 +104,18 @@ const handleDeleteNavigation = () => {
   return (
     <MainLayout>
     <div className="container mt-4">
-      <div className="d-flex justify-content-end mt-3" style={{marginTop:'60px'}}>
-        <ActionButton label="New" iconClass="bi bi-plus-lg" variant="secondary" onClick={handleNew} />
-        <ActionButton label="Edit" iconClass="bi bi-pencil" variant="secondary" onClick={handleEditClick} disabled={!selectedCategoryId} />
-        <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="secondary" onClick={handleDeleteNavigation} />
+      <div className="d-flex justify-content-end mt-3">
+        <ActionButton label="New" iconClass="bi bi-plus-lg" variant="light" onClick={handleNew} />
+        <ActionButton label="Edit" iconClass="bi bi-pencil" variant="light" onClick={handleEditClick} disabled={!selectedCategoryId} />
+        <ActionButton label="Delete" iconClass="bi bi-x-lg" variant="light" onClick={handleDeleteNavigation} disabled={!selectedCategoryId} />
       </div>
-        {actionMessage && (
-       <div className="alert alert-warning mt-3" role="alert">
-        {actionMessage}
-       </div>
-         )}
-
+        
       <div>
-        <h1 className="mb-0 dashboard-header">
-          <span>🗂️</span>Categories
+        <h1 className="mb-0 title">
+            <i class="bi bi-folder2"></i>  Category
         </h1>
         <hr />
+        
         </div>
         <div
     className="px-3 py-2 border rounded"
@@ -120,8 +126,8 @@ const handleDeleteNavigation = () => {
     }}
   >
     <strong>
-      <Link to="/" className="text-decoration-none text-blue me-1">Dashboard</Link>
-      / Users
+      <Link to="/dashboard" className="text-decoration-none text-blue me-1">Dashboard</Link>
+      / Category
     </strong>
   </div>
       
@@ -147,7 +153,7 @@ const handleDeleteNavigation = () => {
       <td colSpan="2" className="text-center">No categories found.</td>
     </tr>
   ) : (
-    categories.map((category) => (
+    currentCategories.map((category) => (
       <tr key={category._id}>
         <td>
           <input
@@ -167,6 +173,16 @@ const handleDeleteNavigation = () => {
 </tbody>
 </table>
     </div>
+    <ReactPaginate
+          previousLabel={"<<"}
+          nextLabel={">>"}
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+        />
     </MainLayout>
   );
 }
