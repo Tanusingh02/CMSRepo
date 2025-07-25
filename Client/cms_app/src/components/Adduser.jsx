@@ -21,14 +21,22 @@ function AddUser({ onUserAdded, users }) {
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-
+const [nameError, setNameError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSuccessMessage("✅ Data successfully edited!");
     setShowValidation(true);
-
+     if (!fullname.trim()) {
+  setNameError("Full name is required.");
+  return;
+} else if (!validateName(fullname)) {
+  setNameError("Name should only contain letters and be at least 2 characters long.");
+  return;
+} else {
+  setNameError('');
+}
     if (parseInt(age) < 22) {
       setAgeError("Age cannot be less than 22");
       return;
@@ -90,11 +98,15 @@ function AddUser({ onUserAdded, users }) {
         console.error("Error adding user:", error);
       });
   };
-
+  const validateName = (name) => {
+  const regex = /^[A-Za-z\s]{2,}$/;
+  return regex.test(name);
+};
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
+ 
 
   const handleAgeChange = (e) => {
     const value = e.target.value;
@@ -111,6 +123,7 @@ function AddUser({ onUserAdded, users }) {
 
   const isFormValid = () => {
     return (
+      validateName(fullname) &&
       fullname.trim() &&
       validateEmail(email) &&
       password.trim() &&
@@ -131,17 +144,28 @@ function AddUser({ onUserAdded, users }) {
             <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>Add-User</h3>
             <form onSubmit={handleSubmit}>
               {/* Full Name */}
-              <div className="mb-3">
-                <label>Full Name <span className="text-danger">*</span></label>
-                <input
-                  type="text"
-                  value={fullname}
-                  onChange={(e) => setFullname(e.target.value)}
-                  className={`form-control ${showValidation && !fullname ? 'is-invalid' : ''}`}
-                />
-                {showValidation && !fullname && <div className="invalid-feedback">Full name is required.</div>}
-              </div>
+            <div className="mb-3">
+  <label>Full Name <span className="text-danger">*</span></label>
+  <input
+    type="text"
+    value={fullname}
+    onChange={(e) => {
+      const value = e.target.value;
+      setFullname(value);
 
+      if (!value.trim()) {
+        setNameError("Full name is required.");
+      } else if (!validateName(value)) {
+        setNameError("Name should only contain letters and be at least 2 characters long.");
+      } else {
+        setNameError('');
+      }
+    }}
+    className={`form-control ${nameError ? 'is-invalid' : ''}`}
+    placeholder="Enter your full name"
+  />
+  {nameError && <div className="invalid-feedback">{nameError}</div>}
+</div>
               {/* Email */}
               <div className="mb-3">
                 <label>Email <span className="text-danger">*</span></label>
@@ -178,15 +202,18 @@ function AddUser({ onUserAdded, users }) {
 
               {/* Role */}
               <div className="mb-3">
-                <label>Role <span className="text-danger">*</span></label>
-                <input
-                  type="text"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className={`form-control ${showValidation && !role ? 'is-invalid' : ''}`}
-                />
-                {showValidation && !role && <div className="invalid-feedback">Role is required.</div>}
-              </div>
+  <label>Role <span className="text-danger">*</span></label>
+  <select
+    value={role}
+    onChange={(e) => setRole(e.target.value)}
+    className={`form-select ${showValidation && !role ? 'is-invalid' : ''}`}
+  >
+    <option value="">Select role</option>
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+  </select>
+  {showValidation && !role && <div className="invalid-feedback">Role is required.</div>}
+</div>
 
               {/* DOJ */}
               <div className="mb-3">

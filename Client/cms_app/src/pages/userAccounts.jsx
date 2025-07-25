@@ -61,7 +61,7 @@ function UserPage() {
     const user = users.find((u) => u._id === selectedUserId);
     if (user) {
       setSelectedUser(user);
-      setEditModalVisible(true);
+   navigate(`/user/edit/${selectedUserId}`);
     }
   };
   const handleDelete = () => {

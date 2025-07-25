@@ -23,12 +23,22 @@ function EditUserForm({ user, onUserUpdated }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label>Full Name</label>
-        <input type="text" className="form-control" value={fullname} onChange={(e) => setFullname(e.target.value)} />
-      </div>
-      <button type="submit" className="btn btn-primary">Update</button>
-    </form>
+  <div className="mb-3">
+    <label>Full Name</label>
+    <input
+      type="text"
+      className="form-control"
+      value={fullname}
+      onChange={(e) => setFullname(e.target.value)}
+    />
+  </div>
+
+  {/* Centered Button */}
+  <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <button type="submit" className="btn btn-primary">Update</button>
+  </div>
+</form>
+
   );
 }
 export default EditUserForm;

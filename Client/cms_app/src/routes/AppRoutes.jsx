@@ -18,7 +18,7 @@ import EditPage from '../pages/Pages/EditPage'
 import DeletePage from '../pages/Pages/DeletePage'
 import Details from "../pages/Pages/PageDetails"
 import Userpage from '../pages/userAccounts'
-
+import EditUserPage from '../components/EditUserPage';
 
 const AppRoutes = () =>{
     return(
@@ -41,6 +41,7 @@ const AppRoutes = () =>{
             <Route path='/pages/delete/:id' element={<DeletePage/>}></Route>
             <Route path='/useraccount' element={<Userpage/>}></Route>
             <Route path="/page-details/:id" element={<Details />} />
+            <Route path="/user/edit/:userId" element={<EditUserPage />} />
         </Routes>
     )
 }
