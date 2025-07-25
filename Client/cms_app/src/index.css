@@ -28,8 +28,8 @@ footer{
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6); /* dark transparent background */
-  backdrop-filter: blur(6px); /* creates blur effect */
+  background-color: rgba(246, 243, 243, 0.753); /* dark transparent background */
+  /* backdrop-filter: blur(6px); creates blur effect */
   z-index: 1040;
 }
 
