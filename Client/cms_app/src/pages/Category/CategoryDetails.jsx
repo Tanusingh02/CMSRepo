@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import MainLayout from "../../layouts/Mainlayout";
 
 function CategoryDetails() {
   const { id } = useParams();
@@ -41,6 +42,7 @@ function CategoryDetails() {
   if (!category) return <div>Loading...</div>;
 
   return (
+    <MainLayout>
     <div className="container mt-4">
       <h2>Category Details</h2>
       <hr />
@@ -52,6 +54,7 @@ function CategoryDetails() {
         ← Back
       </button>
     </div>
+    </MainLayout>
   );
 }
 

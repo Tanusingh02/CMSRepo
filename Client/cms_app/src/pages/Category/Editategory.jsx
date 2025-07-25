@@ -81,6 +81,7 @@ function EditCategory() {
         <h3 className="text-center mb-4" style={{ color: "#1f87c2" }}>
           Edit Category
         </h3>
+        
 
         <form onSubmit={handleSubmit}>
           {/* Title */}

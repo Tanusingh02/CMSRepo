@@ -20,6 +20,7 @@ function ShowCategories() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [actionMessage, setActionMessage] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [pageSortKey, setPageSortKey] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const usersPerPage = 3;

@@ -28,7 +28,7 @@ const AppRoutes = () =>{
             <Route path='/dashboard' element={<Dashboard/>}></Route>
             <Route path='/useraccount' element={<Userpage></Userpage>}></Route>
             <Route path='/user/add' element={<AddUser/>}/>
-            <Route path='/profile' element={ <PrivateRoute> <MainLayout><ProfilePage /></MainLayout> </PrivateRoute>}/>
+            <Route path='/profile' element={ <PrivateRoute> <ProfilePage /> </PrivateRoute>}/>
             <Route path="/useraccount/:id" element={<AdminUserProfile />} />
             <Route path="/categories" element={<ShowCategories></ShowCategories>}/>
             <Route path="/categories/details/:id" element={<CategoryDetails />} />
